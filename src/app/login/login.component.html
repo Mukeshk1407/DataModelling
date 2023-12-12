@@ -1,0 +1,42 @@
+<div class="login-container">
+    <div class="left-side">
+        <div class="left-box">
+            <h4>Welcome to Data Modelling & Bulk Upload </h4>
+            <p>Your digital journey begins here</p>
+            <p>Unlock the full potential of your data with Data Modelling & Bulk Upload</p>
+            <p>Please enter your credentials to access your account</p>
+        </div>
+    </div>
+    <div class="right-side">
+        <div class="right-box">
+            <h4 class="login">Login</h4>
+            <form (ngSubmit)="login()" [formGroup]="loginForm">
+                <div class="form-group" [ngStyle]="{ 'border-color': isInvalid('username') ? '#F00' : '' }">
+                    <label class="label" for="username">Username</label>
+                    <!-- Add [ngClass] to dynamically set the class -->
+                    <input type="email" id="username" name="username" class="form-control input"
+                        placeholder="Enter Username" formControlName="username"
+                        [ngClass]="{ 'error-input': isInvalid('username') }">
+                    <div *ngIf="isInvalid('username')">
+                        <div *ngIf="loginForm.get('username')?.hasError('required')" class="errorcolor">Username is
+                            required</div>
+                        <div *ngIf="loginForm.get('username')?.hasError('email')" class="errorcolor">Invalid email
+                            format</div>
+                    </div>
+                </div>
+                <div class="form-group" [ngStyle]="{ 'border-color': isInvalid('password') ? '#F00' : '' }">
+                    <label class="label" for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control input"
+                        placeholder="Enter Password" formControlName="password"
+                        [ngClass]="{ 'error-input': isInvalid('password') }">
+
+                    <div *ngIf="isInvalid('password')">
+                        <div *ngIf="loginForm.get('password')?.hasError('required')" class="errorcolor">Password is
+                            required</div>
+                    </div>
+                </div>
+                <button type="submit" class="btn logbutton">Login</button>
+            </form>
+        </div>
+    </div>
+</div>

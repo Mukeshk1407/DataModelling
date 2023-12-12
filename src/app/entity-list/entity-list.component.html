@@ -1,0 +1,37 @@
+<!-- entity-list.component.html -->
+
+<div class="header">
+  <div class="icon-container">
+    <i matTooltip="Disconnect Database" class="fa-solid fa-plug-circle-xmark" (click)="switchView()"></i>
+    <i matTooltip="Logout" class="fas fa-sign-out-alt" (click)="logout()"></i>
+  </div>
+</div>
+
+<div class="content">
+  <div class="left-header">
+    <span>Entity List</span>
+  </div>
+  <div class="right-header">
+    <button class="createbutton" mat-raised-button color="primary">Create Entity</button>
+  </div>
+</div>
+
+<div class="entity-list-container">
+  <!-- Search box -->
+  <div class="search-box">
+    <input #searchInput type="text" placeholder="Search by Entity Name" (input)="onSearch(searchInput.value)" />
+    <i class="fas fa-search"></i>
+  </div>
+
+  <!-- Line below search box -->
+  <div class="line"></div>
+
+  <!-- Display entity names here -->
+  <div *ngFor="let entity of entityList" class="entity-box">
+    {{ entity }}
+    <div class="icons-container1">
+      <i matTooltip="Add Validation" class="fa-solid fa-plus"></i>
+      <i matTooltip="View Attributes" class="fa-solid fa-eye"></i>
+    </div>
+  </div>
+</div>

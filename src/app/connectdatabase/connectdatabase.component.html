@@ -1,0 +1,46 @@
+<!-- src/app/popup/popup.component.html -->
+<div class="modal">
+    <div *ngIf="true" class="close-icon" (click)="closePopup()"><i class="fa-solid fa-circle-xmark"></i></div>
+    <h2 *ngIf="!showInputFields">Choose your Database to Manage your Data’s</h2>
+    <div *ngIf="!showInputFields">
+        <div class="box-container">
+          <div *ngFor="let box of boxes" (click)="selectBox(box)" [ngClass]="{ 'selected': box.selected }">
+            <img matTooltip="{{ box.content }}" src="{{ box.imageSrc }}" alt="{{ box.content }}" />
+          </div>
+        </div>
+        <button class="next" *ngIf="showNextButton" (click)="showSelectedContent()">Next</button>
+      </div>
+    <h2 *ngIf="showInputFields">Connect to {{this.selectedContent}} DB by entering the below details</h2>
+
+    <div *ngIf="showInputFields" class="input-fields">
+        <div class="input-group">
+            <label for="hostname">Host Name</label>
+            <input style="border-radius: 15px;" placeholder="Enter Hostname" type="text" id="hostname" [(ngModel)]="hostname" name="hostname" required #hostnameInput="ngModel" [ngClass]="{ 'error': hostnameInput.invalid && (hostnameInput.dirty || hostnameInput.touched) }" />
+            <div *ngIf="hostnameInput.invalid && (hostnameInput.dirty || hostnameInput.touched)" class="error-message">
+                Hostname is required.
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input style="border-radius: 15px;" placeholder="Enter Username" type="text" id="username" [(ngModel)]="username" name="username" required #usernameInput="ngModel" [ngClass]="{ 'error': usernameInput.invalid && (usernameInput.dirty || usernameInput.touched) }" />
+            <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)" class="error-message">
+                Username is required.
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input style="border-radius: 15px;" placeholder="Enter password"  type="password" id="password" [(ngModel)]="password" name="password" required #passwordInput="ngModel" [ngClass]="{ 'error': passwordInput.invalid && (passwordInput.dirty || passwordInput.touched) }" />
+            <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)" class="error-message">
+                Password is required.
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button class="connect" (click)="back()"><i class="fa-solid fa-backward-step"></i>&nbsp;Back</button>
+            <button class="connect" (click)="connect()">Connect&nbsp;<i class="fa-solid fa-plug"></i></button>
+          </div>
+          
+    </div>
+</div>

@@ -1,0 +1,112 @@
+.full-screen-image {
+    height: 97vh;
+    width: 99vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    /* background-color: #23136b; */
+}
+
+.image {
+    height: 100%;
+    width: 100%;
+    object-fit: inherit;
+    position: fixed;
+}
+
+.centered-text {
+    font-size: 99%;
+    color: white;
+    position: absolute;
+    top: 34%;
+    left: 19%;
+    transform: translate(-50%, -50%);
+}
+
+.additional-content {
+    position: absolute;
+    font-size: 16px;
+    display: block;
+    color: white;
+    margin-top: 9%;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+
+.feature-boxes {
+    display: flex;
+    position: absolute;
+    bottom: 9%;
+    left: 21%;
+}
+
+.feature-box {
+    flex: 0 0 22%;
+    padding: 3px;
+    border-radius: 10px;
+    border: 1px solid #243D4D;
+    background: rgb(36 61 77 / 64%);
+    color: white;
+    text-align: center;
+    margin-bottom: 5px;
+    margin-left: 60px;
+}
+
+/* Optional: Style the content inside the container */
+.full-screen-image img {
+    max-width: 100%;
+}
+
+.login-button {
+    position: absolute;
+    top: 5%;
+    right: 7%;
+}
+
+.login-button button {
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 110px;
+    height: 40px;
+    flex-shrink: 0;
+    color: #243D4D;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700; /* Increase the font weight */
+    line-height: normal;
+}
+
+
+.login-button button i {
+    margin-left: 5px;
+}
+
+.connect-database{
+    position: absolute;
+    top: 5%;
+    right: 25%;
+}
+
+.connect-database button {
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 162px;
+    height: 40px;
+    flex-shrink: 0;
+    color: #243D4D;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700; /* Increase the font weight */
+    line-height: normal;
+}
+
+
+.connect-database button i {
+    margin-left: 5px;
+}

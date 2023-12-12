@@ -1,0 +1,119 @@
+.login-container {
+    display: flex;
+    height: 100vh;
+    /* Use linear-gradient for the background color and url for the background image */
+    background: linear-gradient(rgba(36, 20, 108, 0.76), rgba(36, 20, 108, 0.76)),
+                url("../../assets/images/login.jpg") center center / cover no-repeat;
+}
+
+.right-side {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-side {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-box{
+    width: 468px;
+    height: 400px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    color: white;
+    padding: 6%;
+}
+
+.left-box h4{
+    color: white;
+    margin-top: 2%;
+    margin-bottom: 14%;
+    font-weight: bold;
+    font-size: 23px;
+}
+
+.left-box p{
+    color: #FFF;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 136%;
+}
+
+.right-box {
+    width: 468px;
+    height: 400px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: rgba(70, 66, 149, 0.59);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: white;
+    padding: 10%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.login {
+    text-align: center;
+    color: #FFF;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: -10%;
+    margin-bottom: 14%;
+}
+
+.label {
+    margin-bottom: 3%;
+    margin-left: 2%;
+}
+
+.input {
+    border-radius: 15px;
+    background: #494090;
+    color: #FFF;
+}
+
+::placeholder {
+    color: white;
+    font-weight: lighter; 
+    opacity: 0.7;
+}
+
+
+.logbutton {
+    border-radius: 10px;
+    background: #243D4D;
+    width: 118px;
+    height: 42px;
+    margin-left: 30%;
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.errorcolor{
+    color: #F00;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-left: 4%;
+}
+
+/* Add the new error-input style */
+.input.error-input {
+    border-radius: 15px;
+    border: 2px solid #F00;
+    background: rgba(177, 170, 231, 0.11);
+}

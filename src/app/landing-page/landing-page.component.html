@@ -1,0 +1,54 @@
+<!-- src/app/landing-page/landing-page.component.html -->
+
+<div class="full-screen-image">
+    <img class="image" src="../../assets/images/landingpage2.png" alt="Landing-page">
+
+    <div class="centered-text">
+        <h2>Data Modelling & Bulk Upload</h2>
+        <div class="additional-content">
+            <p>Welcome to Data Modelling & Bulk Upload, where data management meets simplicity. Effortlessly handle bulk
+                uploads across databases, ensuring efficiency and consistency. Our user-friendly interface and
+                innovative solutions make us the ideal choice</p>
+        </div>
+    </div>
+
+    <div class="feature-boxes">
+        <div class="feature-box">
+            <p>Upload bulk data from Excel</p>
+        </div>
+        <div class="feature-box">
+            <p>Access to Multiple Database</p>
+        </div>
+        <div class="feature-box">
+            <p>Access to Upload Data Error Logs</p>
+        </div>
+    </div>
+
+    <ng-container *ngIf="(loggedIn$ | async) as loggedIn; else showLoginButton">
+        <div class="connect-database" *ngIf="loggedIn" (click)="dbPopup()">
+            <button>
+                <span>Connect Database</span>&nbsp;<i class="fa-solid fa-plug"></i>
+            </button>
+        </div>
+        <div class="login-button" *ngIf="loggedIn" (click)="logout()">
+            <button>
+                <span>Logout</span>
+                <i class="fa fa-sign-out"></i>
+            </button>
+        </div>
+    </ng-container>
+    <ng-template #showLoginButton>
+        <div class="connect-database" (click)="dbPopup()">
+            <button>
+                <span>Connect Database</span>&nbsp;<i class="fa-solid fa-plug"></i>
+            </button>
+        </div>
+        <div class="login-button" (click)="navigateToLogin()">
+            <button>
+                <span>Login</span>
+                <i class="fa fa-sign-in"></i>
+            </button>
+        </div>
+    </ng-template>
+
+</div>
