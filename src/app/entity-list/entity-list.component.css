@@ -80,6 +80,24 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    max-height: 449px; 
+    overflow-y: auto;
+}
+.entity-list-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+.entity-list-container::-webkit-scrollbar-thumb {
+  background-color: #243D4D; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners of the thumb */
+}
+
+.entity-list-container::-webkit-scrollbar-track {
+  background-color: rgba(143, 185, 212, 0.85); /* Color of the scrollbar track */
+  border-radius: 10px; /* Rounded corners of the track */
+}
+.scrollable {
+  overflow-y: auto;
 }
 
 .entity-box {

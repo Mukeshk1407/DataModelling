@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DatabaseService } from '../services/database.service';
+import { ToastrService } from '../services/ToastrService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-connectdatabase',
@@ -10,7 +12,9 @@ import { DatabaseService } from '../services/database.service';
 export class ConnectdatabaseComponent {
 
   constructor(private dialog: MatDialog,
-    private dbService: DatabaseService) {
+    private dbService: DatabaseService,
+    private toastrService : ToastrService,
+    private router : Router) {
   }
   boxes = [
     { content: 'Dynamo', imageSrc: 'assets/images/dynamo.png', selected: false },
@@ -57,35 +61,31 @@ export class ConnectdatabaseComponent {
   connect() {
     // Check if all required fields are filled
     if (this.hostname && this.username && this.password &&this. databaseName && this.selectedContent) {
-      // Implement the logic to connect to the database using the entered credentials
-      console.log('Connecting to the database...');
-      console.log('Database Type:', this.selectedContent);
-      console.log('Hostname:', this.hostname);
-      console.log('DatabaseName:', this. databaseName);
-      console.log('Username:', this.username);
-      console.log('Password:', this.password);
   
       // Use the DatabaseService to connect to the backend
       //this.selectedContent,
       this.dbService.getTableDetails( 
         this.hostname,this. databaseName, this.username, this.password).subscribe(
         (response) => {
-          console.log('Table details:', response);
-        //  this.snackBar.open('Connection successful!', 'Close', { duration: 3000 });
-          // Handle the response as needed
-          // Close the popup
-          const dialogRef = this.dialog.closeAll();
+
+          if(response.isSuccess){
+            const dialogRef = this.dialog.closeAll();
+            this.toastrService.showSuccess('Your Database Connected Successfully');
+            this.router.navigate(['/entitylist']);
+          }
+          else{
+            this.toastrService.showError(response.errorMessages);
+          }
         },
         (error) => {
-          console.error('Error getting table details:', error);
-      //    this.snackBar.open('Connection failed. Please check your credentials.', 'Close', { duration: 5000 });
-          // Handle the error as needed
+          this.toastrService.showError(error.errorMessages);
         }
       );
   
     } else {
       // Display an error message or perform any other action for incomplete fields
-      console.log('Please fill in all fields.');
+      this.toastrService.showError('Please fill in all fields');
+      console.log('Please fill in all fields');
     }
   }
 

@@ -6,6 +6,7 @@ import { selectLoggedIn } from '../state/auth.selectors';
 import * as authActions from '../state/auth.actions';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthStorageService } from '../services/authstorage.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -15,10 +16,15 @@ import { MatDialog } from '@angular/material/dialog';
 export class LandingPageComponent implements OnInit {
 
   isPopupVisible = false;
-  loggedIn$ !: Observable<boolean>;
+  loggedIn$ = false;
+  // loggedIn$ !: Observable<boolean>;
 
-  constructor(private router: Router, private store: Store, private dialog: MatDialog) {
-    this.loggedIn$ = this.store.select(selectLoggedIn);
+  constructor(private router: Router, private store: Store, private dialog: MatDialog,private authStorageService: AuthStorageService) {
+    var storedAuthInfo = this.authStorageService.getAuthInfo();
+    if(storedAuthInfo != undefined  && storedAuthInfo.loggedIn != undefined) {
+      this.loggedIn$ = storedAuthInfo?.loggedIn
+    }
+    // this.loggedIn$ = this.store.select(selectLoggedIn);
   }
 
   ngOnInit(): void {
@@ -30,8 +36,11 @@ export class LandingPageComponent implements OnInit {
   }
 
   logout() {
+    this.authStorageService.clearAuthInfo();
+    this.router.navigate(['']);
+    window.location.reload();
     // Dispatch the logout action
-    this.store.dispatch(authActions.logout());
+    // this.store.dispatch(authActions.logout());
   }
 
   dbPopup() {

@@ -19,6 +19,8 @@ import { EntityDetailsComponent } from './entity-details/entity-details.componen
 import { LogDetailsComponent } from './log-details/log-details.component';
 import { EditEntityComponent } from './edit-entity/edit-entity.component';
 import { CreateEntityComponent } from './create-entity/create-entity.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -36,6 +38,7 @@ import { CreateEntityComponent } from './create-entity/create-entity.component';
    ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -43,7 +46,12 @@ import { CreateEntityComponent } from './create-entity/create-entity.component';
     StoreModule.forRoot({ auth: authReducer }),
     HttpClientModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ToastrModule.forRoot({
+      timeOut: 5000, 
+      positionClass: 'toast-top-right', 
+      preventDuplicates: true,
+    })
   ],
   providers: [JWTTokenService],
   bootstrap: [AppComponent]
