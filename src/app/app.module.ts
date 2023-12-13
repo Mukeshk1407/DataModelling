@@ -15,6 +15,10 @@ import { ConnectdatabaseComponent } from './connectdatabase/connectdatabase.comp
 import { MatDialogModule } from '@angular/material/dialog';
 import { EntityListComponent } from './entity-list/entity-list.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EntityDetailsComponent } from './entity-details/entity-details.component';
+import { LogDetailsComponent } from './log-details/log-details.component';
+import { EditEntityComponent } from './edit-entity/edit-entity.component';
+import { CreateEntityComponent } from './create-entity/create-entity.component';
 
 
 
@@ -24,8 +28,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     LandingPageComponent,
     LoginComponent,
     ConnectdatabaseComponent,
-    EntityListComponent    
-  ],
+    EntityListComponent,
+    EntityDetailsComponent,
+    LogDetailsComponent,
+    EditEntityComponent,
+    CreateEntityComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,

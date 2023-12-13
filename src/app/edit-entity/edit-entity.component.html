@@ -1,0 +1,457 @@
+<p>edit-entity works!</p>
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="header">Edit Entity</div>
+        <div class="header">
+          <div class="name-div">
+            <label for="entityName">Entity Name</label>
+            <input
+              type="text"
+              id="entityName"
+              name="entityName"
+              placeholder="Enter your entity name here"
+              [(ngModel)]="entityName"
+              required
+              pattern="^[A-Z][a-zA-Z0-9]*$"
+              #entityNameInput="ngModel"
+            />
+            <!-- Validation error messages -->
+            <div
+              *ngIf="
+                entityNameInput.invalid &&
+                (entityNameInput.dirty || entityNameInput.touched)
+              "
+            >
+              <div class="error" *ngIf="entityNameInput?.errors?.['required']">
+                Entity Name is required.
+              </div>
+              <div class="error" *ngIf="entityNameInput?.errors?.['pattern']">
+                Entity Name should start with an uppercase letter and contain only
+                letters and numbers.
+              </div>
+            </div>
+          </div>
+          <div class="back-div">
+            <button class="back-button" routerLink="/entity-list">
+              <i class="fa-solid fa-arrow-left icon"></i>Back
+            </button>
+          </div>
+        </div>
+        <div class="container table-container">
+          <form
+            (keydown)="preventSubmitOnEnter($event, entityForm)"
+            (ngSubmit)="submit()"
+            #entityForm="ngForm"
+            novalidate
+          >
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="center-header">Column Name</th>
+                  <th class="center-header">Data Type</th>
+                  <th class="center-header">Length</th>
+                  <th class="center-header">NotNull</th>
+                  <th class="center-header">PrimaryKey</th>
+                  <th class="center-header">Default Value</th>
+                  <th class="center-header">Description</th>
+                  <th class="center-header">Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of columns; let i = index">
+                  <td class="center-content">
+                    <input
+                      type="text"
+                      [(ngModel)]="row.entityColumnName"
+                      placeholder="Column Name"
+                      name="columnName{{ i }}"
+                      required
+                      pattern="^[A-Z][a-zA-Z0-9]*$"
+                      #columnNameInput="ngModel"
+                    />
+                    <div
+                      *ngIf="
+                        columnNameInput.invalid &&
+                        (columnNameInput.dirty || columnNameInput.touched)
+                      "
+                    >
+                      <div
+                        class="error"
+                        *ngIf="columnNameInput?.errors?.['required']"
+                      >
+                        Column Name is required.
+                      </div>
+                      <div
+                        class="error"
+                        *ngIf="columnNameInput?.errors?.['pattern']"
+                      >
+                        Column Name should start with an uppercase letter and
+                        contain only letters and numbers.
+                      </div>
+                    </div>
+                  </td>
+                  <td class="center-content">
+                    <select
+                      [(ngModel)]="row.datatype"
+                      name="datatype{{ i }}"
+                      required
+                      (change)="onDataTypeChange(row)"
+                    >
+                      <option value="string">String</option>
+                      <option value="int">Number</option>
+                      <option value="boolean">Boolean</option>
+                      <option value="char">Char</option>
+                      <option value="date">Date</option>
+                      <option value="bytea">ByteA</option>
+                      <option value="listofvalue">List of Value</option>
+                    </select>
+                  </td>
+                  <td class="center-content " *ngIf="row.datatype === 'boolean'">
+                    <input class="booleanDW" disabled />
+                  </td>
+                  <td class="center-content" *ngIf="row.datatype === 'char'">
+                    <input class="booleanDW" disabled />
+                  </td>
+                  <td class="center-content" *ngIf="row.datatype === 'bytea'">
+                    <input class="booleanDW" disabled />
+                  </td>
+                  <td class="center-content" *ngIf="row.datatype === 'timestamp'">
+                    <input class="booleanDW" disabled />
+                  </td>
+                  <td
+                    class="center-content"
+                    *ngIf="row.datatype === 'listofvalue'"
+                  >
+                    <input disabled />
+                  </td>
+                  <!-- String MinLenght and MaxLength input -->
+                  <td class="center-content" *ngIf="row.datatype === 'string'">
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        [(ngModel)]="row.minLength"
+                        (input)="onInput($event)"
+                        (keydown)="validateNumeric($event)"
+                        placeholder="MinLength"
+                        id="minLength{{ i }}"
+                        (change)="onPrimaryKeyChange($event, row)"
+                        name="minLength{{ i }}"
+                        (change)="validateMinMax(row)"
+                      />
+                    </div>
+                    <div style="margin-block-start: 10px"></div>
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        [(ngModel)]="row.maxLength"
+                        (input)="onInput($event)"
+                        (keydown)="validateNumeric($event)"
+                        placeholder="MaxLength"
+                        id="maxLength{{ i }}"
+                        (change)="onPrimaryKeyChange($event, row)"
+                        name="maxLength{{ i }}"
+                        (change)="validateMinMax(row)"
+                      />
+                    </div>
+                  </td>
+                  <!-- Number MinValue and MaxValue input -->
+                  <td class="center-content" *ngIf="row.datatype === 'int'">
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        [(ngModel)]="row.minRange"
+                        id="minRange{{ i }}"
+                        placeholder="minRange"
+                        (keydown)="validateNumeric($event)"
+                        (input)="onInput($event)"
+                        (change)="validateMinMaxRange(row)"
+                        name="minValue{{ i }}"
+                      />
+                    </div>
+                    <div style="margin-block-start: 10px"></div>
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        [(ngModel)]="row.maxRange"
+                        id="maxRange{{ i }}"
+                        placeholder="maxRange"
+                        (keydown)="validateNumeric($event)"
+                        (input)="onInput($event)"
+                        (change)="validateMinMaxRange(row)"
+                        name="maxValue{{ i }}"
+                      />
+                    </div>
+                  </td>
+                  <!-- Number MinValue and MaxValue input -->
+                  <td class="center-content" *ngIf="row.datatype === 'date'">
+                    <!-- Inside the date input fields -->
+                    <input class="booleanDW"
+                      *ngIf="row.datatype === 'date'"
+                      type="date"
+                      [(ngModel)]="row.dateMinValue"
+                      id="minValue{{ i }}"
+                      name="minValue{{ i }}"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      (input)="
+                        onMinDateChange($event, row); validateDateRange(row, i)
+                      "
+                    />
+                    <div style="margin-block-start: 10px"></div>
+                    <!-- ... (similarly for the max date) -->
+                    <input
+                    class="booleanDW"
+                      *ngIf="row.datatype === 'date'"
+                      type="date"
+                      [(ngModel)]="row.dateMaxValue"
+                      id="maxValue{{ i }}"
+                      name="maxValue{{ i }}"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      (input)="
+                        onMaxDateChange($event, row); validateDateRange(row, i)
+                      "
+                    />
+                  </td>
+                  <td class="center-content">
+                    <!-- Toggle Switch for Not Null -->
+                    <label class="toggle-switch">
+                      <input
+                        type="checkbox"
+                        [(ngModel)]="row.isNullable"
+                        name="isNullable{{ i }}"
+                      />
+                      <span class="slider"></span>
+                    </label>
+                  </td>
+                  <td class="center-content">
+                    <label class="toggle-switch">
+                      <input
+                        type="checkbox"
+                        [(ngModel)]="row.ColumnPrimaryKey"
+                        name="ColumnPrimaryKey{{ i }}"
+                        [disabled]="!isStringOrNumber(row.datatype)"
+                        (change)="onPrimaryKeyChange($event, row)"
+                      />
+                      <span class="slider"></span>
+                    </label>
+                  </td>
+                  <td class="center-content">
+                    <ng-container
+                      *ngIf="
+                        row.datatype !== 'boolean' &&
+                          row.datatype !== 'date' &&
+                          row.datatype !== 'listofvalue' &&
+                          row.datatype !== 'timestamp';
+                        else booleanOrDate
+                      "
+                    >
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          [(ngModel)]="row.defaultValue"
+                          placeholder="Default Value"
+                          name="defaultValue{{ i }}"
+                          [disabled]="row.ColumnPrimaryKey"
+                          (input)="onDefaultValueInputChange($event, row)"
+                        />
+                      </div>
+                    </ng-container>
+                    <br />
+                    <ng-template #booleanOrDate>
+                      <!-- Dropdown for 'boolean' or calendar input for 'date' and 'timestamp' -->
+                      <select
+                        *ngIf="row.datatype === 'boolean'"
+                        [(ngModel)]="row.defaultValue"
+                        name="defaultValue{{ i }}"
+                        [disabled]="row.ColumnPrimaryKey"
+                        class="booleanDW"
+                      >
+                        <option value="false">UnSelect</option>
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                      </select>
+                      <div class="input-group">
+                        <input
+                          *ngIf="row.datatype === 'date'"
+                          type="date"
+                          [(ngModel)]="row.defaultValue"
+                          id="defaultValue{{ i }}"
+                          name="defaultValue{{ i }}"
+                          [min]="minDate"
+                          [max]="maxDate"
+                          (change)="
+                            onDefaultValueInputChange($event, row);
+                            validateDateRange(row, i)
+                          "
+                        />
+                      </div>
+                      <!-- Add this after the date input fields -->
+                      <div *ngIf="dateErrorMap.get(i)" class="error">
+                        Default Date must be within the selected Min and Max
+                        Dates.
+                      </div>
+  
+                      <div style="margin-block-start: 10px"></div>
+                      <div
+                        *ngIf="row.datatype === 'boolean'"
+                        class="additional-inputs"
+                      >
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            placeholder="True"
+                            [(ngModel)]="row.True"
+                            id="input1"
+                            name="True{{ i }}"
+                            [disabled]="row.ColumnPrimaryKey"
+                          />
+                        </div>
+                        <div style="margin-block-start: 10px"></div>
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            placeholder="False"
+                            [(ngModel)]="row.False"
+                            id="input2"
+                            name="False{{ i }}"
+                            [disabled]="row.ColumnPrimaryKey"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="row.datatype === 'listofvalue'"
+                        class="additional-inputs"
+                      >
+                        <label>Exist EntityValue</label>
+                        <input
+                          [(ngModel)]="EntityentityName"
+                          name="EntityentityName"
+                          type="text"
+                          placeholder="Enter Entity Name"
+                          readonly
+                        />
+  
+                        <label>Key</label>
+                        <input
+                          [(ngModel)]="entityKeyColumnName"
+                          name="entityKeyColumnName"
+                          type="text"
+                          placeholder="Enter Key"
+                          readonly
+                        />
+  
+                        <label>Value</label>
+                        <input
+                          [(ngModel)]="entityValueColumnName"
+                          name="entityValueColumnName"
+                          type="text"
+                          placeholder="Enter Value"
+                          readonly
+                        />
+                      </div>
+                      <div style="margin-block-start: 10px"></div>
+                      <div
+                        *ngIf="row.datatype === 'listofvalue'"
+                        class="additional-inputs"
+                      >
+                        <label>New EntityValue</label>
+                        <select
+                          [(ngModel)]="selectedEntity"
+                          (change)="onListValueSelected(selectedEntity, i)"
+                          [name]="'selectedEntity' + i"
+                          [disabled]="row.ColumnPrimaryKey"
+                        >
+                          <option>{{ SelectedEntityName }}</option>
+                          <option value="">Select an entity</option>
+                          <option
+                            *ngFor="let value of listOfValues"
+                            [value]="value.entityName"
+                          >
+                            {{ value.entityName }}
+                          </option>
+                        </select>
+                        <label
+                          style="position: relative; inset-block-start: -28px"
+                          >{{ SelectedEntityName }}</label
+                        >
+                        <div
+                          *ngIf="entityColumnNames1.length > 0"
+                          class="additional-inputs1"
+                        >
+                          <label>Key</label>
+                          <input
+                            type="text"
+                            name="selectedEntity1"
+                            value="{{ entityColumnNames1[0] }}"
+                            readonly
+                          />
+                        </div>
+                        <div
+                          *ngIf="entityColumnNames2.length > 0"
+                          class="additional-inputs2"
+                        >
+                          <label>Value</label>
+                          <select
+                            name="selectedEntity2"
+                            [(ngModel)]="selectedEntity2Index"
+                            (change)="
+                              selectedEntity2Index !== null &&
+                                updateSelectedId(selectedEntity2Index)
+                            "
+                          >
+                            <option value="-1">Select a column 2</option>
+                            <option
+                              *ngFor="
+                                let columnName of entityColumnNames2;
+                                let i = index
+                              "
+                              [value]="i"
+                            >
+                              {{ columnName }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </td>
+                  <td class="center-content">
+                    <input
+                      type="text"
+                      [(ngModel)]="row.description"
+                      placeholder="Description"
+                      name="description{{ i }}"
+                    />
+                  </td>
+                  <td class="center-content">
+                    <button class="delete-button" (click)="deleteRow(i, $event)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+          <div class="header">
+            <div class="buttons">
+              <button
+                class="sub-button"
+                [disabled]="entityForm.invalid"
+                (click)="submit()"
+              >
+                Submit
+              </button>
+            </div>
+            <div class="buttons">
+              <button class="add-button" (click)="addNewRow()">
+                <i style="margin-inline-end: 10px" class="fa-solid fa-plus"></i
+                >Add Row
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
