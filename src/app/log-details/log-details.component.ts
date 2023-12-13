@@ -101,6 +101,16 @@ export class LogDetailsComponent {
     localStorage.removeItem('logDetailsData');
   }
 
+  logout() {
+    // Your logout logic
+    console.log('Logging out...');
+  }
+
+  switchView() {
+    // Implement switch view logic
+    console.log('Switching view...');
+  }
+
   fetchColumnsData(entityName: string): void {
     this.columnsService.getColumnsForEntitys(entityName).subscribe(
       (data: any) => {

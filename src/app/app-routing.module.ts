@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'entitylist', component: EntityListComponent },
   { path: 'entity/:entityName', component: EntityDetailsComponent },
-  {path:'Log-details',component:LogDetailsComponent},
+  {path:'log_details',component:LogDetailsComponent},
   {path:'createentity',component:CreateEntityComponent},
   {path:'Edit-Entity/:entityName',component:EditEntityComponent}
 ];
