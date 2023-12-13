@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EntitylistService } from '../services/entitylist.service';
+import { AuthStorageService } from '../services/authstorage.service';
+import { Router } from '@angular/router';
+import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-entity-list',
@@ -11,19 +15,17 @@ export class EntityListComponent implements OnInit{
   originalEntityList: any[] = [];
   entityList: any[] = [];
  
-  constructor(private entitylistService: EntitylistService) {}
+  constructor(private entitylistService: EntitylistService , private authStorageService : AuthStorageService , private router : Router , private dialog : MatDialog) {}
  
   ngOnInit() {
     this.loadEntityList();
   }
+
   loadEntityList() {
-    console.log('test');
     this.entitylistService.getEntityList().subscribe(
       (data: any) => {
-        console.log('API Response:', data);
         this.originalEntityList = data.result || [];
         this.entityList = [...this.originalEntityList];
-        console.log('Entity List:', this.entityList); // Add this line for debugging
       },
       error => {
         console.error('Error fetching entity list:', error);
@@ -32,13 +34,29 @@ export class EntityListComponent implements OnInit{
     );
   }
   logout() {
+    this.authStorageService.clearAuthInfo();
+    this.router.navigate(['']);
+    window.location.reload();
     // Your logout logic
-    console.log('Logging out...');
   }
 
   switchView() {
-    // Implement switch view logic
-    console.log('Switching view...');
+    this.router.navigate(['']);
+
+    const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
+      width: '400px',
+      disableClose:true
+    });
+  
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      if (result) {
+        // Handle the selected database
+        console.log('Selected Database:', result);
+      } else {
+        // Handle modal close event
+        console.log('Modal closed');
+      }
+    });
   }
 
   onSearch(searchTerm: string) {
@@ -46,5 +64,13 @@ export class EntityListComponent implements OnInit{
     this.entityList = this.originalEntityList.filter(entity =>
       entity.toLowerCase().includes(searchTerm.toLowerCase())
     );
+  }
+
+  CreateEntity(){
+    this.router.navigate(['createentity'])
+  }
+
+  ViewEntity(entityName : string){
+    this.router.navigate(['entity/:${entityName}'])
   }
 }

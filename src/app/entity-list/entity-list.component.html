@@ -12,11 +12,11 @@
     <span>Entity List</span>
   </div>
   <div class="right-header">
-    <button class="createbutton" mat-raised-button color="primary">Create Entity</button>
+    <button class="createbutton" mat-raised-button color="primary" (click)="CreateEntity()">Create Entity</button>
   </div>
 </div>
 
-<div class="entity-list-container">
+<div class="entity-list-container" [ngClass]="{'scrollable': entityList.length > 12}">
   <!-- Search box -->
   <div class="search-box">
     <input #searchInput type="text" placeholder="Search by Entity Name" (input)="onSearch(searchInput.value)" />

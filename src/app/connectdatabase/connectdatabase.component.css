@@ -99,7 +99,7 @@ button {
   top: 20%;
     position: absolute;
     left: 27%;
-    line-height: 13px;
+    line-height: 0px;
     display: flex;
     flex-direction: column;
     font-size: medium;

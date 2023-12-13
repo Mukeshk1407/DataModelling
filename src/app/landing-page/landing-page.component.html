@@ -24,25 +24,20 @@
         </div>
     </div>
 
-    <ng-container *ngIf="(loggedIn$ | async) as loggedIn; else showLoginButton">
-        <div class="connect-database" *ngIf="loggedIn" (click)="dbPopup()">
-            <button>
-                <span>Connect Database</span>&nbsp;<i class="fa-solid fa-plug"></i>
-            </button>
-        </div>
-        <div class="login-button" *ngIf="loggedIn" (click)="logout()">
-            <button>
-                <span>Logout</span>
-                <i class="fa fa-sign-out"></i>
-            </button>
-        </div>
-    </ng-container>
-    <ng-template #showLoginButton>
+    <div *ngIf="loggedIn$; else showLoginButton">
         <div class="connect-database" (click)="dbPopup()">
-            <button>
-                <span>Connect Database</span>&nbsp;<i class="fa-solid fa-plug"></i>
-            </button>
+          <button>
+            <span>Connect Database</span>&nbsp;<i class="fa-solid fa-plug"></i>
+          </button>
         </div>
+        <div class="login-button" (click)="logout()">
+          <button>
+            <span>Logout</span>
+            <i class="fa fa-sign-out"></i>
+          </button>
+        </div>
+      </div>
+    <ng-template #showLoginButton>
         <div class="login-button" (click)="navigateToLogin()">
             <button>
                 <span>Login</span>
