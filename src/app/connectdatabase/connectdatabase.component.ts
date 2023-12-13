@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-connectdatabase',
@@ -8,7 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ConnectdatabaseComponent {
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog,
+    private dbService: DatabaseService) {
   }
   boxes = [
     { content: 'Dynamo', imageSrc: 'assets/images/dynamo.png', selected: false },
@@ -48,25 +50,45 @@ export class ConnectdatabaseComponent {
   }
 
   hostname: string = '';
+  databaseName: string = '';
   username: string = '';
   password: string = '';
 
   connect() {
     // Check if all required fields are filled
-    if (this.hostname && this.username && this.password) {
+    if (this.hostname && this.username && this.password &&this. databaseName && this.selectedContent) {
       // Implement the logic to connect to the database using the entered credentials
       console.log('Connecting to the database...');
+      console.log('Database Type:', this.selectedContent);
       console.log('Hostname:', this.hostname);
+      console.log('DatabaseName:', this. databaseName);
       console.log('Username:', this.username);
       console.log('Password:', this.password);
   
-      // Close the popup
-      const dialogRef = this.dialog.closeAll();
+      // Use the DatabaseService to connect to the backend
+      //this.selectedContent,
+      this.dbService.getTableDetails( 
+        this.hostname,this. databaseName, this.username, this.password).subscribe(
+        (response) => {
+          console.log('Table details:', response);
+        //  this.snackBar.open('Connection successful!', 'Close', { duration: 3000 });
+          // Handle the response as needed
+          // Close the popup
+          const dialogRef = this.dialog.closeAll();
+        },
+        (error) => {
+          console.error('Error getting table details:', error);
+      //    this.snackBar.open('Connection failed. Please check your credentials.', 'Close', { duration: 5000 });
+          // Handle the error as needed
+        }
+      );
+  
     } else {
       // Display an error message or perform any other action for incomplete fields
       console.log('Please fill in all fields.');
     }
   }
+
 
   closePopup() {
     // Implement logic to close the popup when the close icon is clicked

@@ -22,6 +22,14 @@
         </div>
 
         <div class="input-group">
+            <label for="databasename">DataBase Name</label>
+            <input style="border-radius: 15px;" placeholder="Enter databasename" type="text" id="dbname" [(ngModel)]=" databaseName" name="hostname" required #dbnameInput="ngModel" [ngClass]="{ 'error': dbnameInput.invalid && (dbnameInput.dirty || dbnameInput.touched) }" />
+            <div *ngIf="dbnameInput.invalid && (dbnameInput.dirty || dbnameInput.touched)" class="error-message">
+                DatabaseName is required.
+            </div>
+        </div>
+
+        <div class="input-group">
             <label for="username">Username</label>
             <input style="border-radius: 15px;" placeholder="Enter Username" type="text" id="username" [(ngModel)]="username" name="username" required #usernameInput="ngModel" [ngClass]="{ 'error': usernameInput.invalid && (usernameInput.dirty || usernameInput.touched) }" />
             <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)" class="error-message">

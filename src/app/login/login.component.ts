@@ -79,6 +79,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       console.log('Form is invalid. Please check your inputs.');
       return;
     }
+  
     this.authService.login(this.f['username'].value, this.f['password'].value).subscribe(
       (response) => {
         const token = response;
@@ -92,14 +93,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         );
       },
       (error) => {
-        // On login failure:
-        // this.store.dispatch(authActions.loginFailure({ error: 'your-error' }));
-        console.error('Login failed:', error);
+        // Handle login failure more gracefully
+        this.store.dispatch(authActions.loginFailure({ error: 'Authentication failed' }));
       }
     );
+  
     console.log('Form submitted. Username:', this.f['username'].value, 'Password:', this.f['password'].value);
   }
-
+  
 
   emailValidator(control: AbstractControl): ValidationErrors | null {
     const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
