@@ -2,6 +2,7 @@ import { Component,HostListener } from '@angular/core';
 import { TableColumnDTO } from '../models/TableColumnDTO.model';
 import { SharedDataService } from '../services/log-details.service';
 import { ColumnsService } from '../services/create-entity.service';
+import { Router } from '@angular/router';
 declare var $: any; // Add this line to declare the jQuery variable
 
 
@@ -18,7 +19,7 @@ export class LogDetailsComponent {
   entityName: string = ''; // Initialize entityName variable
 
   
-  constructor(private sharedDataService: SharedDataService,private columnsService: ColumnsService) { }
+  constructor(private router: Router,private sharedDataService: SharedDataService,private columnsService: ColumnsService) { }
 
   ngOnInit(): void {
     // Subscribe to the shared service to get log details data
@@ -58,6 +59,7 @@ export class LogDetailsComponent {
     }
 
   }
+
   saveDataToLocalStorage(): void {
     const dataToSave = {
       logParent: this.logParent,
@@ -77,6 +79,14 @@ export class LogDetailsComponent {
     } else {
       console.error('parentId is undefined. Unable to generate Excel template.');
     }
+  }
+  
+
+  BacktoView() {
+    localStorage.removeItem('logDetailsData');
+    this.router.navigate(['']);
+    // Dispatch the logout action
+    // this.store.dispatch(authActions.logout());
   }
 
   exportData(): void {

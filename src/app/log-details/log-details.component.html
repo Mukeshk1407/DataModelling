@@ -5,7 +5,7 @@
   </div>
 </div>
 <div class="content">
-  <div class="left-header">
+  <div class="left-header" (click)="BacktoView()">
     <i class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl" style="color: white;font-size: 33px;font-weight: bold;"></i>
   </div>
   <div class="middle-header">
@@ -19,7 +19,7 @@
         <div class="col-12">
           <div class="row">
             <div class="col-4">
-              <div class="card" style="inline-size: 9rem; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1)">
+              <div class="card" >
                 <div class="card-body">
                   <div class="row">
                     <div class="col-4">
@@ -28,13 +28,15 @@
                     <div class="col-8">
                       <h5 class="card-title" style="font-weight: bold; font-size :15px; ">Total</h5>
                     </div>
-                    <h6 style="font-weight: bold;font-size :15px;text-align: center;">{{ logParent.recordCount }}</h6>
+                    <h6 style="font-weight: bold; font-size: 15px; text-align: center;">
+                      {{ logParent?.recordCount || 0 }}
+                    </h6>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-4">
-              <div class="card" style="inline-size: 9rem; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1)">
+              <div class="card">
                 <div class="card-body"> 
                   <div class="row">
                     <div class="col-4">
@@ -43,13 +45,13 @@
                     <div class="col-8">
                       <h5 class="card-title" style="font-weight: bold;font-size :15px; ">Success</h5>
                     </div>
-                    <h6 style="font-weight: bold;text-align: center;font-size :15px; ">{{ logParent.passCount }}</h6>
+                    <h6 style="font-weight: bold;text-align: center;font-size :15px; ">{{ logParent?.passCount || 0 }}</h6>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-4">
-              <div class="card" style="inline-size: 9rem; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1)">
+              <div class="card">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-4">
@@ -58,7 +60,7 @@
                     <div class="col-8">
                       <h5 class="card-title"style="font-weight: bold;font-size :15px; ">Error</h5>
                     </div>
-                    <h6 style="font-weight: bold;text-align: center;font-size :15px; ">{{0  || logParent.failCount }}</h6>
+                    <h6 style="font-weight: bold;text-align: center;font-size :15px; ">{{logParent?.failCount || 0}}</h6>
                   </div>  
                 </div>
               </div>
@@ -70,51 +72,45 @@
   </div>
   <br>
   <div>
-    <div class="row">
-      <div class="col-12">
+    <div *ngIf="logChildren !=  null">
+      <div>
         <div class="row">
-          <div class="col-4"></div>
-          <div class="col-4"></div>
-          <div class="col-3">
-            <div class="export-align">
-              <button class="export-button" mat-raised-button color="primary" (click)="onButtonClick()" [disabled]="!logParent.failCount || logParent.failCount === 0"><img src="../../assets/images/export.png" class="export-image" >  Export</button>
+          <div class="col-12">
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4"></div>
+              <div class="col-3">
+                <div class="export-align">
+                  <button class="export-button" mat-raised-button color="primary" (click)="onButtonClick()" [disabled]="!logParent.failCount || logParent.failCount === 0"><img src="../../assets/images/export.png" class="export-image" >  Export</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Username</th>
+              <th>Error Message</th>
+              <th>Error Rows</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let child of logChildren;let i = index">
+              <td scope="row">{{ i + 1 }}</td>
+              <td>admin</td>
+              <td>{{ child.errorMessage }}</td>
+              <td>{{ child.errorRowNumber}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
-  </div>
-  <br>
-  <div>
-    <div *ngIf="logChildren && logChildren.length > 0">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>S.No</th>
-            <th>Username</th>
-            <th>Error Message</th>
-            <th>Error Rows</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let child of logChildren;let i = index">
-            <td scope="row">{{ i + 1 }}</td>
-            <td>admin</td>
-            <td>{{ child.errorMessage }}</td>
-            <td>{{ child.errorRowNumber}}</td>
-          </tr>
-        </tbody>
-        <tbody>
-          <tr *ngFor="let child of logChildren;let i = index">
-            <td scope="row">{{ i + 1 }}</td>
-            <td>admin</td>
-            <td>{{ child.errorMessage }}</td>
-            <td>{{ child.errorRowNumber}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div *ngIf="!(logChildren && logChildren.length > 0)">
+    <div  *ngIf="logChildren == null">
       <div class="container2">
         <div class="outbox">
           <div class="nofound">
@@ -129,91 +125,6 @@
   </div>
 </div>
 
-
-
-
-<!-- <header>
-    <div class="container">
-      <div class="row">
-        <div class="col-3">
-          <div
-            class="card"
-            style="inline-size: 15rem; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1)"
-          >
-            <div class="card-body">
-              <h5 class="card-title">EntityName</h5>
-              <h6>{{  entityName }}</h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div
-            class="card"
-            style="inline-size: 15rem; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1)"
-          >
-            <div class="card-body">
-              <h5 class="card-title">TotalCounts</h5>
-              <h6>{{ logParent.recordCount }}</h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div
-            class="card"
-            style="inline-size: 15rem; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1)"
-          >
-            <div class="card-body"> 
-              <h5 class="card-title">SuccessCounts</h5>
-              <h6>{{ logParent.passCount }}</h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div
-            class="card"
-            style="inline-size: 15rem; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1)"
-          >
-            <div class="card-body">
-              <h5 class="card-title">ErrorCounts</h5>
-              <h6>{{0  || logParent.failCount }}</h6>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-  <body style="margin-block-start: -20px;">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <div style="text-align:start;margin-block-start:15px;">
-            <button class="btn btn-info" routerLink="/entity-list" >Back</button>
-          </div>
-          <div style="text-align: end; margin-block-start: 15px;">
-            <button class="btn btn-info" (click)="onButtonClick()" [disabled]="!logParent.failCount || logParent.failCount === 0">Export</button>
-        </div>
-          <br />
-          <table class="table table-striped table-hover" style="margin-block-start: -5px;">
-            <thead>
-              <tr>
-                <th scope="col">S.No</th>
-                <th scope="col">User Name</th>
-                <th scope="col">ErrorMessage</th>
-                <th scope="col">ErrorRowNumber</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let child of logChildren;let i = index">
-                <th scope="row">{{ i + 1 }}</th>
-                <td>admin</td>
-                <td>{{ child.errorMessage }}</td>
-                <td>{{ child.errorRowNumber}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div> -->
   <!-- Add this at the end of your log-details.component.html file -->
   <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
