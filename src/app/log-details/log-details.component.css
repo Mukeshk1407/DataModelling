@@ -191,6 +191,7 @@ th {
   .card {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin-block-end: 20px;
+    inline-size: 9rem;
   }
   
   .btn-info {
