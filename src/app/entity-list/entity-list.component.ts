@@ -15,7 +15,8 @@ export class EntityListComponent implements OnInit{
   originalEntityList: any[] = [];
   entityList: any[] = [];
  
-  constructor(private entitylistService: EntitylistService , private authStorageService : AuthStorageService , private router : Router , private dialog : MatDialog) {}
+  constructor(private entitylistService: EntitylistService ,
+     private authStorageService : AuthStorageService , private router : Router , private dialog : MatDialog) {}
  
   ngOnInit() {
     this.loadEntityList();
@@ -62,7 +63,7 @@ export class EntityListComponent implements OnInit{
   onSearch(searchTerm: string) {
     // Filter entity names based on the search term
     this.entityList = this.originalEntityList.filter(entity =>
-      entity.toLowerCase().includes(searchTerm.toLowerCase())
+      entity.entityName.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }
 
@@ -72,5 +73,15 @@ export class EntityListComponent implements OnInit{
 
   ViewEntity(entityName : string){
     this.router.navigate(['entity/:${entityName}'])
+  }
+
+  addValidation(entityName: string) {
+    // Navigate to the validation route using the entityName
+    this.router.navigate([`Edit-Entity/${entityName}`]);
+  }
+  Viewattribute(entityName: string){
+      // Navigate to the view route using the entityName
+      this.router.navigate([`entity/${entityName}`]);
+  
   }
 }

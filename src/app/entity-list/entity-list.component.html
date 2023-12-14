@@ -26,12 +26,13 @@
   <!-- Line below search box -->
   <div class="line"></div>
 
-  <!-- Display entity names here -->
-  <div *ngFor="let entity of entityList" class="entity-box">
-    {{ entity.entityName }}
-    <div class="icons-container1">
-      <i matTooltip="Add Validation" class="fa-solid fa-plus"></i>
-      <i matTooltip="View Attributes" class="fa-solid fa-eye"></i>
+  <div *ngFor="let entity of entityList" class="entity-wrapper">
+    <div class="entity-box">
+      {{ entity.entityName }}
+      <div class="icons-container1">
+        <i matTooltip="Add Validation" class="fa-solid fa-plus" (click)="addValidation(entity.entityName)"></i>
+        <i matTooltip="View Attributes" class="fa-solid fa-eye" (click)="Viewattribute(entity.entityName)"></i>
+      </div>
     </div>
   </div>
 </div>

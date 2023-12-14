@@ -114,22 +114,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
           this.toastrService.showSuccess('LogIn successfully');
           this.router.navigate(['']);
-
-
-          const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
-            width: '400px',
-            disableClose:true
-          });
-        
-          dialogRef.afterClosed().subscribe((result: string | undefined) => {
-            if (result) {
-              // Handle the selected database
-              console.log('Selected Database:', result);
-            } else {
-              // Handle modal close event
-              console.log('Modal closed');
-            }
-          });
         }
         else {
           this.store.dispatch(authActions.loginFailure({ error: 'Authentication failed' }));

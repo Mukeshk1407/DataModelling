@@ -19,7 +19,7 @@ export class ConnectdatabaseComponent {
   boxes = [
     { content: 'Dynamo', imageSrc: 'assets/images/dynamo.png', selected: false },
     { content: 'PostgreSQL', imageSrc: 'assets/images/postgre.png', selected: false },
-    { content: 'MY SQL', imageSrc: 'assets/images/sql.png', selected: false },
+    { content: 'MY SQL', imageSrc: 'assets/images/Db1-mysql.png', selected: false },
     { content: 'MS SQL', imageSrc: 'assets/images/sql.png', selected: false },
     // ... other items
   ];  
@@ -78,7 +78,7 @@ export class ConnectdatabaseComponent {
           }
         },
         (error) => {
-          this.toastrService.showError(error.errorMessages);
+          this.toastrService.showError("Invalid Credentials");
         }
       );
   
