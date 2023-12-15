@@ -3,6 +3,7 @@ import { TableColumnDTO } from '../models/TableColumnDTO.model';
 import { SharedDataService } from '../services/log-details.service';
 import { ColumnsService } from '../services/create-entity.service';
 import { Router } from '@angular/router';
+import { AuthStorageService } from '../services/authstorage.service';
 declare var $: any; // Add this line to declare the jQuery variable
 
 
@@ -19,7 +20,10 @@ export class LogDetailsComponent {
   entityName: string = ''; // Initialize entityName variable
 
   
-  constructor(private router: Router,private sharedDataService: SharedDataService,private columnsService: ColumnsService) { }
+  constructor(private router: Router,
+    private sharedDataService: SharedDataService,
+    private columnsService: ColumnsService,
+    private authStorageService: AuthStorageService) { }
 
   ngOnInit(): void {
     // Subscribe to the shared service to get log details data
@@ -82,9 +86,9 @@ export class LogDetailsComponent {
   }
   
 
-  BacktoView() {
+  BacktoView(entityName : string) {
     localStorage.removeItem('logDetailsData');
-    this.router.navigate(['']);
+    this.router.navigate(['entity/:entityName']);
     // Dispatch the logout action
     // this.store.dispatch(authActions.logout());
   }
@@ -99,6 +103,12 @@ export class LogDetailsComponent {
     } else {
       console.error('parentId is undefined. Unable to generate Excel template.');
     }
+    
+  }
+  exportbtn():void{
+    console.log("first")
+   this.exportData();
+   this.exportData();
   }
 
   closeModal(): void {
@@ -112,8 +122,11 @@ export class LogDetailsComponent {
   }
 
   logout() {
-    // Your logout logic
-    console.log('Logging out...');
+    localStorage.removeItem('logDetailsData');
+    this.authStorageService.clearAuthInfo();
+      this.router.navigate(['']);
+     
+    
   }
 
   switchView() {

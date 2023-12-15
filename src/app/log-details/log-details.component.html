@@ -5,7 +5,7 @@
   </div>
 </div>
 <div class="content">
-  <div class="left-header" (click)="BacktoView()">
+  <div class="left-header" (click)="BacktoView(entityName)">
     <i class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl" style="color: white;font-size: 33px;font-weight: bold;"></i>
   </div>
   <div class="middle-header">
@@ -81,7 +81,7 @@
               <div class="col-4"></div>
               <div class="col-3">
                 <div class="export-align">
-                  <button class="export-button" mat-raised-button color="primary" (click)="onButtonClick()" [disabled]="!logParent.failCount || logParent.failCount === 0"><img src="../../assets/images/export.png" class="export-image" >  Export</button>
+                  <button class="export-button" mat-raised-button color="primary" (click)="exportbtn()" [disabled]="!logParent.failCount || logParent.failCount === 0"><img src="../../assets/images/export.png" class="export-image" >Export</button>
                 </div>
               </div>
             </div>
