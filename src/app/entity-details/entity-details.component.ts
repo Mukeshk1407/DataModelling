@@ -144,11 +144,7 @@ export class EntityDetailsComponent implements OnInit {
     const tableName = this.entityName; // Replace with the actual table name
     const formData = new FormData();
     formData.append('file', file);
-
-    
      // Create an instance of LogDetailsDTO and populate it
-    
-  
     this.columnsService.uploadTemplate(formData, tableName).subscribe(
       (res: any) => {
         
@@ -159,12 +155,12 @@ export class EntityDetailsComponent implements OnInit {
         this.sharedDataService.setLogDetails(logDetails);
           this.toastrService.showSuccess(response.errorMessage[0]);
           // Navigate to LogDetailsComponent
-          this.router.navigate(['/Log-details']);
+          this.router.navigate(['/log_details']);
         } else {
           const logDetails: LogDetailsDTO = JSON.parse(res);
           this.sharedDataService.setLogDetails(logDetails);
           this.toastrService.showError(response.errorMessage[0]);
-          this.router.navigate(['/Log-details']);
+          this.router.navigate(['/log_details']);
         }
       },
       (error: any) => {
