@@ -42,6 +42,8 @@ export class EntityListComponent implements OnInit{
   }
 
   switchView() {
+     // Clear localStorage data
+  localStorage.removeItem('databaseDetails');
     this.router.navigate(['']);
 
     const dialogRef = this.dialog.open(ConnectdatabaseComponent, {

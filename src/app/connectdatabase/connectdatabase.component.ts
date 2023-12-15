@@ -61,7 +61,15 @@ export class ConnectdatabaseComponent {
   connect() {
     // Check if all required fields are filled
     if (this.hostname && this.username && this.password &&this. databaseName && this.selectedContent) {
-  
+       // Store the entered details in localStorage
+    const databaseDetails = {
+      hostname: this.hostname,
+      databaseName: this.databaseName,
+      username: this.username,
+      password: this.password,
+      selectedContent: this.selectedContent,
+    };
+    localStorage.setItem('databaseDetails', JSON.stringify(databaseDetails));
       // Use the DatabaseService to connect to the backend
       //this.selectedContent,
       this.dbService.getTableDetails( 

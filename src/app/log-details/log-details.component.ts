@@ -39,7 +39,7 @@ export class LogDetailsComponent {
     });
 
     const savedData = localStorage.getItem('logDetailsData');
-    console.log("saveddata",savedData)
+
     if (savedData) {
       // If data exists in localStorage, parse and set it
       const parsedData = JSON.parse(savedData);
@@ -176,7 +176,7 @@ export class LogDetailsComponent {
     if (this.columns.length === 0) {
       return; 
     }
-    this.columnsService.generateExcelFiles(parentId, this.columns).subscribe(
+    this.columnsService.generateExcelFiles(parentId,this.columns).subscribe(
       (data: Blob) => {
         const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         const url = window.URL.createObjectURL(blob);

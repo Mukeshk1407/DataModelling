@@ -19,6 +19,12 @@ export class EntityDetailsComponent implements OnInit {
   columns: TableColumnDTO[] = [];
    defaultValueForEntityId: number = 0; // Replace 0 with your desired default integer value
 
+     // Add these properties to store additional parameters
+  hostname: string = '';
+  dbname: string = '';
+  username: string = '';
+  password: string = '';
+
   constructor(private route: ActivatedRoute, private columnsService: ColumnsService, private router: Router, private toastrService: ToastrService,  private sharedDataService: SharedDataService   ) {}
 
   ngOnInit(): void {
@@ -144,6 +150,7 @@ export class EntityDetailsComponent implements OnInit {
     const tableName = this.entityName; // Replace with the actual table name
     const formData = new FormData();
     formData.append('file', file);
+   
      // Create an instance of LogDetailsDTO and populate it
     this.columnsService.uploadTemplate(formData, tableName).subscribe(
       (res: any) => {
@@ -186,6 +193,11 @@ export class EntityDetailsComponent implements OnInit {
   generateExcelTemplate() {
     // Log the content of this.columns for debugging
     console.log('Columns data before sending to the backend:', this.columns); 
+    this.hostname = localStorage.getItem('hostname') || '';
+    this.dbname = localStorage.getItem('dbname') || '';
+    this.username = localStorage.getItem('username') || '';
+    this.password = localStorage.getItem('password') || '';
+    console.log("alldbdetails",this.hostname,this.dbname,this.username,this.password)
     if (this.columns.length === 0) {
       return; // Do nothing if there are no columns
     }
