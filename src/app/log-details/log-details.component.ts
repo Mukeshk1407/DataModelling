@@ -4,6 +4,8 @@ import { SharedDataService } from '../services/log-details.service';
 import { ColumnsService } from '../services/create-entity.service';
 import { Router } from '@angular/router';
 import { AuthStorageService } from '../services/authstorage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 declare var $: any; // Add this line to declare the jQuery variable
 
 
@@ -23,7 +25,7 @@ export class LogDetailsComponent {
   constructor(private router: Router,
     private sharedDataService: SharedDataService,
     private columnsService: ColumnsService,
-    private authStorageService: AuthStorageService) { }
+    private authStorageService: AuthStorageService, private dialog:MatDialog) { }
 
   ngOnInit(): void {
     // Subscribe to the shared service to get log details data
@@ -86,13 +88,39 @@ export class LogDetailsComponent {
   }
   
 
+  switchView() {
+    // Clear localStorage data
+ localStorage.removeItem('databaseDetails');
+   this.router.navigate(['']);
+
+   const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
+     width: '400px',
+     disableClose:true
+   });
+ 
+   dialogRef.afterClosed().subscribe((result: string | undefined) => {
+     if (result) {
+       // Handle the selected database
+       console.log('Selected Database:', result);
+     } else {
+       // Handle modal close event
+       console.log('Modal closed');
+     }
+   });
+ }
+
   BacktoView(entityName : string) {
+    this.router.navigate([`entity/${entityName}`]);
     localStorage.removeItem('logDetailsData');
-    this.router.navigate(['entity/:entityName']);
     // Dispatch the logout action
     // this.store.dispatch(authActions.logout());
   }
 
+  truncateErrorRowNumber(errorRowNumber: number): string {
+    const truncatedNumber = errorRowNumber.toString().slice(0, 10);
+    return truncatedNumber;
+  }
+  
   exportData(): void {
     const entityName = this.entityName;
     const parentId = this.parentId;
@@ -127,11 +155,6 @@ export class LogDetailsComponent {
       this.router.navigate(['']);
      
     
-  }
-
-  switchView() {
-    // Implement switch view logic
-    console.log('Switching view...');
   }
 
   fetchColumnsData(entityName: string): void {

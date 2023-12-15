@@ -22,8 +22,18 @@
     color: white;
     position: absolute;
     top: 34%;
-    left: 19%;
+    left: 25%;
+    width: 35%;
     transform: translate(-50%, -50%);
+}
+
+.centered-text h2{
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 0px;
+    font-family: Roboto, sans-serif;
+    letter-spacing: .0125em;
+    margin: 0 0 3px;
 }
 
 .additional-content {

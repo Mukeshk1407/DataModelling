@@ -187,7 +187,7 @@ export class EntityDetailsComponent implements OnInit {
   }
   
   goBackToList(){
-    this.router.navigate(['/entity-list']);
+    this.router.navigate(['/entitylist']);
   }
 
   generateExcelTemplate() {

@@ -1,7 +1,7 @@
 <!-- src/app/popup/popup.component.html -->
 <div class="modal">
     <div *ngIf="true" class="close-icon" (click)="closePopup()"><i class="fa-solid fa-circle-xmark"></i></div>
-    <h2 *ngIf="!showInputFields">Choose your Database to Manage your Data’s</h2>
+    <h2 *ngIf="!showInputFields">Choose your Database to Manage your Data</h2>
     <div *ngIf="!showInputFields">
         <div class="box-container">
           <div *ngFor="let box of boxes" (click)="selectBox(box)" [ngClass]="{ 'selected': box.selected }">
