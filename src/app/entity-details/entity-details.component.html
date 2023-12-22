@@ -1,191 +1,331 @@
-<div class="" style="margin: 10px;">
-    <div class="header" style="text-align: center;">
-        Attributes
-    <div class="header">
-        <div class="name-div">
-            <label for="entityName">Entity Name</label>
-            <input
-                type="text"
-                id="entityName"
-                name="entityName"
-                [(ngModel)]="entityName"
-                disabled
-            />
-        </div>
-    </div>
-    </div>
-    <div class="headerbuttons">
-        <div class="btn-div">
-          <button class="create-button" routerLink="/createentity"><i class="fa-solid fa-plus">&nbsp;</i>Create Entity</button>
-        </div>
-          <!-- Button to create a template -->
-    <button class="create-button" [routerLink]="['/entity', entityName]" (click)="generateExcelTemplate()" [disabled]="!hasColumns()">
-      <i class="fa-solid fa-download"></i> 
-      Create Template
-    </button>
-    &nbsp;
-    <button class="create-button" [disabled]="!hasColumns()" (click)="openFileInput()" >
-      <i class="fa-solid fa-upload"></i>
-      Upload Data
-    </button>
-    <input type="file" #fileInput style="display: none" (change)="uploadTemplate($event)" accept=".xlsx">
-  
-        <div class="back-div">
-          <button class="back-button" routerLink="/entity-list"><i class="fa-solid fa-arrow-left">&nbsp;</i>Back to list</button>
+<div class="header">
+  <div class="icon-container">
+    <i
+      matTooltip="Disconnect Database"
+      class="fa-solid fa-plug-circle-xmark"
+    ></i>
+    <i matTooltip="Logout" class="fas fa-sign-out-alt"></i>
+  </div>
+</div>
+<div class="content">
+  <div class="left-header" (click)="BacktoView()">
+    <i
+      class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl"
+      style="
+        background-color: #243d4d;
+        color: white;
+        font-size: 33px;
+        font-weight: bold;
+      "
+    >
+    </i>
+  </div>
+  <div class="middle-header">
+    <span [textContent]="entityName"></span>
+  </div>
+</div>
+<div class="entity-list-container"  [ngClass]="{'scrollable': columns.length > 2}">
+  <br />
+  <div class="container">
+    <div class="row">
+      <div class="col-9">
+        <div class="search-box">
+          <input
+            #searchInput
+            type="text"
+            placeholder="Search by Attribute"
+            (input)="onSearch()"
+          />
+          <i class="fas fa-search"></i>
         </div>
       </div>
-  <br>
-
-    <!-- <div class="" style=""> -->
-    <div class="" style="overflow-x: auto">
-  
-        <table class="table table-responsive responsive" style="padding:10px">
-            <!-- <thead> -->
-                <tr>
-                    <th class="center-header">Column Name</th>
-                    <th class="center-header">Data Type</th>
-                    <!-- <th class="center-header">Length</th> -->
-                    <th class="center-header">MinLength</th>
-                    <th class="center-header">MaxLength</th>
-                    <th class="center-header">MinRange</th>
-                    <th class="center-header">MaxRange</th>
-                    <th class="center-header">DateMinValue</th>
-                    <th class="center-header">DateMaxValue</th>
-                    <th class="center-header">NotNull</th>
-                    <th class="center-header">PrimaryKey</th>
-                    <th class="center-header">Default Value</th>
-                    <th class="center-header">Description</th>
-                    <th class="center-header">True</th>
-                    <th class="center-header">False</th>
-                    <th class="center-header">ListEntityID</th>
-                    <th class="center-header">ListEntityKey</th>
-                    <th class="center-header">ListEntityValue</th>
-                </tr>
-            <!-- </thead> -->
-            <tbody>
-                <tr *ngFor="let row of columns; let i = index">
-                    <td class="center-content">
-                        <input
-                            type="text"         
-                            [(ngModel)]="row.entityColumnName"
-                            disabled
-                        />
-                    </td>
-                    <td class="center-content">
-                        <input
-                            type="text"
-                            [(ngModel)]="row.datatype"
-                            disabled
-                        />
-                    </td>
-                  <td class="center-content">
-                    <input
-                        type="number"
-                        [(ngModel)]="row.minLength"
-                        [disabled]="true"
-                    />
-                    </td>
-                <td class="center-content">
-                    <input
-                        type="text"
-                        [(ngModel)]="row.maxLength"
-                        [disabled]="true"
-                    />
-                </td>
-                <td class="center-content">
-                    <input
-                        type="number"
-                        [(ngModel)]="row.minRange"
-                        [disabled]="true"
-                    />
-                    </td>
-                <td class="center-content">
-                    <input
-                        type="text"
-                        [(ngModel)]="row.maxRange"
-                        [disabled]="true"
-                    />
-                </td>
-                <td class="center-content">
-                    <input
-                        type="text"
-                        [(ngModel)]="row.dateMinValue"
-                        [disabled]="true "
-                    />
-                </td>
-                <td class="center-content">
-                    <input
-                        type="text"
-                        [(ngModel)]="row.dateMaxValue"
-                        [disabled]="true"
-                    />
-                </td>
-                    <td class="center-content">
-                        <!-- Toggle Switch for Not Null (Disabled) -->
-                        <label class="toggle-switch">
-                            <input type="checkbox" [(ngModel)]="row.isNullable" disabled />
-                            <span class="slider"></span>
-                        </label>
-                    </td>
-                    <td class="center-content">
-                        <!-- Toggle Switch for Primary Key (Disabled) -->
-                        <label class="toggle-switch">
-                            <input type="checkbox" [(ngModel)]="row.ColumnPrimaryKey" disabled />
-                            <span class="slider"></span>
-                        </label>
-                    </td>
-                    <td class="center-content">
-                        <input
-                            type="text"
-                            [(ngModel)]="row.defaultValue"
-                            disabled
-                        />
-                    </td>
-                    <td class="center-content">
-                        <input
-                            type="text"
-                            [(ngModel)]="row.description"
-                            disabled
-                        />
-                    </td>
-                    <td class="center-content">
-                      <input
-                          type="text"
-                          [(ngModel)]="row.True"
-                          disabled
-                      />
-                  </td>
-                  <td class="center-content">
-                      <input
-                          type="text"
-                          [(ngModel)]="row.False"
-                          disabled
-                      />
-                  </td>
-                  <td class="center-content">
-                    <input
-                        type="text"
-                        [(ngModel)]="row.S_ListEntityId"
-                        disabled
-                    />
-                </td>
-                <td class="center-content">
-                    <input
-                        type="text"
-                        [(ngModel)]="row.S_ListEntityKey"
-                        disabled
-                    />
-                </td>
-                <td class="center-content">
-                    <input
-                        type="text"
-                        [(ngModel)]="row.S_ListEntityValue"
-                        disabled
-                    />
-                </td>
-                </tr>
-            </tbody>
-        </table>
+      <div class="col-3">
+        <div class="row">
+          <div class="col-1" style="padding-right: 50px; width: 43px">
+            <div class="trash">
+              <div class="background-circle">
+                <div class="upload-align" (click)="generateExcelTemplate()"  [routerLink]="['/entity', entityName]"  [ngClass]="{ 'disabled': !hasColumns() }" >
+                  <i class="fa-solid fa-file-excel" ></i>
+                </div>
+              </div>
+              <div class="label-content">
+                <label>Download</label>
+              </div>
+            </div>
+          </div>
+          &nbsp; &nbsp; &nbsp;
+          <div class="col-1" style="padding-right: 50px; width: 43px">
+            <div class="trash">
+              <div class="background-circle">
+                <div class="upload-align">
+                  <i class="fa-solid fa-arrow-up-from-bracket" style="color: #ffffff" [ngClass]="{ 'disabled': !hasColumns() }" (click)="openFileInput()"></i>
+                  <input type="file" #fileInput style="display: none" (change)="uploadTemplate($event)" accept=".xlsx">
+                </div>
+                <div class="label-content">
+                  <label style="padding-left: 10px;"> Upload</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          &nbsp; &nbsp; &nbsp;
+          <div class="col-1" style="padding-right: 50px; width: 43px">
+            <div class="trash">
+              <div class="background-circle">
+                <div class="upload-align">
+                  <i
+                    class="fa-solid fa-plus"
+                    style="color: #ffffff; width: 33px"
+                    routerLink="/createentity"
+                  ></i>
+                </div>
+                <div class="label-content">
+                  <label style="padding-left: 10px;">Create</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="line"></div>
     </div>
-  
-  
+  </div>
+  <br />
+  <br />
+  <br />
+  <div style="padding: 10px 10px">
+    <form #entityForm="ngForm" novalidate>
+      <div class="main-container">
+        <div *ngFor="let row of columns; let i = index">
+          <div class="row">
+            <div class="col-2">
+              <div class="incontainer">
+                <label>Column name</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.entityColumnName"
+                  disabled
+                  style="font-size: 15px"
+                  name="entityColumnName_{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="incontainer">
+                <label>Data Type</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.datatype"
+                  disabled
+                  name="datatype_{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'string'">
+              <div class="incontainer">
+                <label>Min Length</label>
+                <input
+                  type="number"
+                  [(ngModel)]="row.minLength"
+                  [disabled]="true"
+                  name="minLength_{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'string'">
+              <div class="incontainer">
+                <label>Max Length</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.maxLength"
+                  [disabled]="true"
+                  name="maxLength_{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'int'">
+              <div class="incontainer">
+                <label>Min Range</label>
+                <input
+                  type="number"
+                  [(ngModel)]="row.minRange"
+                  [disabled]="true"
+                  name="minRange_{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'int'">
+              <div class="incontainer">
+                <label>Max Range</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.maxRange"
+                  [disabled]="true"
+                  name="maxRange_{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'date'">
+              <div class="incontainer">
+                <label for="minValue{{ i }}">Min Date</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.dateMinValue"
+                  [disabled]="true"
+                  name="dateMinValue{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'date'">
+              <div class="incontainer">
+                <label for="maxValue{{ i }}">Max Date</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.dateMaxValue"
+                  [disabled]="true"
+                  name="dateMaxValue{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'boolean'">
+              <div class="incontainer">
+                <label>Custom True</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.True"
+                  disabled
+                  name="True{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                  style="font-size: 15px; font-weight: bold"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'boolean'">
+              <div class="incontainer">
+                <label>Custom False Value</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.False"
+                  disabled
+                  name="False{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                  style="font-size: 15px; font-weight: bold"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="incontainer">
+                <div class="inside-incontainer">
+                  <label> Not Null </label>
+                  <label class="toggle-switch" style="margin-top: 17px">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="row.isNullable"
+                      disabled
+                      name="isNullable{{ i }}"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="incontainer">
+                <div class="inside-incontainer">
+                  <label> Primary Key </label>
+                  <label class="toggle-switch" style="margin-top: 17px">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="row.ColumnPrimaryKey"
+                      disabled
+                      name="ColumnPrimaryKey{{ i }}"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-2">
+              <div class="incontainer">
+                <label>Default Value</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.defaultValue"
+                  disabled
+                  name="defaultValue{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                  style="font-size: 15px; font-weight: bold"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="incontainer">
+                <label>Description</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.description"
+                  disabled
+                  name="description{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                  style="font-size: 15px; font-weight: bold"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'listofvalue'">
+              <div class="incontainer">
+                <label>Select Entity</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.S_ListEntityId"
+                  disabled
+                  name="S_ListEntityId{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                  style="font-size: 15px; font-weight: bold"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'listofvalue'">
+              <div class="incontainer">
+                <label>Key</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.S_ListEntityKey"
+                  disabled
+                  name="S_ListEntityKey{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                  style="font-size: 15px; font-weight: bold"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'listofvalue'">
+              <div class="incontainer">
+                <label>Value</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.S_ListEntityValue"
+                  disabled
+                  name="S_ListEntityValue{{ i }}"
+                  [ngModelOptions]="{ standalone: true }"
+                  style="font-size: 15px; font-weight: bold"
+                />
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px; padding-top: 10px"><hr /></div>
+        </div>
+      </div>
+      <br />
+    </form>
+    <br />
+  </div>
+</div>

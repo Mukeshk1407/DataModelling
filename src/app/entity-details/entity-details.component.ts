@@ -91,6 +91,11 @@ export class EntityDetailsComponent implements OnInit {
     this.pagedData = this.columns.slice(startIndex, endIndex);
   }
 
+  BacktoView() {
+    // localStorage.removeItem('entitylist');
+    this.router.navigate(['entitylist']);
+  }
+
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;

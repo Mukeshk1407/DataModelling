@@ -10,6 +10,9 @@ import { EntityListDto } from '../models/EntitylistDto.model';
 import { EntitylistService } from '../services/entitylist.service';
 import { NgZone } from '@angular/core';
 import { TableEditColumnDTO } from '../models/TableEditColumnDTO';
+import { AuthStorageService } from '../services/authstorage.service';
+import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-entity',
@@ -37,25 +40,25 @@ export class EditEntityComponent implements OnInit {
   selectedEntity2: string | null = null;
   selectedEntity2Index: number | null = null;
   selectedEntityKeyId: number | null = null;
-  selectedKeyvalueId :number | null = null;
+  selectedKeyvalueId: number | null = null;
   selectedColumnIds: any;
   firstColumnId: number | null = null; // Initialize firstColumnId with a default value of null
   cdr: any;
- // Assume these properties are defined in your component
- entityKeyColumnName: string = '';
+  isReadOnly: boolean = true; 
+  // Assume these properties are defined in your component
+  entityKeyColumnName: string = '';
   EntityentityName: string = '';
   entityValueColumnName: string = '';
   initiallyHidden: boolean = true;
   secondSetVisible: boolean = false;
   minMaxDatesSelected: boolean = false;
-// In your component
-dateErrorMap: Map<number, boolean> = new Map<number, boolean>();
-
-
- 
+  // In your component
+  dateErrorMap: Map<number, boolean> = new Map<number, boolean>();
 
   constructor(
     private route: ActivatedRoute,
+    private authStorageService: AuthStorageService,
+    private dialog: MatDialog,
     private columnsService: ColumnsService,
     private router: Router,
     private toastrService: ToastrService,
@@ -65,7 +68,6 @@ dateErrorMap: Map<number, boolean> = new Map<number, boolean>();
   ) {}
 
   ngOnInit(): void {
-  
     this.route.params.subscribe((params) => {
       this.entityName = params['entityName'];
       console.log(this.entityName);
@@ -111,11 +113,12 @@ dateErrorMap: Map<number, boolean> = new Map<number, boolean>();
               )
               .subscribe(
                 (entityData) => {
-            
                   console.log(entityData);
-                  this.entityKeyColumnName = entityData.entityKeyColumnName || '';
+                  this.entityKeyColumnName =
+                    entityData.entityKeyColumnName || '';
                   this.EntityentityName = entityData.entityName || '';
-                  this.entityValueColumnName = entityData.entityValueColumnName || '';
+                  this.entityValueColumnName =
+                    entityData.entityValueColumnName || '';
                   console.log(this.EntityentityName);
                 },
                 (error) => {
@@ -160,7 +163,38 @@ dateErrorMap: Map<number, boolean> = new Map<number, boolean>();
       }
     );
   }
+  logout() {
+    this.authStorageService.clearAuthInfo();
+    this.router.navigate(['']);
+    window.location.reload();
+    // Your logout logic
+  }
 
+  switchView() {
+    this.router.navigate(['']);
+
+    const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
+      width: '400px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      if (result) {
+        // Handle the selected database
+        console.log('Selected Database:', result);
+      } else {
+        // Handle modal close event
+        console.log('Modal closed');
+      }
+    });
+  }
+  resetForm(entityForm: NgForm) {
+    entityForm.resetForm();
+  }
+  BacktoView() {
+    // localStorage.removeItem('entitylist');
+    this.router.navigate(['entitylist']);
+  }
   hasColumns(): boolean {
     return this.columns.length > 0;
   }
@@ -318,7 +352,7 @@ dateErrorMap: Map<number, boolean> = new Map<number, boolean>();
     });
   }
   selectedEntity2Indexs: number | null = null;
- 
+
   updateSelectedId(index: number) {
     if (index !== null && index >= 0 && index < this.selectedColumnIds.length) {
       this.selectedKeyvalueId = this.selectedColumnIds[index];
@@ -338,31 +372,31 @@ dateErrorMap: Map<number, boolean> = new Map<number, boolean>();
       this.toastrService.showError('Min value must be smaller than Max value');
       row.minLength = null;
       row.maxLength = null;
-    }
-    else if(row.minLength === row.maxLength){
-      this.toastrService.showError('Minimum length must be different from Maximum length')
+    } else if (row.minLength === row.maxLength) {
+      this.toastrService.showError(
+        'Minimum length must be different from Maximum length'
+      );
       row.minLength = null;
       row.maxLength = null;
     }
   }
 
-onDataTypeChange(row: any) {
-  if (row.datatype === 'string') {
+  onDataTypeChange(row: any) {
+    if (row.datatype === 'string') {
       row.minRange = null;
       row.maxRange = null;
-  } else if (row.datatype === 'int') {
+    } else if (row.datatype === 'int') {
       row.minLength = null;
       row.maxLength = null;
-  } 
-}
-
+    }
+  }
 
   // In your component
   validateDateRange(row: any, index: number) {
     const minDate = new Date(row.dateMinValue);
     const maxDate = new Date(row.dateMaxValue);
     const defaultDate = new Date(row.defaultValue);
-  
+
     if (defaultDate < minDate || defaultDate > maxDate) {
       this.dateErrorMap.set(index, true);
     } else {
@@ -370,9 +404,9 @@ onDataTypeChange(row: any) {
     }
   }
 
-preventInput(event: Event): void {
-  event.preventDefault();
-}
+  preventInput(event: Event): void {
+    event.preventDefault();
+  }
   validateMinMaxRange(row: any) {
     if (row.minRange >= row.maxRange) {
       this.toastrService.showError(
@@ -381,8 +415,7 @@ preventInput(event: Event): void {
       );
       row.minRange = null;
       row.maxRange = null;
-    }
-    else if (row.minRange === row.maxRange) {
+    } else if (row.minRange === row.maxRange) {
       this.toastrService.showError(
         'Minimum Range must be different from Maximum Range'
       );
@@ -406,7 +439,6 @@ preventInput(event: Event): void {
       );
     }
   }
-
 
   validateDefaultDate(row: any) {
     if (row.datatype === 'date') {
@@ -520,7 +552,7 @@ preventInput(event: Event): void {
   isStringOrNumber(datatype: string): boolean {
     return ['string', 'int'].includes(datatype);
   }
-  
+
   onPrimaryKeyChange(event: Event, row: any): void {
     if (row.ColumnPrimaryKey) {
       row.defaultValue = '';
@@ -548,7 +580,7 @@ preventInput(event: Event): void {
       row.defaultValue = '';
     }
   }
- 
+
   validateNumeric(event: any) {
     const keyCode = event.keyCode;
     if (

@@ -2,7 +2,11 @@
 
 <div class="header">
   <div class="icon-container">
-    <i matTooltip="Disconnect Database" class="fa-solid fa-plug-circle-xmark" (click)="switchView()"></i>
+    <i
+      matTooltip="Disconnect Database"
+      class="fa-solid fa-plug-circle-xmark"
+      (click)="switchView()"
+    ></i>
     <i matTooltip="Logout" class="fas fa-sign-out-alt" (click)="logout()"></i>
   </div>
 </div>
@@ -12,17 +16,31 @@
     <span>Entity List</span>
   </div>
   <div class="right-header">
-    <button class="createbutton" mat-raised-button color="primary" (click)="CreateEntity()">Create Entity</button>
+    <button
+      class="createbutton"
+      mat-raised-button
+      color="primary"
+      (click)="CreateEntity()"
+    >
+      Create Entity
+    </button>
   </div>
 </div>
 
-<div class="entity-list-container" [ngClass]="{'scrollable': entityList.length > 12}">
+<div
+  class="entity-list-container"
+  [ngClass]="{ scrollable: entityList.length > 12 }"
+>
   <!-- Search box -->
   <div class="search-box">
-    <input #searchInput type="text" placeholder="Search by Entity Name" (input)="onSearch(searchInput.value)" />
+    <input
+      #searchInput
+      type="text"
+      placeholder="Search by Entity Name"
+      (input)="onSearch(searchInput.value)"
+    />
     <i class="fas fa-search"></i>
   </div>
-
   <!-- Line below search box -->
   <div class="line"></div>
 
@@ -30,8 +48,14 @@
   <div *ngFor="let entity of entityList" class="entity-box">
     {{ entity.entityName }}
     <div class="icons-container1">
-      <i matTooltip="Add Validation" class="fa-solid fa-plus"></i>
-      <i matTooltip="View Attributes" class="fa-solid fa-eye"></i>
+      <div *ngIf="hasValues !== undefined && hasValues[entity.entityName] !== undefined"  [ngClass]="{ 'disabled': hasValues[entity.entityName] }"  [routerLink]="['/Edit-Entity', entity.entityName]" (click)="editTable(entity.entityName)">
+        <i matTooltip="Add Validation" class="fa-solid fa-plus" ></i>
+      </div>
+      <i
+        matTooltip="View Attributes"
+        class="fa-solid fa-eye"
+        [routerLink]="['/entity', entity.entityName]"
+      ></i>
     </div>
   </div>
 </div>
