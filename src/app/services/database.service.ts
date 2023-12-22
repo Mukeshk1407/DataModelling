@@ -11,15 +11,7 @@ export class DatabaseService {
 
   constructor(private http: HttpClient) { }
   getTableDetails( host: string, databaseName: string,username: string, password: string): Observable<any> {
-    const body = {
-      //selecteddbName: string,
-      // dbName,
-      host,
-      databaseName,
-      username,
-      password,
-    };
-    console.log("dbconnection details",body);
+
     const endpoint = `${this.baseUrl}/GetTableDetails?Host=${host}&Database=${databaseName}&Username=${username}&Password=${password}`;
 
     return this.http.get<any>(endpoint).pipe(

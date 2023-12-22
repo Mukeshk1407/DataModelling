@@ -78,6 +78,8 @@ export class EntityListComponent implements OnInit{
   }
 
   switchView() {
+     // Clear localStorage data
+  localStorage.removeItem('databaseDetails');
     this.router.navigate(['']);
 
     const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
@@ -99,7 +101,7 @@ export class EntityListComponent implements OnInit{
   onSearch(searchTerm: string) {
     // Filter entity names based on the search term
     this.entityList = this.originalEntityList.filter(entity =>
-      entity.toLowerCase().includes(searchTerm.toLowerCase())
+      entity.entityName.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }
 
@@ -109,5 +111,15 @@ export class EntityListComponent implements OnInit{
 
   ViewEntity(entityName : string){
     this.router.navigate(['entity/:${entityName}'])
+  }
+
+  addValidation(entityName: string) {
+    // Navigate to the validation route using the entityName
+    this.router.navigate([`Edit-Entity/${entityName}`]);
+  }
+  Viewattribute(entityName: string){
+      // Navigate to the view route using the entityName
+      this.router.navigate([`entity/${entityName}`]);
+  
   }
 }

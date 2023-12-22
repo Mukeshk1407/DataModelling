@@ -19,7 +19,7 @@ export class ConnectdatabaseComponent {
   boxes = [
     { content: 'Dynamo', imageSrc: 'assets/images/dynamo.png', selected: false },
     { content: 'PostgreSQL', imageSrc: 'assets/images/postgre.png', selected: false },
-    { content: 'MY SQL', imageSrc: 'assets/images/sql.png', selected: false },
+    { content: 'MY SQL', imageSrc: 'assets/images/Db1-mysql.png', selected: false },
     { content: 'MS SQL', imageSrc: 'assets/images/sql.png', selected: false },
     // ... other items
   ];  
@@ -61,7 +61,15 @@ export class ConnectdatabaseComponent {
   connect() {
     // Check if all required fields are filled
     if (this.hostname && this.username && this.password &&this. databaseName && this.selectedContent) {
-  
+       // Store the entered details in localStorage
+    const databaseDetails = {
+      hostname: this.hostname,
+      databaseName: this.databaseName,
+      username: this.username,
+      password: this.password,
+      selectedContent: this.selectedContent,
+    };
+    localStorage.setItem('databaseDetails', JSON.stringify(databaseDetails));
       // Use the DatabaseService to connect to the backend
       //this.selectedContent,
       this.dbService.getTableDetails( 
@@ -78,7 +86,7 @@ export class ConnectdatabaseComponent {
           }
         },
         (error) => {
-          this.toastrService.showError(error.errorMessages);
+          this.toastrService.showError("Invalid Credentials");
         }
       );
   

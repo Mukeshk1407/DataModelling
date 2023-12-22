@@ -3,6 +3,9 @@ import { TableColumnDTO } from '../models/TableColumnDTO.model';
 import { SharedDataService } from '../services/log-details.service';
 import { ColumnsService } from '../services/create-entity.service';
 import { Router } from '@angular/router';
+import { AuthStorageService } from '../services/authstorage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 declare var $: any; // Add this line to declare the jQuery variable
 
 
@@ -19,7 +22,10 @@ export class LogDetailsComponent {
   entityName: string = ''; // Initialize entityName variable
 
   
-  constructor(private router: Router,private sharedDataService: SharedDataService,private columnsService: ColumnsService) { }
+  constructor(private router: Router,
+    private sharedDataService: SharedDataService,
+    private columnsService: ColumnsService,
+    private authStorageService: AuthStorageService, private dialog:MatDialog) { }
 
   ngOnInit(): void {
     // Subscribe to the shared service to get log details data
@@ -35,7 +41,7 @@ export class LogDetailsComponent {
     });
 
     const savedData = localStorage.getItem('logDetailsData');
-    console.log("saveddata",savedData)
+
     if (savedData) {
       // If data exists in localStorage, parse and set it
       const parsedData = JSON.parse(savedData);
@@ -82,13 +88,39 @@ export class LogDetailsComponent {
   }
   
 
-  BacktoView() {
+  switchView() {
+    // Clear localStorage data
+ localStorage.removeItem('databaseDetails');
+   this.router.navigate(['']);
+
+   const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
+     width: '400px',
+     disableClose:true
+   });
+ 
+   dialogRef.afterClosed().subscribe((result: string | undefined) => {
+     if (result) {
+       // Handle the selected database
+       console.log('Selected Database:', result);
+     } else {
+       // Handle modal close event
+       console.log('Modal closed');
+     }
+   });
+ }
+
+  BacktoView(entityName : string) {
+    this.router.navigate([`entity/${entityName}`]);
     localStorage.removeItem('logDetailsData');
-    this.router.navigate(['']);
     // Dispatch the logout action
     // this.store.dispatch(authActions.logout());
   }
 
+  truncateErrorRowNumber(errorRowNumber: number): string {
+    const truncatedNumber = errorRowNumber.toString().slice(0, 10);
+    return truncatedNumber;
+  }
+  
   exportData(): void {
     const entityName = this.entityName;
     const parentId = this.parentId;
@@ -99,6 +131,12 @@ export class LogDetailsComponent {
     } else {
       console.error('parentId is undefined. Unable to generate Excel template.');
     }
+    
+  }
+  exportbtn():void{
+    console.log("first")
+   this.exportData();
+   this.exportData();
   }
 
   closeModal(): void {
@@ -112,13 +150,11 @@ export class LogDetailsComponent {
   }
 
   logout() {
-    // Your logout logic
-    console.log('Logging out...');
-  }
-
-  switchView() {
-    // Implement switch view logic
-    console.log('Switching view...');
+    localStorage.removeItem('logDetailsData');
+    this.authStorageService.clearAuthInfo();
+      this.router.navigate(['']);
+     
+    
   }
 
   fetchColumnsData(entityName: string): void {
@@ -163,7 +199,7 @@ export class LogDetailsComponent {
     if (this.columns.length === 0) {
       return; 
     }
-    this.columnsService.generateExcelFiles(parentId, this.columns).subscribe(
+    this.columnsService.generateExcelFiles(parentId,this.columns).subscribe(
       (data: Blob) => {
         const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         const url = window.URL.createObjectURL(blob);

@@ -112,6 +112,7 @@ tbody{
   background-color: white;
 }
 th {
+  font-weight: 500;
   color: white;
   font-size: 16px;
   background-color: #243D4C;
