@@ -7,6 +7,9 @@ import { ColumnsService } from '../services/create-entity.service';
 import { EntityListDto } from '../models/EntitylistDto.model';
 import { EntitylistService } from '../services/entitylist.service';
 import { NgZone } from '@angular/core';
+import { AuthStorageService } from '../services/authstorage.service';
+import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-entity',
@@ -39,6 +42,8 @@ export class CreateEntityComponent {
   showPopup: boolean | undefined;
   
   constructor( private toastrService : ToastrService,
+              private authStorageService : AuthStorageService ,
+              private dialog : MatDialog,
               private router: Router,
               private  columnInputService: ColumnInputServiceService,
               private columnsService : ColumnsService,
@@ -95,8 +100,15 @@ export class CreateEntityComponent {
       ListEntityKey:0,
       ListEntityValue:0
     });
-    this.entityForm.form.updateValueAndValidity();
+    if(this.entityForm)
+    {
+      this.entityForm.form.updateValueAndValidity();
+    }
     console.log(this.newEntity)
+  }
+  BacktoView() {
+    // localStorage.removeItem('entitylist');
+    this.router.navigate(['entitylist']);
   }
   ngOnInit(): void {
     const storedFormData = localStorage.getItem('formData');
@@ -116,7 +128,20 @@ export class CreateEntityComponent {
       }
     );
   }
-
+  toggleCheckbox(id: string): void {
+    console.log("clicked");
+    const checkbox = document.getElementById(id) as HTMLInputElement;
+    if (checkbox) {
+      checkbox.checked = !checkbox.checked;
+    }
+  }
+  toggleCheckbox1(id: string): void {
+    console.log("clicked");
+    const checkbox = document.getElementById(id) as HTMLInputElement;
+    if (checkbox) {
+      checkbox.checked = !checkbox.checked;
+    }
+  }
   showBooleanPopup: boolean = false;
 onListValueSelected(entityName: string, rowIndex: number) {
    this.zone.run(() => {
@@ -308,6 +333,32 @@ validateNumeric(event: any) {
   isReservedKeyword(name: string): boolean {
     return this.reservedKeywords.includes(name.toLowerCase());
   }
+
+  logout() {
+    this.authStorageService.clearAuthInfo();
+    this.router.navigate(['']);
+    window.location.reload();
+    // Your logout logic
+  }
+
+  switchView() {
+    this.router.navigate(['']);
+
+    const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
+      width: '400px',
+      disableClose:true
+    });
+  
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      if (result) {
+        // Handle the selected database
+        console.log('Selected Database:', result);
+      } else {
+        // Handle modal close event
+        console.log('Modal closed');
+      }
+    });
+  }
   
 submit() {
   localStorage.setItem('formData', JSON.stringify(this.newEntity));
@@ -424,7 +475,9 @@ submit() {
       this.toastrService.showError('Error creating table: ' + error);
     }
   );
+  
   localStorage.removeItem('formData');
   }
+  
 }
 }
