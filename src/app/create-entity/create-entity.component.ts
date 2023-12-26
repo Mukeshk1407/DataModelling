@@ -435,8 +435,12 @@ submit() {
       entityname: this.newEntity.entityname,
       columns: this.newEntity.columns
     };
+
     const backendRequest = {
           tableName: formData.entityname,
+          hostName:'',
+          databaseName:'',
+          provider:'',
           columns: formData.columns.map((columns: any) => {
             return {
               entityColumnName: columns.columnName,
@@ -447,31 +451,36 @@ submit() {
               isNullable: columns.isNullable,
               defaultValue: columns.defaultValue,
               columnPrimaryKey: columns.primaryKey,
-              Description:columns.description,
+              description:columns.description,
               minLength: parseInt(columns.minLength), 
               maxLength: parseInt(columns.maxLength),
-              MaxRange: parseInt(columns.MaxRange),
-              MinRange: parseInt(columns.MinRange),
-              dateminValue:columns.dateminValue,
-              datemaxValue:columns.datemaxValue,
-              ListEntityId:parseInt(this.selectedEntity) ||0,
-              ListEntityKey:this.firstColumnId ||0,
-              ListEntityValue:this.selectedKeyId ||0
+              maxRange: parseInt(columns.MaxRange),
+              minRange: parseInt(columns.MinRange),
+              dateMinValue:columns.dateminValue,
+              dateMaxValue:columns.datemaxValue,
+              listEntityId:parseInt(this.selectedEntity) ||0,
+              listEntityKey:this.firstColumnId ||0,
+              listEntityValue:this.selectedKeyId ||0
             };
           }),
         }
 
-        console.log(backendRequest);
+        const databaseDetailsString = localStorage.getItem('databaseDetails');
+        const databaseDetails = JSON.parse(databaseDetailsString || '{}');
+        
+        // Assign the values to backendRequest
+        backendRequest.hostName = databaseDetails?.hostname || '';
+        backendRequest.databaseName = databaseDetails?.databaseName || '';
+        backendRequest.provider = databaseDetails?.selectedContent || '';
+
   this.columnInputService.createTable(backendRequest).subscribe(
     response => {
       // Handle success response if needed
-      console.log('Entity created successfully:', response.success);
       this.toastrService.showSuccess('Entity created successfully');
       this.router.navigate(['/entity-list']);
     },
     error => {
       // Handle error response and display error message
-      console.error('Error creating table:', error);
       this.toastrService.showError('Error creating table: ' + error);
     }
   );
