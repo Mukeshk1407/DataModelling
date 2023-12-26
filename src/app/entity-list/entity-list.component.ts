@@ -4,6 +4,8 @@ import { AuthStorageService } from '../services/authstorage.service';
 import { Router } from '@angular/router';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
+import { EntityListDto } from '../models/EntitylistDto.model';
+import { SharedDataService } from '../services/log-details.service';
 
 @Component({
   selector: 'app-entity-list',
@@ -11,15 +13,44 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./entity-list.component.css']
 })
 export class EntityListComponent implements OnInit{
-  
+  tableNames: EntityListDto[] = [];
   originalEntityList: any[] = [];
+  errorMessage: string = '';
+  currentPage = 1;
   entityList: any[] = [];
+  pagedData: any[] = [];
+  hasValues: { [key: string]: boolean } = {};
  
-  constructor(private entitylistService: EntitylistService ,
-     private authStorageService : AuthStorageService , private router : Router , private dialog : MatDialog) {}
+  constructor(private entitylistService: EntitylistService , private authStorageService : AuthStorageService , private router : Router , private dialog : MatDialog, private SharedDataService :SharedDataService) {}
  
   ngOnInit() {
+    this.entitylistService.getEntityList().subscribe(
+      (data: any) => {
+        this.tableNames = data.result;
+        this.pagedData = this.tableNames;
+        console.log(this.tableNames);
+        // Make the second API call inside this block
+        const tableNames = this.pagedData.map(table => table.entityName);
+        this.SharedDataService.checkTablesHaveValues(this.pagedData.map(table => table.entityName))
+        .subscribe(
+          (tablesWithValues: { [key: string]: boolean }) => {
+            this.hasValues = tablesWithValues;  // Assign the values to the component property
+          },
+          (error) => {
+            console.error('Error checking tables for values:', error);
+          }
+        );
+      },
+      (error) => {
+        this.errorMessage = 'No Data Available';  // Update error message
+      }
+    );
+   
+    this.setPage(this.currentPage); // Initialize the first page
     this.loadEntityList();
+  }
+  editTable(entityName: string) {
+    // Implement your editTable logic here
   }
 
   loadEntityList() {
@@ -33,6 +64,11 @@ export class EntityListComponent implements OnInit{
         // Handle error as needed
       }
     );
+  }
+  setPage(page: number) {
+    // const startIndex = (page - 1) * this.itemsPerPage;
+    // const endIndex = Math.min(startIndex + this.itemsPerPage, this.tableNames.length);
+    this.pagedData = this.tableNames;
   }
   logout() {
     this.authStorageService.clearAuthInfo();

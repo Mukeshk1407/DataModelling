@@ -1,330 +1,352 @@
-.container{
-    margin-top: 3%;
-  }
-  
-  .header {
-    font-family: 'Poppins', sans-serif; /* Use 'Poppins' as the font name */
-    font-weight: bold;
-    font-size: 32px;
-  }
-  
-  
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1%;
-    padding: 10px;
-  }
-  
-  .name-div,
-  .back-div {
-    overflow: hidden;
-    display: inline-block;
-  }
-  
-  .name-div{
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    font-size: 23px;
-  }
-  
-  .name-div label{
-    margin-right: 40px;
-  }
-  
-  .name-div input{
-    width: 265px;
-    height: 42px;
-    border: 1px solid #AEAEAE;
-    outline: none;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
-    font-size: 14px;
-    border-radius: 7px;
-  }
-  
-  .back-button {
-    background-color: #00419C;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 5px 18px;
-    width: 172px;
-    height: 45px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    font-size: 23px;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition */
-  }
-  
-  .back-button:hover {
-  background-color: white; /* Change background color on hover */
-  color: #00419C; /* Change font color on hover */
-  border: 2px solid #00419C; /* Add border on hover */
-  }
-    /* Center the header text */
-  .center-header {
-    text-align: center;
-  }
-  
-  /* Center the table name and button content */
-  .center-content {
-    text-align: center;
-  }
-  
-  /* Table Styles */
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  /* Header Styles */
-  th {
-    background-color: #00419C;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    font-size: 14px;
-    padding: 10px;
-  }
-  
-  /* Toggle Switch Styles */
-  .toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 50px; /* Adjust the width as needed */
-    height: 24px; /* Adjust the height as needed */
-    background-color: #ffffff;
-    border-radius: 12px;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #7D7C7C;
-    border-radius: 25px;
-    transition: 0.4s;
-  }
-  
-  .toggle-switch input {
-    display: none;
-  }
-  
-  /* Change background color when checked */
-  .toggle-switch input:checked + .slider {
-    background-color: #00419C; /* Toggle switch color when checked */
-  }
-  
-  /* Move the slider to the right when checked */
-  .toggle-switch input:checked + .slider:before {
-    transform: translateX(26px); /* Adjust as needed */
-  }
-  
-  /* Styling for the slider circle */
-  .toggle-switch .slider:before {
-    position: absolute;
-    content: "";
-    height: 20px; /* Adjust the height as needed */
-    width: 20px; /* Adjust the width as needed */
-    left: 2px; /* Adjust the position as needed */
-    bottom: 2px; /* Adjust the position as needed */
-    background-color: #ffffff;
-    border-radius: 50%;
-    transition: 0.4s;
-  }
-  
-  td input, td select{
-    width: 150px;
-    height: 30px;
-    border: 1px solid #AEAEAE;
-    outline: none;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
-    font-size: 14px;
-    border-radius: 7px;
-  }
-  
-  
-  .delete-button{
-    background-color: #ff1c03;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    width: 62px;
-    height: 30px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    font-size: 20px;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition */
-  }
-  
-  .delete-button:hover {
-  background-color: white; /* Change background color on hover */
-  color: #00419C; /* Change font color on hover */
-  border: 2px solid #00419C; /* Add border on hover */
-  }
-  
-  .delete-button i{
-    font-size: 20px;
-  }
-  
-  .add-button{
-    background-color: #00419C;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    width: 170px;
-    height: 45px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    font-size: 23px;
-    float: right; /* Align to the right */
-    margin-left: 10px; /* Optional margin for spacing */
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition */
-  }
-  
-  .add-button:hover {
-  background-color: white; /* Change background color on hover */
-  color: #00419C; /* Change font color on hover */
-  border: 2px solid #00419C; /* Add border on hover */
-  }
-  
-  .sub-button{
-    background-color: #69fd34;
-    color: #ffffff;
-    border: none;
-    border-radius: 20px;
-    width: 170px;
-    height: 45px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    font-size: 23px;
-    float: right; /* Align to the right */
-    margin-left: 10px; /* Optional margin for spacing */
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition */
-  }
-  
-  .sub-button:hover {
-  background-color: white; /* Change background color on hover */
-  color: #00419C; /* Change font color on hover */
-  border: 2px solid #00419C; /* Add border on hover */
-  }
-  
-  .error{
-    color: red;
-    font-size: x-small;
-    float: right;
-  }
-  
-  .disabled-input {
-    background-color: #f4f4f4; /* Set your desired background color */
-    color: #888; /* Set your desired text color */
-  }
-  
-  input[type=number]::-webkit-inner-spin-button, 
-  input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0; 
-  }
-  
-  
-  .headerbuttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1%;
-    padding: 10px;
-  }
-  
-  .btn-div,
-  .search-div,
-  .back-div {
-    border-radius: 20px;
-    overflow: hidden;
-    display: inline-block;
-  }
-  
-  .create-button,
-  .back-button {
-    background-color: #00419C;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 5px 18px;
-    inline-size: 172px;
-    block-size: 45px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    font-size: 14px;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition */
-  }
-  
-  .create-button:hover,
-  .back-button:hover {
-  background-color: white; /* Change background color on hover */
-  color: #00419C; /* Change font color on hover */
-  border: 2px solid #00419C; /* Add border on hover */
-  }
-  
- 
-  
-  .search-div input {
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 20px;
-    padding: 10px;
-    outline: none;
-    inline-size: 365px;
-  }
-  
-  .fa-magnifying-glass:before, .fa-search:before {
-    color: #00419C;
-    margin-inline-start: -35px;
-    content: "\f002";
-  }
-  
-  
-  .pagination-controls{
-    font-family: 'Poppins', sans-serif; /* Use 'Poppins' as the font name */
-    font-weight: bold;
-    font-size: 18px;
-    margin-inline-end: 2%;
-    float: inline-end
-  }
-  
-  .page-button{
-    background-color: #00419C;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 5px 10px;
-    inline-size: 152px;
-    block-size: 40px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    font-size: 18px;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition */
-  }
-  
-  .page-button:active {
-  background-color: white; /* Change background color on hover */
-  color: #00419C; /* Change font color on hover */
-  border: 2px solid #00419C; /* Add border on hover */
-  }
-  .error {
-    color: #ff0000; /* Set the text color to red */
-    font-size: 14px; /* Adjust the font size */
-    margin-block-start: 5px; /* Add some top margin for spacing */
-  }
+/* entity-list.component.css */
 
-  .booleanDW{
-    margin-left : -30px
+:host {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  background-image: url('../../assets/images/entitylist.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 9px;
+  color: white;
+  background: #1E175E;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+  
+.left-header span {
+  font-size: x-large;
+  font-weight: 700;
+  color: white;
+}
+
+.right-header {
+  right: 5%;
+  width: 7%;
+  display: inline-grid;
+  position: absolute;
+}
+
+.icon-container {
+  display: flex;
+  gap: 20px;
+}
+
+.icon-container i {
+  font-size: 24px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.content {
+  padding: 20px;
+  display: flex;
+  /* Add additional styling for your entity list content */
+}
+
+.create-entity {
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.createbutton{
+  font-weight: 500;
+  font-size: 16px;
+  color: white;
+  width: 140px;
+  height: 45px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #243D4D;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.entity-list-container {
+position: absolute;
+  width: 90%;
+  height: 75%;
+  left: 5%;
+  border-radius: 10px;
+  background: rgba(143, 185, 212, 0.85);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+  max-height:auto;
+}
+.entity-list-container::-webkit-scrollbar {
+width: 12px;
+}
+
+.entity-list-container::-webkit-scrollbar-thumb {
+background-color: #243D4D; /* Color of the scrollbar thumb */
+border-radius: 10px; /* Rounded corners of the thumb */
+}
+
+.entity-list-container::-webkit-scrollbar-track {
+background-color: rgba(143, 185, 212, 0.85); /* Color of the scrollbar track */
+border-radius: 10px; /* Rounded corners of the track */
+}
+.scrollable {
+overflow-y: auto;
+}
+
+.entity-box {
+background: #FFF;
+  text-align: center;
+  height: 15%;
+  margin: auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: calc(26.33% - 20px);
+  box-sizing: border-box;
+}
+
+
+.search-box {
+display: flex;
+align-items: center;
+margin-bottom: 10px;
+position: absolute;
+right: 8%;
+}
+
+.search-box input {
+height: 35px;
+width: calc(128% - 0px);
+border: none;
+background: none;
+color: rgb(0, 0, 0);
+padding: 16px;
+font-size: 14px;
+margin-right: -39px;
+border-radius: 20px;
+background: #FFF;
+}
+
+.search-box i {
+margin-left: -23px;
+color: white;
+cursor: pointer;
+background: #243D4D; /* Background color for the icon */
+border-radius: 50%; /* Border-radius to make it circular */
+padding: 10px; /* Padding to increase the clickable area */
+margin-left: 5px; /* Margin to separate the icon from the input */
+}
+
+.line {
+  margin-top: 1%;
+  width: 100%;
+  height: 1px;
+  background-color: rgb(0, 0, 0);
+}
+.middle-header{
+  color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 26px;
+    padding-left: 38%;
+}
+.left-header span {
+  font-size: x-large;
+  font-weight: 700;
+  color: white;
+}
+
+::placeholder {
+color: rgb(0, 0, 0);
+font-weight: bold; 
+font-size: 13px;
+}
+
+.icons-container1 {
+margin-left: 115%;
+  margin-top: -23%;
+}
+
+.icons-container1 i {
+background: #243D4D;
+color: white;
+border-radius: 50%;
+padding: 10px;
+cursor: pointer;
+margin-bottom: 5px;
+}
+
+.EntityName{
+  font-size: 22px;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  text-align: left;
+}
+::placeholder {
+  color: rgb(0, 0, 0);
+  font-weight: lighter; 
+  opacity: 0.7;
+  padding-left: 20px;
+
+}
+.name-div{
+  padding-left: 22px;
+  padding-top: 10px;
+  font-weight: bold;
+}
+.EnterEntity input{
+  width: 250px;
+  height: 40px;
+  padding-left: 10px;
+  border-radius: 10px;
+  padding-bottom: 5px;
+  outline: 0;
+  border:none;
+}
+
+.fa-solid{
+  font-size: 39px;
+}
+.inside-container{
+  height: 10px;
+}
+.container{
+  height:10px;
+}
+.container1{
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 10px;
+}
+.main-container{
+  background-color: white;
+  border-radius: 10px;
+}
+.incontainer{
+  flex-direction: column;
+  width: 200px;
+  font-size: 15px;
+  padding-left: 30px;
+  border-radius: 8px;
+  display: block;
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.incontainer input, select{
+  margin-top: 10px;
+  border-radius: 8px;
+  height: 30px;
+  border: 1px solid #243D4D ;
+  width: 170px;
+}
+
+.inside-incontainer {
+  display: flex;
+  flex-direction: column; /* Set the flex direction to column */
+  align-items: center;
+}
+.trash{
+  padding-left: 60%;
+  background-color:#212529; 
+  color: white;
+  border-radius: 70%;
+  padding: 12px; /* adjust as needed */
+  width: 40px;
+  height: 42px;
+}
+.backgroud-circle{
+  font-size: 18px;
+}
+.trash-container{
+  padding-left: 61%;
+}
+.Submit-button{
+  font-weight: 500;
+  font-size: 16px;
+  color: white;
+  width: 100px;
+  height: 37px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #243D4D;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border:none;
+}
+.form-button{
+  padding-left: 90%;
+}
+.error{
+  color: red;
+}
+ /* Toggle Switch Styles */
+ .toggle-switch {
+  position: relative;
+  display: inline-block;
+  inline-size: 50px; 
+  block-size: 24px; 
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  background-color: #7D7C7C;
+  border-radius: 25px;
+  transition: 0.4s;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+
+.toggle-switch input:checked + .slider {
+  background-color: #00419C;
+}
+
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(26px); 
+}
+
+
+.toggle-switch .slider:before {
+  position: absolute;
+  content: "";
+  block-size: 20px; 
+  inline-size: 20px; 
+  inset-inline-start: 2px; 
+  inset-block-end: 2px; 
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+.last-row .col-1 {
+  padding-left: 0;
+}
+
+.last-row .trash {
+  text-align: right;
+}
+.entity-list-container::-webkit-scrollbar {
+  width: 12px;
   }
+.entity-list-container::-webkit-scrollbar-thumb {
+background-color: #243D4D; /* Color of the scrollbar thumb */
+border-radius: 10px; /* Rounded corners of the thumb */
+}
+
+.entity-list-container::-webkit-scrollbar-track {
+background-color: rgba(143, 185, 212, 0.85); /* Color of the scrollbar track */
+border-radius: 10px; /* Rounded corners of the track */
+}
+.scrollable {
+overflow-y: auto;
+}
