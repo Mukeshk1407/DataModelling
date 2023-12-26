@@ -1,0 +1,104 @@
+<div class="header">
+  <!-- <div class="icon-container">
+      <i matTooltip="Disconnect Database" class="fa-solid fa-plug-circle-xmark" (click)="switchView()"></i> 
+      <i matTooltip="Logout" class="fas fa-sign-out-alt" (click)="logout()"></i> 
+    </div> -->
+</div>
+
+<div class="content">
+  <div class="middle-header">
+    <span>Create User</span>
+  </div>
+</div>
+
+<div class="entity-list-container">
+  <!-- firstrow -->
+  <div class="insidecontainer">
+    <div class="row row-4">
+      <div class="col-md-4">
+        <label class="label">Username</label>
+        <input
+          type="text"
+          class="input-box"
+          placeholder="Enter Username"
+          [(ngModel)]="userModel.Name"
+        />
+      </div>
+      <div class="col-md-4">
+        <label class="label">Email</label>
+        <input
+          type="text"
+          class="input-box"
+          placeholder="Enter Email"
+          [(ngModel)]="userModel.Email"
+        />
+      </div>
+      <div class="col-md-4">
+        <label class="label">Phone</label>
+        <input
+          type="text"
+          class="input-box"
+          placeholder="Enter Phone number"
+          [(ngModel)]="userModel.phonenumber"
+        />
+      </div>
+    </div>
+
+    <!-- Secondrow -->
+    <div class="row row-4">
+      <div class="col-md-4">
+        <label class="label">Gender</label>
+        <select class="input-box">
+          <option value="" selected disabled>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="label">Date of Birth</label>
+        <input
+          type="date"
+          class="input-box"
+          placeholder="Enter DOB"
+          [(ngModel)]="userModel.DOB"
+        />
+      </div>
+      <div class="col-md-4">
+        <label class="label">Role</label>
+        <select class="input-box" [(ngModel)]="userModel.RoleId">
+          <option value="" selected disabled>Select Role</option>
+          <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Thirdrow -->
+    <div class="row row-4">
+      <div class="col-md-4">
+        <label class="label">Password</label>
+        <input
+          type="password"
+          class="input-box"
+          placeholder="Enter Password"
+          [(ngModel)]="userModel.Password"
+        />
+      </div>
+      <div class="col-md-4">
+        <div class="container">
+          <label class="label">Activate/Deactivate User</label>
+          <label class="switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row-4">
+      <div class="col-md-4 offset-md-4">
+        <button class="button button4">Cancel</button>
+        <button class="button button4" (click)="createUser()">Create</button>
+      </div>
+    </div>
+  </div>
+</div>

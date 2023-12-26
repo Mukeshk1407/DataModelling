@@ -20,10 +20,12 @@ import { EditEntityComponent } from './edit-entity/edit-entity.component';
 import { CreateEntityComponent } from './create-entity/create-entity.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CreateUserComponent } from './create-user/create-user.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { MatInputModule } from '@angular/material/input';
     EntityDetailsComponent,
     LogDetailsComponent,
     EditEntityComponent,
-    CreateEntityComponent
+    CreateEntityComponent,
+    CreateUserComponent,
    ],
   imports: [
     BrowserModule,
