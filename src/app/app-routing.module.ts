@@ -7,10 +7,13 @@ import { EntityDetailsComponent } from './entity-details/entity-details.componen
 import { LogDetailsComponent } from './log-details/log-details.component';
 import { CreateEntityComponent } from './create-entity/create-entity.component';
 import { EditEntityComponent } from './edit-entity/edit-entity.component';
+import { CreateUserComponent } from './create-user/create-user.component';
+
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register',component: CreateUserComponent},
   { path: 'entitylist', component: EntityListComponent },
   { path: 'entity/:entityName', component: EntityDetailsComponent },
   {path:'log_details',component:LogDetailsComponent},

@@ -21,6 +21,8 @@ import { EditEntityComponent } from './edit-entity/edit-entity.component';
 import { CreateEntityComponent } from './create-entity/create-entity.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CreateUserComponent } from './create-user/create-user.component';
+
 
 
 
@@ -34,7 +36,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     EntityDetailsComponent,
     LogDetailsComponent,
     EditEntityComponent,
-    CreateEntityComponent
+    CreateEntityComponent,
+    CreateUserComponent,
    ],
   imports: [
     BrowserModule,

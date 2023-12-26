@@ -16,7 +16,7 @@ export class ColumnInputServiceService {
   }
 
   createTable(request: any): Observable<any> {
-    return this.http.post<any>(`${this.ApiUrlGateWay}/create-table`, request)
+    return this.http.post<any>(`${this.ApiUrlGateWay}/createtable`, request)
       .pipe(
         catchError(error => {
           let errorMessage = 'An error occurred while creating the table.';
