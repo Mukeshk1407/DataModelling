@@ -29,15 +29,33 @@
     <div class="row row-4">
       <div class="col-md-4">
         <label class="label">Username</label>
-        <input type="text" class="input-box" [(ngModel)]="user.name" placeholder="Enter Username" />
+        <input
+          type="text"
+          class="input-box"
+          [(ngModel)]="user.name"
+          placeholder="Enter Username"
+          readonly
+        />
       </div>
       <div class="col-md-4">
         <label class="label">Email</label>
-        <input type="text" class="input-box" placeholder="Enter Email" />
+        <input
+          type="text"
+          class="input-box"
+          [(ngModel)]="user.email"
+          placeholder="Enter Email"
+          readonly
+        />
       </div>
       <div class="col-md-4">
         <label class="label">Phone</label>
-        <input type="text" class="input-box" placeholder="Enter Phone number" />
+        <input
+          type="text"
+          class="input-box"
+          [(ngModel)]="user.phonenumber"
+          placeholder="Enter Phone number"
+          readonly
+        />
       </div>
     </div>
 
@@ -45,7 +63,12 @@
     <div class="row row-4">
       <div class="col-md-4">
         <label class="label">Gender</label>
-        <select class="input-box">
+        <select
+          class="input-box"
+          name="gender"
+          [(ngModel)]="user.gender"
+          disabled
+        >
           <option value="" selected disabled>Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
@@ -53,19 +76,27 @@
       </div>
       <div class="col-md-4">
         <label class="label">Date of Birth</label>
-        <input type="date" class="input-box" placeholder="Enter DOB" />
+        <input
+          type="date"
+          class="input-box"
+          [(ngModel)]="user.dob"
+          placeholder="Enter DOB"
+          readonly
+        />
       </div>
       <div class="col-md-4">
         <label class="label">Role</label>
-        <select class="input-box">
-          <option value="" selected disabled>Select Role</option>
-          <option></option>
-        </select>
+        <input type="text" class="input-box" [value]="user.roleId" readonly />
       </div>
       <div class="col-md-4">
         <label class="label">Activate/Deactivate User</label>
         <label class="switch" for="checkbox">
-          <input type="checkbox" id="checkbox" />
+          <input
+            type="checkbox"
+            id="checkbox"
+            name="status"
+            [(ngModel)]="user.status"
+          />
           <div class="slider round"></div>
         </label>
       </div>
@@ -74,7 +105,8 @@
     <div class="row row-4">
       <div class="col-md-4 offset-md-4">
         <button class="button button4">Cancel</button>
-        <button class="button button4">Create</button>
+        <button class="button button4" (click)="onSubmit()">Create</button>
+
       </div>
     </div>
   </div>

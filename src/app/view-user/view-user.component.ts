@@ -75,4 +75,8 @@ export class ViewUserComponent implements OnInit {
     // Handle the change if needed
     console.log('Role changed:', event.target.value);
   }
+  editUser(): void {
+    console.log("clicked")
+    this.router.navigate([`edit-user/${this.userId}`]);
+  }
 }
