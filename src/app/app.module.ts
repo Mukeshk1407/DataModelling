@@ -25,7 +25,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import { ListUserComponent } from './list-user/list-user.component';
+import { ViewUserComponent } from './view-user/view-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { UserInfoService } from './services/user-info.service';
 
 
 @NgModule({
@@ -40,6 +43,9 @@ import { MatInputModule } from '@angular/material/input';
     EditEntityComponent,
     CreateEntityComponent,
     CreateUserComponent,
+    ListUserComponent,
+    ViewUserComponent,
+    EditUserComponent,
    ],
   imports: [
     BrowserModule,

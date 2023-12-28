@@ -8,6 +8,9 @@ import { LogDetailsComponent } from './log-details/log-details.component';
 import { CreateEntityComponent } from './create-entity/create-entity.component';
 import { EditEntityComponent } from './edit-entity/edit-entity.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { ListUserComponent } from './list-user/list-user.component';
+import { ViewUserComponent } from './view-user/view-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 
 const routes: Routes = [
@@ -18,7 +21,10 @@ const routes: Routes = [
   { path: 'entity/:entityName', component: EntityDetailsComponent },
   {path:'log_details',component:LogDetailsComponent},
   {path:'createentity',component:CreateEntityComponent},
-  {path:'Edit-Entity/:entityName',component:EditEntityComponent}
+  {path:'Edit-Entity/:entityName',component:EditEntityComponent},
+  {path:'list-user',component:ListUserComponent},
+  { path: 'view-user/:id', component: ViewUserComponent },
+  {path:'edit-user/:id',component:EditUserComponent}
 ];
 
 @NgModule({

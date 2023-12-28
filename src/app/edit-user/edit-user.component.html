@@ -1,0 +1,81 @@
+<div class="header">
+  <div class="icon-container">
+    <i
+      matTooltip="Disconnect Database"
+      class="fa-solid fa-plug-circle-xmark"
+    ></i>
+    <i matTooltip="Logout" class="fas fa-sign-out-alt"></i>
+  </div>
+</div>
+<div class="content">
+  <div class="left-header" (click)="BacktoView(entityName)">
+    <i
+      class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl"
+      style="
+        color: white;
+        font-size: 33px;
+        font-weight: bold;
+        padding-left: 160px;
+      "
+    ></i>
+  </div>
+  <div class="middle-header">
+    <span>Edit Profile</span>
+  </div>
+</div>
+<div class="entity-list-container">
+  <!-- firstrow -->
+  <div class="insidecontainer">
+    <div class="row row-4">
+      <div class="col-md-4">
+        <label class="label">Username</label>
+        <input type="text" class="input-box" [(ngModel)]="user.name" placeholder="Enter Username" />
+      </div>
+      <div class="col-md-4">
+        <label class="label">Email</label>
+        <input type="text" class="input-box" placeholder="Enter Email" />
+      </div>
+      <div class="col-md-4">
+        <label class="label">Phone</label>
+        <input type="text" class="input-box" placeholder="Enter Phone number" />
+      </div>
+    </div>
+
+    <!-- Secondrow -->
+    <div class="row row-4">
+      <div class="col-md-4">
+        <label class="label">Gender</label>
+        <select class="input-box">
+          <option value="" selected disabled>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="label">Date of Birth</label>
+        <input type="date" class="input-box" placeholder="Enter DOB" />
+      </div>
+      <div class="col-md-4">
+        <label class="label">Role</label>
+        <select class="input-box">
+          <option value="" selected disabled>Select Role</option>
+          <option></option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="label">Activate/Deactivate User</label>
+        <label class="switch" for="checkbox">
+          <input type="checkbox" id="checkbox" />
+          <div class="slider round"></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="row row-4">
+      <div class="col-md-4 offset-md-4">
+        <button class="button button4">Cancel</button>
+        <button class="button button4">Create</button>
+      </div>
+    </div>
+  </div>
+</div>

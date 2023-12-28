@@ -1,0 +1,240 @@
+<div class="header">
+  <div class="icon-container">
+    <i
+      matTooltip="Disconnect Database"
+      class="fa-solid fa-plug-circle-xmark"
+    ></i>
+    <i matTooltip="Logout" class="fas fa-sign-out-alt"></i>
+  </div>
+</div>
+<div class="content">
+  <div class="left-header" (click)="BacktoView(entityName)">
+    <i
+      class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl"
+      style="color: white; font-size: 33px; font-weight: bold"
+    ></i>
+  </div>
+  <div class="middle-header">
+    <span>Users</span>
+  </div>
+</div>
+<div class="entity-list-container">
+  <div class="container">
+    <div class="row">
+      <div class="container1">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-4">
+                      <i class="fa-solid fa-list" style="font-size: 29px"></i>
+                    </div>
+                    <div class="col-8">
+                      <h5
+                        class="card-title"
+                        style="font-weight: bold; font-size: 15px"
+                      >
+                        Total
+                      </h5>
+                    </div>
+                    <h6
+                      style="
+                        font-weight: bold;
+                        font-size: 15px;
+                        text-align: center;
+                      "
+                    >
+                      {{ totalUserCount }}
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-4">
+                      <i
+                        class="fa-sharp fa-solid fa-circle-check"
+                        style="color: #06db14; font-size: 29px"
+                      ></i>
+                    </div>
+                    <div class="col-8">
+                      <h5
+                        class="card-title"
+                        style="font-weight: bold; font-size: 15px"
+                      >
+                        Active
+                      </h5>
+                    </div>
+                    <h6
+                      style="
+                        font-weight: bold;
+                        text-align: center;
+                        font-size: 15px;
+                      "
+                    >
+                      {{ activeUserCount }}
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-4">
+                      <i
+                        class="fa-sharp fa-solid fa-circle-xmark"
+                        style="color: #ec0909; font-size: 29px"
+                      ></i>
+                    </div>
+                    <div class="col-8">
+                      <h5
+                        class="card-title"
+                        style="font-weight: bold; font-size: 15px"
+                      >
+                        Inactive
+                      </h5>
+                    </div>
+                    <h6
+                      style="
+                        font-weight: bold;
+                        text-align: center;
+                        font-size: 15px;
+                      "
+                    >
+                      {{ inactiveUserCount }}
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="line"></div>
+    </div>
+    <br />
+    <div>
+      <div>
+        <div>
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4"></div>
+                <div class="col-3">
+                  <div class="export-align">
+                    <div class="col-1">
+                      <div class="add-icon">
+                        <i
+                          class="fa-solid fa-circle-plus"
+                          style="font-size: 35px"
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Phone</th>
+                <th>Date of birth</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let user of users; let i = index">
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <a [routerLink]="['/view-user', user.id]">{{ user.name }}</a>
+                </td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.phonenumber }}</td>
+                <td>{{ user.dob }}</td>
+                <td>{{ user.roleId }}</td>
+                <td>{{ user.status }}</td>
+                <td>
+                  <div class="trash" style="padding-top: 7px">
+                    <div>
+                      <div class="backgroud-circle">
+                        <i class="fa-regular fa-trash-can"></i>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Add the user details display here -->
+              <!-- <tr *ngIf="selectedUserId === user.id">
+                <td colspan="9">
+                  <div *ngFor="let userDetail of user | keyvalue">
+                    {{ userDetail.key }}: {{ userDetail.value }}
+                  </div>
+                </td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="container2">
+          <div class="outbox" *ngIf="users.length === 0">
+            <div class="nofound">
+              <img
+                src="../../assets/images/modern-flat-design-concept-no-result-found-empty-results-popup-design_637684-98 1.png"
+              />
+            </div>
+            <div class="error-content">
+              <h4>No Users found</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add this at the end of your log-details.component.html file -->
+  <div
+    class="modal fade"
+    id="exportModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exportModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exportModalLabel">Confirmation</h5>
+        </div>
+        <div class="modal-body">
+          <p>You want to Exporting the error data for {{ entityName }}</p>
+          <!-- Add your export-related content here -->
+        </div>
+        <div class="modal-footer">
+          <!-- Update the Close button inside the modal-footer -->
+          <button type="button" class="btn btn-secondary">Close</button>
+          <!-- OK button to trigger export -->
+          <button type="button" class="btn btn-primary">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

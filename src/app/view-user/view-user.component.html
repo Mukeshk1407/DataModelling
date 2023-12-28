@@ -1,0 +1,100 @@
+<div class="header">
+  <div class="icon-container">
+    <i
+      matTooltip="Disconnect Database"
+      class="fa-solid fa-plug-circle-xmark"
+    ></i>
+    <i matTooltip="Logout" class="fas fa-sign-out-alt"></i>
+  </div>
+</div>
+<div class="content">
+  <div class="left-header" (click)="BacktoView(entityName)">
+    <i
+      class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl"
+      style="
+        color: white;
+        font-size: 33px;
+        font-weight: bold;
+        padding-left: 160px;
+      "
+    ></i>
+  </div>
+  <div class="middle-header">
+    <span>View Profile</span>
+  </div>
+</div>
+
+<div class="entity-list-container">
+  <!-- firstrow -->
+  <div class="insidecontainer">
+    <div class="row row-4">
+      <div class="col-md-4">
+        <label class="label">Username</label>
+        <input type="text" class="input-box" [value]="user.name" readonly />
+      </div>
+      <div class="col-md-4">
+        <label class="label">Email</label>
+        <input type="text" class="input-box" [value]="user.email" readonly />
+      </div>
+      <div class="col-md-4">
+        <label class="label">Phone</label>
+        <input
+          type="text"
+          class="input-box"
+          [value]="user.phonenumber"
+          readonly
+        />
+      </div>
+    </div>
+
+    <!-- Secondrow -->
+    <div class="row row-4">
+      <div class="col-md-4">
+        <label class="label">Gender</label>
+        <select class="input-box" [value]="user.gender" disabled>
+          <option value="" selected disabled>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="label">Date of Birth</label>
+        <input
+          type="date"
+          class="input-box"
+          [value]="user.dob | date : 'yyyy-MM-dd'"
+          readonly
+        />
+      </div>
+      <div class="col-md-4">
+        <label class="label">Role</label>
+        <input type="text" class="input-box" [value]="user.roleId" readonly />
+      </div>
+      <div class="col-md-4">
+        <label class="label">Activate/Deactivate User</label>
+        <label class="switch" for="checkbox">
+          <input
+            type="checkbox"
+            id="checkbox"
+            [checked]="user.status"
+            disabled
+          />
+          <div class="slider round"></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="row ">
+      <div class="col-4">
+        <div class="can-but">
+          <button class="button button4">Cancel</button>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="edit-but">
+          <button class="button button4">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
