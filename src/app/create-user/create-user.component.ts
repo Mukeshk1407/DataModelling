@@ -4,6 +4,7 @@ import { RoleService } from '../services/role.service';
 import { Role } from '../interface/role';
 import { User } from '../models/User.model';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class CreateUserComponent {
 
  constructor(private createuserservice: CreateUserService,
   private roleService: RoleService,
-  private toastrService: ToastrService) {}
+  private toastrService: ToastrService,
+  private router: Router) {}
 
 
   ngOnInit() {
@@ -94,6 +96,9 @@ togglePasswordVisibility() {
   this.showPassword = !this.showPassword;
 }
 
+backtolanding(){
+  this.router.navigate(['/']);
+}
 
 
 }
