@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CreateUserService } from '../services/create-user.service';
 import { RoleService } from '../services/role.service';
 import { Role } from '../interface/role';
+import { User } from '../models/User.model';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -11,24 +13,26 @@ import { Role } from '../interface/role';
 })
 export class CreateUserComponent {
 
- userModel: any = {};
- roles: string[] = []; // Array to store role names
+  userModel: User = new User();
+ roles: Role[] = []; // Array to store role names
+ selectedRole: Role | null = null;
+
 
  constructor(private createuserservice: CreateUserService,
-  private roleService: RoleService) {}
+  private roleService: RoleService,
+  private toastrService: ToastrService) {}
 
 
   ngOnInit() {
     this.getRoles();
-    console.log("role", this.getRoles())
   }
 
   getRoles() {
     this.roleService.getRoles().subscribe(
       (response) => {
-        console.log('API Response:', response); 
-        this.roles = response?.result.map((role: Role) => role.roleName) || [];
-        console.log("Roles", this.roles); // Log roles here
+       // this.roles = response?.result.map((role: Role) => role.roleName) || [];
+       this.roles = response?.result || [];
+       console.log('Roles:', this.roles);
       },
       (error) => {
         console.error('Error getting roles', error);
@@ -36,14 +40,60 @@ export class CreateUserComponent {
     );
   }
 
+  onRoleSelected(selectedRole: Role | null) {
+    if (selectedRole !== null && selectedRole !== undefined) {
+      console.log('Selected role ID:', selectedRole.id);
+      console.log('Selected role Name:', selectedRole.roleName);
+
+   // Assign the selected role name to the userModel's role property
+    this.userModel.role = selectedRole.roleName;
+    } else {
+      console.log('error');
+    }
+  }
+
+
+
+  
  createUser() {
+   // Check if a role is selected
+   if (this.selectedRole) {
+    // Assign selected role information to userModel
+    this.userModel.roleId = this.selectedRole.id;
+    this.userModel.role = this.selectedRole.roleName;
+  }
+  console.log('User Model:', this.userModel);
   this.createuserservice.createUser(this.userModel).subscribe(
+    
     (response) => {
+      
       console.log('User created successfully', response);
+      this.toastrService.success('User created successfully');
+      // Reset the userModel to clear the form fields
+      this.userModel = new User();
     },
     (error) => {
       console.error('Error creating user', error);
+      this.toastrService.error('Error creating user');
     }
   );
 }
+
+
+// validation-dob
+getMaxDOB(): string {
+  const today = new Date();
+  today.setFullYear(today.getFullYear() - 18);
+  return today.toISOString().split('T')[0];
+}
+
+//password
+showPassword = false;
+
+togglePasswordVisibility() {
+  this.showPassword = !this.showPassword;
+}
+
+
+
 }
