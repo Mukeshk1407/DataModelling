@@ -15,24 +15,57 @@
   <!-- firstrow -->
   <div class="insidecontainer">
     <div class="row row-4">
+      <!-- username -->
       <div class="col-md-4">
         <label class="label">Username</label>
         <input
           type="text"
           class="input-box"
           placeholder="Enter Username"
-          [(ngModel)]="userModel.Name"
+          [(ngModel)]="userModel.name"
+          [ngModelOptions]="{ standalone: true }"
+          name="username"
+          #username="ngModel"
+          [maxlength]="15"
+          pattern="[a-zA-Z]+"
+          required
         />
+        <div *ngIf="username.invalid && (username.dirty || username.touched)">
+          <div *ngIf="username.hasError('required')" style="color: red">
+            Username is required.
+          </div>
+          <div *ngIf="username.hasError('pattern')" style="color: red">
+            Only alphabets are allowed in the username.
+          </div>
+          <div *ngIf="username.hasError('maxlength')" style="color: red">
+            Username cannot exceed 15 characters.
+          </div>
+        </div>
       </div>
+      <!-- email -->
       <div class="col-md-4">
         <label class="label">Email</label>
         <input
           type="text"
           class="input-box"
           placeholder="Enter Email"
-          [(ngModel)]="userModel.Email"
+          [(ngModel)]="userModel.email"
+          [ngModelOptions]="{ standalone: true }"
+          name="email"
+          #email="ngModel"
+          email
+          required
         />
+        <div *ngIf="email.invalid && (email.dirty || email.touched)">
+          <div *ngIf="email.hasError('required')" style="color: red">
+            Email is required.
+          </div>
+          <div *ngIf="email.hasError('email')" style="color: red">
+            Invalid email format.
+          </div>
+        </div>
       </div>
+      <!-- phonenumber -->
       <div class="col-md-4">
         <label class="label">Phone</label>
         <input
@@ -40,54 +73,130 @@
           class="input-box"
           placeholder="Enter Phone number"
           [(ngModel)]="userModel.phonenumber"
+          [ngModelOptions]="{ standalone: true }"
+          name="phonenumber"
+          #phonenumber="ngModel"
+          pattern="[0-9]+"
+          minlength="10"
+          maxlength="10"
+          required
         />
+        <div
+          *ngIf="
+            phonenumber.invalid && (phonenumber.dirty || phonenumber.touched)
+          "
+        >
+          <div *ngIf="phonenumber.hasError('required')" style="color: red">
+            Phone number is required.
+          </div>
+          <div *ngIf="phonenumber.hasError('pattern')" style="color: red">
+            Only numbers are allowed.
+          </div>
+          <div
+            *ngIf="
+              phonenumber.hasError('minlength') ||
+              phonenumber.hasError('maxlength')
+            "
+            style="color: red"
+          >
+            Phone number should have 10 digits.
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Secondrow -->
     <div class="row row-4">
+      <!-- gender  -->
       <div class="col-md-4">
         <label class="label">Gender</label>
-        <select class="input-box">
+        <select class="input-box" [(ngModel)]="userModel.gender">
           <option value="" selected disabled>Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
       </div>
+      <!-- dob  -->
       <div class="col-md-4">
         <label class="label">Date of Birth</label>
         <input
           type="date"
           class="input-box"
           placeholder="Enter DOB"
-          [(ngModel)]="userModel.DOB"
+          [(ngModel)]="userModel.dob"
+          [ngModelOptions]="{ standalone: true }"
+          name="dob"
+          #dob="ngModel"
+          [max]="getMaxDOB()"
+          required
         />
+        <div *ngIf="dob.invalid && (dob.dirty || dob.touched)">
+          <div *ngIf="dob.hasError('required')" style="color: red">
+            DOB is required.
+          </div>
+          <div *ngIf="dob.hasError('max')" style="color: red">
+            Age should be 18 years or older.
+          </div>
+        </div>
       </div>
+      <!-- role  -->
       <div class="col-md-4">
         <label class="label">Role</label>
-        <select class="input-box" [(ngModel)]="userModel.RoleId">
+        <select
+          class="input-box"
+          [(ngModel)]="selectedRole"
+          (change)="onRoleSelected(selectedRole)"
+        >
           <option value="" selected disabled>Select Role</option>
-          <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+          <option *ngFor="let role of roles" [ngValue]="role">
+            {{ role.roleName }}
+          </option>
         </select>
       </div>
     </div>
 
     <!-- Thirdrow -->
     <div class="row row-4">
-      <div class="col-md-4">
+      <div class="col-md-4 input-container">
         <label class="label">Password</label>
-        <input
-          type="password"
-          class="input-box"
-          placeholder="Enter Password"
-          [(ngModel)]="userModel.Password"
-        />
+        <div class="password-container inside_elcontainer">
+          <input
+            type="{{ showPassword ? 'text' : 'password' }}"
+            class="input-box"
+            placeholder="Enter Password"
+            [(ngModel)]="userModel.password"
+            [ngModelOptions]="{ standalone: true }"
+            name="password"
+            #password="ngModel"
+            [minlength]="8"
+            required
+          />
+          <span
+            class="password-toggle-icon"
+            (click)="togglePasswordVisibility()"
+          >
+            <i [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </span>
+        </div>
+        <div *ngIf="password.invalid && (password.dirty || password.touched)">
+          <div *ngIf="password.hasError('required')" style="color: red">
+            Password is required.
+          </div>
+          <div *ngIf="password.hasError('minlength')" style="color: red">
+            Password should be at least 8 characters.
+          </div>
+        </div>
       </div>
+
       <div class="col-md-4">
         <div class="container">
           <label class="label">Activate/Deactivate User</label>
           <label class="switch" for="checkbox">
-            <input type="checkbox" id="checkbox" />
+            <input
+              type="checkbox"
+              id="checkbox"
+              [(ngModel)]="userModel.status"
+            />
             <div class="slider round"></div>
           </label>
         </div>
