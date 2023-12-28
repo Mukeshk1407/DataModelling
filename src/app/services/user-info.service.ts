@@ -22,6 +22,14 @@ export class UserInfoService {
   getUserById(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/GetUserbyId?id=${userId}`);
   }
+  getRoles(): Observable<any[]> {
+    const url = `${this.apiUrl}/GetRoles`; // Adjust the endpoint based on your API
+    return this.http.get<any[]>(url);
+  }
 
-  
+  updateUserById(userId: number, userData: any): Observable<any> {
+    const url = `${this.apiUrl}/UpdateUserbyId`;
+    return this.http.put(url, userData);
+  }
+
 }
