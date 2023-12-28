@@ -59,5 +59,9 @@ export class LandingPageComponent implements OnInit {
         }
       });
     }
+
+    navigateToRegister(): void {
+      this.router.navigate(['/register']); // Update 'login' with the actual route path to your login component
+    }
 }
 
