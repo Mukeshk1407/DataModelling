@@ -1,15 +1,22 @@
 <div class="header">
   <div class="icon-container">
-    <i matTooltip="Disconnect Database" class="fa-solid fa-plug-circle-xmark" (click)="switchView()"></i>
+    <i
+      matTooltip="Disconnect Database"
+      class="fa-solid fa-plug-circle-xmark"
+      (click)="switchView()"
+    ></i>
     <i matTooltip="Logout" class="fas fa-sign-out-alt" (click)="logout()"></i>
   </div>
 </div>
 <div class="content">
   <div class="left-header" (click)="BacktoView(entityName)">
-    <i class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl" style="color: white;font-size: 33px;font-weight: bold;"></i>
+    <i
+      class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl"
+      style="color: white; font-size: 33px; font-weight: bold"
+    ></i>
   </div>
   <div class="middle-header">
-    <span>Error Logs</span>
+    <span>Error Details</span>
   </div>
 </div>
 <div class="entity-list-container">
@@ -19,16 +26,27 @@
         <div class="col-12">
           <div class="row">
             <div class="col-4">
-              <div class="card" >
+              <div class="card">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-4">
-                      <i class="fa-solid fa-list"  style="font-size :29px;"></i>
+                      <i class="fa-solid fa-list" style="font-size: 29px"></i>
                     </div>
                     <div class="col-8">
-                      <h5 class="card-title" style="font-weight: bold; font-size :15px; ">Total</h5>
+                      <h5
+                        class="card-title"
+                        style="font-weight: bold; font-size: 15px"
+                      >
+                        Total
+                      </h5>
                     </div>
-                    <h6 style="font-weight: bold; font-size: 15px; text-align: center;">
+                    <h6
+                      style="
+                        font-weight: bold;
+                        font-size: 15px;
+                        text-align: center;
+                      "
+                    >
                       {{ logParent?.recordCount || 0 }}
                     </h6>
                   </div>
@@ -37,15 +55,31 @@
             </div>
             <div class="col-4">
               <div class="card">
-                <div class="card-body"> 
+                <div class="card-body">
                   <div class="row">
                     <div class="col-4">
-                      <i class="fa-sharp fa-solid fa-circle-check" style="color: #06db14;font-size :29px;"></i>
+                      <i
+                        class="fa-sharp fa-solid fa-circle-check"
+                        style="color: #06db14; font-size: 29px"
+                      ></i>
                     </div>
                     <div class="col-8">
-                      <h5 class="card-title" style="font-weight: bold;font-size :15px; ">Success</h5>
+                      <h5
+                        class="card-title"
+                        style="font-weight: bold; font-size: 15px"
+                      >
+                        Success
+                      </h5>
                     </div>
-                    <h6 style="font-weight: bold;text-align: center;font-size :15px; ">{{ logParent?.passCount || 0 }}</h6>
+                    <h6
+                      style="
+                        font-weight: bold;
+                        text-align: center;
+                        font-size: 15px;
+                      "
+                    >
+                      {{ logParent?.passCount || 0 }}
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -55,13 +89,29 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-4">
-                      <i class="fa-sharp fa-solid fa-circle-xmark" style="color: #ec0909;font-size :29px;"></i>
+                      <i
+                        class="fa-sharp fa-solid fa-circle-xmark"
+                        style="color: #ec0909; font-size: 29px"
+                      ></i>
                     </div>
                     <div class="col-8">
-                      <h5 class="card-title"style="font-weight: bold;font-size :15px; ">Error</h5>
+                      <h5
+                        class="card-title"
+                        style="font-weight: bold; font-size: 15px"
+                      >
+                        Error
+                      </h5>
                     </div>
-                    <h6 style="font-weight: bold;text-align: center;font-size :15px; ">{{logParent?.failCount || 0}}</h6>
-                  </div>  
+                    <h6
+                      style="
+                        font-weight: bold;
+                        text-align: center;
+                        font-size: 15px;
+                      "
+                    >
+                      {{ logParent?.failCount || 0 }}
+                    </h6>
+                  </div>
                 </div>
               </div>
             </div>
@@ -69,64 +119,86 @@
         </div>
       </div>
       <div class="line"></div>
-  </div>
-  <br>
-  <div>
-    <div *ngIf="logChildren !=  null">
-      <div>
-        <div class="row">
-          <div class="col-12">
-            <div class="row">
-              <div class="col-4"></div>
-              <div class="col-4"></div>
-              <div class="col-3">
-                <div class="export-align">
-                  <button class="export-button" mat-raised-button color="primary" (click)="exportbtn()" [disabled]="!logParent.failCount || logParent.failCount === 0"><img src="../../assets/images/export.png" class="export-image" >Export</button>
+    </div>
+    <br />
+    <div>
+      <div *ngIf="logChildren != null">
+        <div>
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4"></div>
+                <div class="col-3">
+                  <div class="export-align">
+                    <button
+                      class="export-button"
+                      mat-raised-button
+                      color="primary"
+                      (click)="exportbtn()"
+                      [disabled]="
+                        !logParent.failCount || logParent.failCount === 0
+                      "
+                    >
+                      <img
+                        src="../../assets/images/export.png"
+                        class="export-image"
+                      />Export
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="table-container">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>S.No</th>
-              <th>Username</th>
-              <th>Error Message</th>
-              <th>Error Rows</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let child of logChildren;let i = index">
-              <td scope="row">{{ i + 1 }}</td>
-              <td>admin</td>
-              <td>{{ child.errorMessage }}</td>
-              <td>{{ truncateErrorRowNumber(child.errorRowNumber) }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Username</th>
+                <th>Error Message</th>
+                <th>Error Rows</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let child of logChildren; let i = index">
+                <td scope="row">{{ i + 1 }}</td>
+                <td>admin</td>
+                <td>{{ child.errorMessage }}</td>
 
-    </div>
-    <div  *ngIf="logChildren == null">
-      <div class="container2">
-        <div class="outbox">
-          <div class="nofound">
-            <img src="../../assets/images/modern-flat-design-concept-no-result-found-empty-results-popup-design_637684-98 1.png">
-          </div>
-          <div class="error-content">
-            <h4>No error log found</h4>
+                <td>{{ truncateErrorRowNumber(child.errorRowNumber) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="logChildren == null">
+        <div class="container2">
+          <div class="outbox">
+            <div class="nofound">
+              <img
+                src="../../assets/images/modern-flat-design-concept-no-result-found-empty-results-popup-design_637684-98 1.png"
+              />
+            </div>
+            <div class="error-content">
+              <h4>No error log found</h4>
+            </div>
           </div>
         </div>
-      </div>       
+      </div>
     </div>
   </div>
-</div>
 
   <!-- Add this at the end of your log-details.component.html file -->
-  <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="exportModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exportModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -137,11 +209,20 @@
           <!-- Add your export-related content here -->
         </div>
         <div class="modal-footer">
-         <!-- Update the Close button inside the modal-footer -->
-  <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+          <!-- Update the Close button inside the modal-footer -->
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="closeModal()"
+          >
+            Close
+          </button>
           <!-- OK button to trigger export -->
-          <button type="button" class="btn btn-primary" (click)="exportData()">OK</button>
+          <button type="button" class="btn btn-primary" (click)="exportData()">
+            OK
+          </button>
         </div>
       </div>
     </div>
-  </div> 
+  </div>
+</div>

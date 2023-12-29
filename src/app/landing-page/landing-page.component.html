@@ -1,5 +1,10 @@
 <!-- src/app/landing-page/landing-page.component.html -->
-
+<!-- <div *ngIf="(role$ | async) === 'admin'" style="border: 2px solid red">
+  <h3>Welcome, Admin!</h3>
+  <a routerLink="/user">User</a>
+</div> -->
+<!-- <p>Role: {{ role$ | async }}</p>
+<p>LoggedIn: {{ loggedIn$ | async }}</p> -->
 <div class="full-screen-image">
   <img
     class="image"
@@ -31,7 +36,11 @@
     </div>
   </div>
 
-  <div class="register-button" (click)="navigateToRegister()">
+  <div
+    class="register-button"
+    *ngIf="!(loggedIn$ | async)"
+    (click)="navigateToRegister()"
+  >
     <button>
       <span>Register</span>
       <i class="fas fa-user-plus"></i>
