@@ -12,7 +12,16 @@ export class EntitylistService {
   private apiUrlGateway = 'https://localhost:7093/api/entitylist';
   constructor(private http:HttpClient) { }
   getEntityList(): Observable<EntityListDto[]> {  
-    console.log(this.apiUrlGateway,"this.apiUrlGateWay")  
-    return this.http.get<EntityListDto[]>(this.apiUrlGateway);
+    var databaseDetailsString = localStorage.getItem('databaseDetails');
+    // Parse the JSON string into an object
+    var databaseDetails1 = JSON.parse(databaseDetailsString || '{}');
+
+    // Extract individual values from the object
+    var host = databaseDetails1?.hostname || '';
+    var databaseName = databaseDetails1?.databaseName || '';
+    var username = databaseDetails1?.username || '';
+    var password = databaseDetails1?.password || '';
+    
+    return this.http.get<EntityListDto[]>(`${this.apiUrlGateway}?HostName=${host}&DatabaseName=${databaseName}&ProviderName=${username}'`);
   }
 }
