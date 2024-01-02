@@ -28,7 +28,6 @@ export class EntityListComponent implements OnInit{
       (data: any) => {
         this.tableNames = data.result;
         this.pagedData = this.tableNames;
-        console.log(this.tableNames);
         // Make the second API call inside this block
         const tableNames = this.pagedData.map(table => table.entityName);
         this.SharedDataService.checkTablesHaveValues(this.pagedData.map(table => table.entityName))

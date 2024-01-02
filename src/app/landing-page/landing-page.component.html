@@ -1,49 +1,70 @@
 <!-- src/app/landing-page/landing-page.component.html -->
-
+<!-- <div *ngIf="(role$ | async) === 'admin'" style="border: 2px solid red">
+  <h3>Welcome, Admin!</h3>
+  <a routerLink="/user">User</a>
+</div> -->
+<!-- <p>Role: {{ role$ | async }}</p>
+<p>LoggedIn: {{ loggedIn$ | async }}</p> -->
 <div class="full-screen-image">
-    <img class="image" src="../../assets/images/landingpage2.png" alt="Landing-page">
+  <img
+    class="image"
+    src="../../assets/images/landingpage2.png"
+    alt="Landing-page"
+  />
 
-    <div class="centered-text">
-        <h2>BulkUpload Pro                    </h2>
-        <div class="additional-content">
-            <p>Welcome to BulkUpload Pro, where data management meets simplicity. Effortlessly handle bulk
-                uploads across databases, ensuring efficiency and consistency. Our user-friendly interface and
-                innovative solutions make us the ideal choice</p>
-        </div>
+  <div class="centered-text">
+    <h2>BulkUpload Pro</h2>
+    <div class="additional-content">
+      <p>
+        Welcome to BulkUpload Pro, where data management meets simplicity.
+        Effortlessly handle bulk uploads across databases, ensuring efficiency
+        and consistency. Our user-friendly interface and innovative solutions
+        make us the ideal choice
+      </p>
     </div>
+  </div>
 
-    <div class="feature-boxes">
-        <div class="feature-box">
-            <p>Upload bulk data from Excel</p>
-        </div>
-        <div class="feature-box">
-            <p>Access to Multiple Database</p>
-        </div>
-        <div class="feature-box">
-            <p>Access to Upload Data Error Logs</p>
-        </div>
+  <div class="feature-boxes">
+    <div class="feature-box">
+      <p>Upload bulk data from Excel</p>
     </div>
+    <div class="feature-box">
+      <p>Access to Multiple Database</p>
+    </div>
+    <div class="feature-box">
+      <p>Access to Upload Data Error Logs</p>
+    </div>
+  </div>
 
-    <div *ngIf="loggedIn$; else showLoginButton">
-        <div class="connect-database" (click)="dbPopup()">
-          <button>
-            <span>Connect Database</span>&nbsp;<i class="fa-solid fa-plug"></i>
-          </button>
-        </div>
-        <div class="login-button" (click)="logout()">
-          <button>
-            <span>Logout</span>
-            <i class="fa fa-sign-out"></i>
-          </button>
-        </div>
-      </div>
-    <ng-template #showLoginButton>
-        <div class="login-button" (click)="navigateToLogin()">
-            <button>
-                <span>Login</span>
-                <i class="fa fa-sign-in"></i>
-            </button>
-        </div>
-    </ng-template>
-
+  <div
+    class="register-button"
+    *ngIf="!(loggedIn$ | async)"
+    (click)="navigateToRegister()"
+  >
+    <button>
+      <span>Register</span>
+      <i class="fas fa-user-plus"></i>
+    </button>
+  </div>
+  <div *ngIf="loggedIn$; else showLoginButton">
+    <div class="connect-database" (click)="dbPopup()">
+      <button>
+        <span>Connect Database</span>&nbsp;<i class="fa-solid fa-plug"></i>
+      </button>
+    </div>
+    <div class="login-button" (click)="logout()">
+      <button>
+        <span>Logout</span>
+        <i class="fa fa-sign-out"></i>
+      </button>
+    </div>
+  </div>
+  <ng-template #showLoginButton>
+    <div class="login-button" (click)="navigateToLogin()">
+      <button>
+        <span>Login</span>
+        <i class="fa fa-sign-in"></i>
+      </button>
+    </div>
+  </ng-template>
 </div>

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { selectLoggedIn } from '../state/auth.selectors';
+import { Observable, combineLatest, of } from 'rxjs';
+import { selectLoggedIn ,selectRole} from '../state/auth.selectors';
 import * as authActions from '../state/auth.actions';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthStorageService } from '../services/authstorage.service';
+
+
 
 @Component({
   selector: 'app-landing-page',
@@ -16,19 +18,25 @@ import { AuthStorageService } from '../services/authstorage.service';
 export class LandingPageComponent implements OnInit {
 
   isPopupVisible = false;
-  loggedIn$ = false;
-  // loggedIn$ !: Observable<boolean>;
+  //loggedIn$ = false;
+   loggedIn$ !: Observable<boolean>;
+   role$!: Observable<string | null>;
 
   constructor(private router: Router, private store: Store, private dialog: MatDialog,private authStorageService: AuthStorageService) {
     var storedAuthInfo = this.authStorageService.getAuthInfo();
     if(storedAuthInfo != undefined  && storedAuthInfo.loggedIn != undefined) {
-      this.loggedIn$ = storedAuthInfo?.loggedIn
+      this.loggedIn$ = of(storedAuthInfo?.loggedIn);
     }
+    this.role$ = this.store.select(selectRole);
     // this.loggedIn$ = this.store.select(selectLoggedIn);
   }
 
   ngOnInit(): void {
-    // ... (existing initialization logic)
+    // this.loggedIn$ = this.store.select(selectLoggedIn);
+    // this.role$ = this.store.select(selectRole);
+  
+    this.loggedIn$!.subscribe(loggedIn => console.log('LoggedIn:', loggedIn));
+    this.role$!.subscribe(role => console.log('Role:', role));
   }
 
   navigateToLogin(): void {
@@ -36,6 +44,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   logout() {
+    
     this.authStorageService.clearAuthInfo();
     this.router.navigate(['']);
     window.location.reload();
@@ -58,6 +67,10 @@ export class LandingPageComponent implements OnInit {
           console.log('Modal closed');
         }
       });
+    }
+
+    navigateToRegister(): void {
+      this.router.navigate(['/register']); // Update 'login' with the actual route path to your login component
     }
 }
 

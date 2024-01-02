@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthStorageService } from '../services/authstorage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
+
 declare var $: any; // Add this line to declare the jQuery variable
 
 
@@ -235,4 +236,6 @@ export class LogDetailsComponent {
     }
     return ''; 
   }
+
+ 
 }
