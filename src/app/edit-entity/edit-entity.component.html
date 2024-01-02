@@ -30,7 +30,7 @@
   [ngClass]="{ scrollable: columns.length > 1 }"
 >
   <br />
-<div class="container">
+  <div class="container">
     <div class="row">
       <div class="col-2">
         <div class="EntityName">
@@ -45,13 +45,10 @@
             type="text"
             id="entityName"
             name="entityName"
-            placeholder="Enter your entity name here"
-            sty
-            [(ngModel)]="EntityentityName"
-            required
-            pattern="^[a-zA-Z][a-zA-Z0-9]*$"
+            [(ngModel)]="entityName"
             #entityNameInput="ngModel"
             readonly="true"
+            value="entityName "    
           />
         </div>
         <div
@@ -77,9 +74,6 @@
           </div>
         </div>
       </div>
-      <div (click)="addNewRow()" class="col-1">
-        <i class="fa-solid fa-circle-plus"></i>
-      </div>
       <div class="line"></div>
     </div>
   </div>
@@ -104,7 +98,7 @@
                   name="columnName{{ i }}"
                   #columnNameInput="ngModel"
                   style="font-size: 15px"
-                  readonly = "true"
+                  readonly="true"
                 />
               </div>
             </div>
@@ -118,8 +112,8 @@
                   (change)="onDataTypeChange(row)"
                   [disabled]="isReadOnly"
                 >
-                  <option value="string">String</option>
-                  <option value="int">Number</option>
+                  <option value="character varying">String</option>
+                  <option value="integer">Number</option>
                   <option value="boolean">Boolean</option>
                   <option value="char">Char</option>
                   <option value="date">Date</option>
@@ -418,13 +412,6 @@
               style="padding-top: 37px; padding-left: 87px"
               (click)="deleteRow(i, $event)"
             >
-              <div class="trash" style="padding-top: 10px">
-                <div>
-                  <div class="backgroud-circle">
-                    <i class="fa-regular fa-trash-can"></i>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <div style="margin-bottom: 10px; padding-top: 10px"><hr /></div>
