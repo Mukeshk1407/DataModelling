@@ -156,7 +156,6 @@
                 <th>Date of birth</th>
                 <th>Role</th>
                 <th>Status</th>
-                <th></th>
               </tr>
             </thead>
             <tbody *ngFor="let user of users; let i = index">
@@ -171,15 +170,6 @@
                 <td>{{ user.dob }}</td>
                 <td>{{ user.roleId }}</td>
                 <td>{{ user.status }}</td>
-                <td>
-                  <div class="trash" style="padding-top: 7px">
-                    <div>
-                      <div class="backgroud-circle">
-                        <i class="fa-regular fa-trash-can"></i>
-                      </div>
-                    </div>
-                  </div>
-                </td>
               </tr>
               <!-- Add the user details display here -->
               <!-- <tr *ngIf="selectedUserId === user.id">

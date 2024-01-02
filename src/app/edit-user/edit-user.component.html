@@ -8,7 +8,7 @@
   </div>
 </div>
 <div class="content">
-  <div class="left-header" (click)="BacktoView(entityName)">
+  <div class="left-header" [routerLink]="['/view-user', user.id]">
     <i
       class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl"
       style="
@@ -104,7 +104,7 @@
 
     <div class="row row-4">
       <div class="col-md-4 offset-md-4">
-        <button class="button button4">Cancel</button>
+        <button class="button button4" [routerLink]="['/view-user', user.id]">Cancel</button>
         <button class="button button4" (click)="onSubmit()">Create</button>
 
       </div>

@@ -8,7 +8,7 @@
   </div>
 </div>
 <div class="content">
-  <div class="left-header" (click)="BacktoView(entityName)">
+  <div class="left-header" routerLink="/list-user">
     <i
       class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl"
       style="
@@ -84,17 +84,9 @@
       </div>
     </div>
 
-    <div class="row ">
-      <div class="col-4">
-        <div class="can-but">
-          <button class="button button4">Cancel</button>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="edit-but">
-          <button class="button button4" (click)="editUser()">Edit</button>
-        </div>
-      </div>
+    <div class="row cancel-btn">
+      <button class="button button4" (click)="listuser()">Cancel</button>
+      <button class="button button4" style="margin-left: 2px;" (click)="editUser()">Edit</button>
     </div>
   </div>
 </div>

@@ -297,13 +297,17 @@
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    margin: 5px 90px;
+    /* margin: 5px 90px; */
     width: 82px;
     height: 42px;
   }
-  .edit-but{
+  /* .edit-but{
     padding-left: 50px;
   }
   .can-but{
     padding-left: 200px;
-  }
+  } */
+.cancel-btn{
+  display: flex;
+  justify-content: center;
+}

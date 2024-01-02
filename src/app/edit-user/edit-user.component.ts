@@ -88,6 +88,7 @@ export class EditUserComponent implements OnInit {
       (response) => {
         console.log('User updated successfully:', response);
         // Optionally, you can redirect to another page or perform other actions upon successful update
+        this.router.navigate(['list-user']);
       },
       (error) => {
         console.error('Error updating user:', error);

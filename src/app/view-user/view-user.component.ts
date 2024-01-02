@@ -79,4 +79,8 @@ export class ViewUserComponent implements OnInit {
     console.log("clicked")
     this.router.navigate([`edit-user/${this.userId}`]);
   }
+  listuser(): void{
+    console.log("clicked")
+    this.router.navigate(['list-user']);
+  }
 }
