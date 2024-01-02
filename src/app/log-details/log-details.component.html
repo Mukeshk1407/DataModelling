@@ -151,33 +151,36 @@
             </div>
           </div>
         </div>
-        <div class="table-container">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>S.No</th>
-                <th>Username</th>
-                <th>Error Message</th>
-                <th>Error Rows</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let child of logChildren; let i = index">
-                <td scope="row">{{ i + 1 }}</td>
-                <td>admin</td>
-                <td>{{ child.errorMessage }}</td>
+        <div *ngIf="logChildren && logChildren.length > 0">
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Username</th>
+                  <th>Error Message</th>
+                  <th>Error Rows</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let child of logChildren; let i = index">
+                  <td scope="row">{{ i + 1 }}</td>
+                  <td>admin</td>
+                  <td>{{ child.errorMessage }}</td>
 
-                <td>{{ truncateErrorRowNumber(child.errorRowNumber) }}</td>
-              </tr>
-            </tbody>
-          </table>
+                  <td>{{ truncateErrorRowNumber(child.errorRowNumber) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <div *ngIf="logChildren == null">
+      <div *ngIf="!logChildren || logChildren.length === 0">
         <div class="container2">
           <div class="outbox">
             <div class="nofound">
               <img
+                style="height: 250px; padding-left: 12px"
                 src="../../assets/images/modern-flat-design-concept-no-result-found-empty-results-popup-design_637684-98 1.png"
               />
             </div>

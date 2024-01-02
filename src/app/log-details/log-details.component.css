@@ -254,12 +254,11 @@ th {
   .outbox{
     background-color: white;
     padding-left: 50px;
-    height: 320px;
-    width: 95%;
-    
+    height: 250px;
+    width: 95%;    
   }
   .nofound{
-    height: 250px;  
+    height: 260px;  
     padding-left: 27%;
 
   }
@@ -271,6 +270,7 @@ th {
   .error-content{
     font-weight: bold;
     text-align: center;
+    margin-top: -43px;
   }
 
 .table-container{
