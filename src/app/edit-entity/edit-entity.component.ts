@@ -164,12 +164,10 @@ export class EditEntityComponent implements OnInit {
     );
   }
   logout() {
+    localStorage.removeItem('logDetailsData');
     this.authStorageService.clearAuthInfo();
-    this.router.navigate(['']);
-    window.location.reload();
-    // Your logout logic
+      this.router.navigate(['']);
   }
-
   switchView() {
     this.router.navigate(['']);
 
@@ -747,6 +745,9 @@ export class EditEntityComponent implements OnInit {
       errorMessages.push('Exactly one Primary Key is required.');
       this.toastrService.showError('Exactly one Primary Key is required.');
     }
+
+    const databaseDetailsString = localStorage.getItem('databaseDetails');
+    const databaseDetails = JSON.parse(databaseDetailsString || '{}');
     if (errorMessages.length > 0) {
       console.log('Form validation failed:');
       for (const errorMessage of errorMessages) {
@@ -760,7 +761,7 @@ export class EditEntityComponent implements OnInit {
         isNullable: column.isNullable,
         True: column.True,
         False: column.False,
-        ColumnPrimaryKey: column.ColumnPrimaryKey,
+        columnPrimaryKey: column.ColumnPrimaryKey,
         defaultValue: column.defaultValue,
         description: column.description,
         minLength: parseInt(column.minLength) || 0,
@@ -769,9 +770,11 @@ export class EditEntityComponent implements OnInit {
         maxRange: parseInt(column.maxRange) || 0,
         dateMinValue: column.dateMinValue,
         dateMaxValue: column.dateMaxValue,
-        ListEntityId: parseInt(this.selectedEntity) || 0,
-        ListEntityKey: this.firstColumnId || 0,
-        ListEntityValue: this.selectedKeyvalueId || 0,
+        listEntityId: parseInt(this.selectedEntity) || 0,
+        listEntityKey: this.firstColumnId || 0,
+        listEntityValue: this.selectedKeyvalueId || 0,
+        hostName:  databaseDetails?.hostname || '',
+        databaseName: databaseDetails?.databaseName || ''
       }));
 
       const backendRequest = {

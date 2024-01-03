@@ -3,8 +3,9 @@
     <i
       matTooltip="Disconnect Database"
       class="fa-solid fa-plug-circle-xmark"
+      (click)="switchView()"
     ></i>
-    <i matTooltip="Logout" class="fas fa-sign-out-alt"></i>
+    <i matTooltip="Logout" class="fas fa-sign-out-alt" (click)="logout()"></i>
   </div>
 </div>
 <div class="content">
@@ -24,7 +25,7 @@
     <span [textContent]="entityName"></span>
   </div>
 </div>
-<div class="entity-list-container"  [ngClass]="{'scrollable': columns.length > 2}">
+<div class="entity-list-container"  [ngClass]="{'scrollable': columns.length >= 2}">
   <br />
   <div class="container">
     <div class="row">
@@ -34,7 +35,7 @@
             #searchInput
             type="text"
             placeholder="Search by Attribute"
-            (input)="onSearch()"
+            (input)="onSearch(searchInput.value)"
           />
           <i class="fas fa-search"></i>
         </div>
@@ -95,7 +96,7 @@
   <div style="padding: 10px 10px">
     <form #entityForm="ngForm" novalidate>
       <div class="main-container">
-        <div *ngFor="let row of columns; let i = index">
+        <div *ngFor="let row of columnList; let i = index">
           <div class="row">
             <div class="col-2">
               <div class="incontainer">
