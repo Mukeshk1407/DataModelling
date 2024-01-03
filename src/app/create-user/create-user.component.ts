@@ -53,9 +53,6 @@ export class CreateUserComponent {
       console.log('error');
     }
   }
-
-
-
   
  createUser() {
    // Check if a role is selected
@@ -73,6 +70,7 @@ export class CreateUserComponent {
       this.toastrService.success('User created successfully');
       // Reset the userModel to clear the form fields
       this.userModel = new User();
+      this.router.navigate(['/list-user']);
     },
     (error) => {
       console.error('Error creating user', error);
@@ -81,6 +79,9 @@ export class CreateUserComponent {
   );
 }
 
+logout() {
+  this.router.navigate(['']);
+ }
 
 // validation-dob
 getMaxDOB(): string {

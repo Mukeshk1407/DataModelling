@@ -176,12 +176,8 @@
             [minlength]="8"
             required
           />
-          <span
-            class="password-toggle-icon"
-            (click)="togglePasswordVisibility()"
-          >
-            <i [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-          </span>
+          <i [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="password-toggle-icon"
+          (click)="togglePasswordVisibility()" style="margin-left:-30px;  cursor: pointer;"></i>
         </div>
         <div *ngIf="password.invalid && (password.dirty || password.touched)">
           <div *ngIf="password.hasError('required')" style="color: red">
@@ -210,8 +206,8 @@
 
     <div class="row row-4">
       <div class="col-md-4 offset-md-4">
-        <button class="button button4">Cancel</button>
-        <button class="button button4" (click)="createUser()" routerLink="/list-user">Create</button>
+        <button class="button button4" (click)="logout()">Cancel</button>
+        <button class="button button4" (click)="createUser()">Create</button>
       </div>
     </div>
   </div>

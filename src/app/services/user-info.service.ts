@@ -15,10 +15,12 @@ export class UserInfoService {
     return this.http.get<UserTableDTO[]>(url);
   }
   // Add this method to your UserInfoService
-  getRoleById(roleId: number): Observable<string> {
-    const url = `${this.apiUrl}/getrole/${roleId}`;
-    return this.http.get<string>(url);
-  }
+ // Add this method to your UserInfoService
+getRoleById(roleId: number): Observable<string> {
+  const url = `${this.apiUrl}/GetUserRoleById?id=${roleId}`;
+  return this.http.get<string>(url);
+}
+
   getUserById(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/GetUserbyId?id=${userId}`);
   }
@@ -26,6 +28,7 @@ export class UserInfoService {
     const url = `${this.apiUrl}/GetRoles`; // Adjust the endpoint based on your API
     return this.http.get<any[]>(url);
   }
+  
 
   updateUserById(userId: number, userData: any): Observable<any> {
     const url = `${this.apiUrl}/UpdateUserbyId`;

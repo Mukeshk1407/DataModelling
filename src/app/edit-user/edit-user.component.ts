@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { UserInfoService } from '../services/user-info.service';
+import { AuthStorageService } from '../services/authstorage.service';
+import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface UserData {
   id: number;
   name: string;
   roleId: number;
+  roleName: string; // Add this line
   email: string;
   phonenumber: string;
   gender: string;
@@ -25,6 +29,7 @@ export class EditUserComponent implements OnInit {
     id: 0,
     name: '',
     roleId: 0,
+    roleName: '', // Add this line
     email: '',
     phonenumber: '',
     gender: '',
@@ -37,7 +42,7 @@ export class EditUserComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userInfoService: UserInfoService
+    private userInfoService: UserInfoService,private authStorageService: AuthStorageService,private dialog:MatDialog
   ) {}
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -51,7 +56,31 @@ export class EditUserComponent implements OnInit {
       (response: any) => {
         if (response.isSuccess) {
           console.log('Received user details:', response.result);
-          this.user = response.result;
+          this.user = {
+            id: response.result.id,
+            name: response.result.name,
+            roleId: response.result.roleId,
+            roleName: '', // Initialize roleName, it will be filled later
+            email: response.result.email,
+            phonenumber: response.result.phonenumber,
+            gender: response.result.gender,
+            dob: response.result.dob,
+            status: response.result.status,
+          };
+
+          // Fetch the role name for the user
+          this.userInfoService.getRoleById(this.user.roleId).subscribe(
+            (roleResponse: any) => {
+              if (roleResponse.isSuccess) {
+                this.user.roleName = roleResponse.result;
+              } else {
+                console.error('Error fetching role:', roleResponse.error);
+              }
+            },
+            (error) => {
+              console.error('Error fetching role:', error);
+            }
+          );
         } else {
           console.error('Error fetching user details:', response);
           this.user = {} as UserData;
@@ -103,4 +132,29 @@ export class EditUserComponent implements OnInit {
     // Dispatch the logout action
     // this.store.dispatch(authActions.logout());
   }
+  logout() {
+    localStorage.removeItem('logDetailsData');
+    this.authStorageService.clearAuthInfo();
+      this.router.navigate(['']);
+  }
+  switchView() {
+    // Clear localStorage data
+ localStorage.removeItem('databaseDetails');
+   this.router.navigate(['']);
+
+   const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
+     width: '400px',
+     disableClose:true
+   });
+ 
+   dialogRef.afterClosed().subscribe((result: string | undefined) => {
+     if (result) {
+       // Handle the selected database
+       console.log('Selected Database:', result);
+     } else {
+       // Handle modal close event
+       console.log('Modal closed');
+     }
+   });
+ }
 }

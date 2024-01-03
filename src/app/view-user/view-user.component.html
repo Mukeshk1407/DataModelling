@@ -3,8 +3,9 @@
     <i
       matTooltip="Disconnect Database"
       class="fa-solid fa-plug-circle-xmark"
+      (click)="switchView()"
     ></i>
-    <i matTooltip="Logout" class="fas fa-sign-out-alt"></i>
+    <i matTooltip="Logout" class="fas fa-sign-out-alt" (click)="logout()"></i>
   </div>
 </div>
 <div class="content">
@@ -68,7 +69,7 @@
       </div>
       <div class="col-md-4">
         <label class="label">Role</label>
-        <input type="text" class="input-box" [value]="user.roleId" readonly />
+        <input type="text" class="input-box" [value]="user.roleName" readonly />
       </div>
       <div class="col-md-4">
         <label class="label">Activate/Deactivate User</label>
