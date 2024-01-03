@@ -9,4 +9,5 @@ export interface UserTableDTO{
     dob: string;
     status: boolean;
     role?: string;
+    roleName?: string;
 }

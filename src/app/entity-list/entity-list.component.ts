@@ -70,12 +70,10 @@ export class EntityListComponent implements OnInit{
     this.pagedData = this.tableNames;
   }
   logout() {
+    localStorage.removeItem('logDetailsData');
     this.authStorageService.clearAuthInfo();
-    this.router.navigate(['']);
-    window.location.reload();
-    // Your logout logic
+      this.router.navigate(['']);
   }
-
   switchView() {
      // Clear localStorage data
   localStorage.removeItem('databaseDetails');

@@ -3,12 +3,13 @@
     <i
       matTooltip="Disconnect Database"
       class="fa-solid fa-plug-circle-xmark"
+      (click)="switchView()"
     ></i>
-    <i matTooltip="Logout" class="fas fa-sign-out-alt"></i>
+    <i matTooltip="Logout" (click)="logout()" class="fas fa-sign-out-alt"></i>
   </div>
 </div>
 <div class="content">
-  <div class="left-header" (click)="BacktoView(entityName)">
+  <div class="left-header" (click)="BacktoView()">
     <i
       class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl"
       style="color: white; font-size: 33px; font-weight: bold"
@@ -135,6 +136,7 @@
                         <i
                           class="fa-solid fa-circle-plus"
                           style="font-size: 35px"
+                          (click)="BacktoView()"
                         ></i>
                       </div>
                     </div>
@@ -168,7 +170,7 @@
                 <td>{{ user.gender }}</td>
                 <td>{{ user.phonenumber }}</td>
                 <td>{{ user.dob }}</td>
-                <td>{{ user.roleId }}</td>
+                <td>{{ user.roleName }}</td>
                 <td>{{ user.status }}</td>
               </tr>
               <!-- Add the user details display here -->

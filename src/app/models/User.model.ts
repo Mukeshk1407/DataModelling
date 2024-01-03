@@ -9,5 +9,6 @@ export class User {
     gender: string = '';
     dob: Date | null = null;
     role: string = '';
+    roleName: string; 
     status: boolean = false;
   }
