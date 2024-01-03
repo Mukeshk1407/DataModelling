@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { ToastrService } from '../services/ToastrService';
 import { SharedDataService } from '../services/log-details.service';
 import { LogDetailsDTO } from '../models/LogDetailsDTO';
+import { AuthStorageService } from '../services/authstorage.service';
+import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-entity-details',
@@ -24,8 +27,10 @@ export class EntityDetailsComponent implements OnInit {
   dbname: string = '';
   username: string = '';
   password: string = '';
+  columnList: any[] = [];
+  originalEntityList: any[] = [];
 
-  constructor(private route: ActivatedRoute, private columnsService: ColumnsService, private router: Router, private toastrService: ToastrService,  private sharedDataService: SharedDataService   ) {}
+  constructor(private route: ActivatedRoute, private columnsService: ColumnsService,private authStorageService: AuthStorageService, private router: Router, private toastrService: ToastrService,  private sharedDataService: SharedDataService , private dialog:MatDialog  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -66,6 +71,7 @@ export class EntityDetailsComponent implements OnInit {
               S_ListEntityValue:columnData.s_ListEntityValue
               
             };
+            this.columnList = this.columns;
             console.log("column",column);
             return column;
           });
@@ -102,6 +108,27 @@ export class EntityDetailsComponent implements OnInit {
     this.router.navigate(['entitylist']);
   }
 
+  switchView() {
+    // Clear localStorage data
+ localStorage.removeItem('databaseDetails');
+   this.router.navigate(['']);
+
+   const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
+     width: '400px',
+     disableClose:true
+   });
+ 
+   dialogRef.afterClosed().subscribe((result: string | undefined) => {
+     if (result) {
+       // Handle the selected database
+       console.log('Selected Database:', result);
+     } else {
+       // Handle modal close event
+       console.log('Modal closed');
+     }
+   });
+ }
+
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
@@ -116,17 +143,13 @@ export class EntityDetailsComponent implements OnInit {
     }
   }
 
-  onSearch() {
-    // Filter the data based on the searchText
-    if (this.searchText) {
-      this.pagedData = this.columns.filter( (item : TableColumnDTO) =>
-        item.entityColumnName.toLowerCase().includes(this.searchText.toLowerCase())
-      );
-    } else {
-      // If search text is empty, reset to the original data
-      this.setPage(this.currentPage);
-    }
+  onSearch(searchTerm: string) {
+    // Filter entity names based on the search term
+    this.columnList = this.columns.filter(entity =>
+      entity.entityColumnName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   }
+
 
   get totalPages(): number {
     return Math.ceil(this.columns.length / this.itemsPerPage);
@@ -194,7 +217,11 @@ export class EntityDetailsComponent implements OnInit {
   goBackToList(){
     this.router.navigate(['/entitylist']);
   }
-
+  logout() {
+    localStorage.removeItem('logDetailsData');
+    this.authStorageService.clearAuthInfo();
+      this.router.navigate(['']);
+  }
   generateExcelTemplate() {
     // Log the content of this.columns for debugging
     console.log('Columns data before sending to the backend:', this.columns); 
