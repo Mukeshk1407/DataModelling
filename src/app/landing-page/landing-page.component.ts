@@ -7,6 +7,7 @@ import * as authActions from '../state/auth.actions';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthStorageService } from '../services/authstorage.service';
+import { AuthService } from '../services/auth.service';
 
 
 
@@ -22,25 +23,34 @@ export class LandingPageComponent implements OnInit {
    loggedIn$ !: Observable<boolean>;
    role$!: Observable<string | null>;
 
-  constructor(private router: Router, private store: Store, private dialog: MatDialog,private authStorageService: AuthStorageService) {
+  constructor(private router: Router, private store: Store, private dialog: MatDialog,private authStorageService: AuthStorageService,private authService:AuthService ) {
     var storedAuthInfo = this.authStorageService.getAuthInfo();
     if(storedAuthInfo != undefined  && storedAuthInfo.loggedIn != undefined) {
       this.loggedIn$ = of(storedAuthInfo?.loggedIn);
+      this.role$ = this.store.select(selectRole);
     }
     this.role$ = this.store.select(selectRole);
-    // this.loggedIn$ = this.store.select(selectLoggedIn);
   }
 
   ngOnInit(): void {
-    // this.loggedIn$ = this.store.select(selectLoggedIn);
-    // this.role$ = this.store.select(selectRole);
-  
-    this.loggedIn$!.subscribe(loggedIn => console.log('LoggedIn:', loggedIn));
-    this.role$!.subscribe(role => console.log('Role:', role));
+    //this.loggedIn$!.subscribe(loggedIn => console.log('LoggedIn:', loggedIn));
+    this.loggedIn$!.subscribe((loggedIn) => {
+      console.log('LoggedIn:', loggedIn);
+      if (loggedIn) {
+        const userRole = this.authService.getUserRole();
+        console.log('User Role:', userRole);
+        // Now you can use the user role to determine whether to show the register button
+      }
+    });
   }
 
   navigateToLogin(): void {
     this.router.navigate(['/login']); // Update 'login' with the actual route path to your login component
+  }
+  isAdminRole(): boolean {
+    const userRole = this.authService.getUserRole();
+    console.log('roleinlanding',userRole)
+    return userRole === 'admin'; // Replace 'admin' with your actual admin role value
   }
 
   logout() {
