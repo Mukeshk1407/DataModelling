@@ -154,8 +154,6 @@ export class LogDetailsComponent {
     localStorage.removeItem('logDetailsData');
     this.authStorageService.clearAuthInfo();
       this.router.navigate(['']);
-     
-    
   }
 
   fetchColumnsData(entityName: string): void {
