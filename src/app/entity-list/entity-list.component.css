@@ -19,10 +19,13 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
   
+.left-header{
+  margin-left: 42%;
+}
 .left-header span {
-  font-size: x-large;
   font-weight: 700;
   color: white;
+  font-size: 30px;
 }
 
 .right-header {

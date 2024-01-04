@@ -5,19 +5,20 @@ import { UserInfoService } from '../services/user-info.service';
 import { AuthStorageService } from '../services/authstorage.service';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import { UserTableDTO } from '../models/user-table.dto';
 interface UserData {
   id: number;
   name: string;
   roleId: number;
   roleName: string; // Add this line
   email: string;
+  password?: string;
   phonenumber: string;
   gender: string;
   dob: string;
   status: boolean;
 }
-import { UserTableDTO } from '../models/user-table.dto';
+
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -112,6 +113,7 @@ export class EditUserComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.user.password = ''; 
     // Ensure the user object is properly populated with updated data
     this.userInfoService.updateUserById(this.userId, this.user).subscribe(
       (response) => {

@@ -122,7 +122,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'string'">
+            <div class="col-2" *ngIf="row.datatype === 'string' || row.datatype === 'varchar' || row.datatype === 'nvarchar' || row.datatype === 'text' || row.datatype === 'character varying'">
               <div class="incontainer">
                 <label>Min Length</label>
                 <input
@@ -138,7 +138,7 @@
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'string'">
+            <div class="col-2" *ngIf="row.datatype === 'string' || row.datatype === 'varchar' || row.datatype === 'nvarchar' || row.datatype === 'text' || row.datatype === 'character varying'">
               <div class="incontainer">
                 <label>Max Length</label>
                 <input
@@ -154,7 +154,7 @@
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'int'">
+            <div class="col-2" *ngIf="row.datatype === 'integer' || row.datatype ==='number' || row.datatype ==='int'">
               <div class="incontainer">
                 <label>Min Range</label>
                 <input
@@ -169,7 +169,7 @@
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'int'">
+            <div class="col-2" *ngIf="row.datatype === 'integer' || row.datatype ==='number' || row.datatype ==='int'">
               <div class="incontainer">
                 <label>Max Range</label>
                 <input

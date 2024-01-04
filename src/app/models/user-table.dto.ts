@@ -3,7 +3,7 @@ export interface UserTableDTO{
     name: string;
     roleId: number;
     email:string;
-    password: string;
+    password?: string;
     phonenumber: number;
     gender: string;
     dob: string;

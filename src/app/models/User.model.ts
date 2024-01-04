@@ -4,7 +4,7 @@ export class User {
     name: string = '';
     roleId: number = 0;
     email: string = '';
-    password: string = '';
+    password?: string = '';
     phonenumber: number = 0;
     gender: string = '';
     dob: Date | null = null;
