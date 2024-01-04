@@ -1,10 +1,10 @@
 <div class="header">
   <div class="icon-container">
-    <i
+    <!-- <i
       matTooltip="Disconnect Database"
       class="fa-solid fa-plug-circle-xmark"
       (click)="switchView()"
-    ></i>
+    ></i> -->
     <i matTooltip="Logout" (click)="logout()" class="fas fa-sign-out-alt"></i>
   </div>
 </div>
@@ -146,7 +146,7 @@
             </div>
           </div>
         </div>
-        <div class="table-container" *ngIf="users.length < 0">
+        <div class="table-container" *ngIf="users.length > 0">
           <table class="table">
             <thead>
               <tr>
