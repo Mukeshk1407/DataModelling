@@ -146,7 +146,7 @@
             </div>
           </div>
         </div>
-        <div class="table-container">
+        <div class="table-container" *ngIf="users.length < 0">
           <table class="table">
             <thead>
               <tr>
@@ -190,6 +190,7 @@
           <div class="outbox" *ngIf="users.length === 0">
             <div class="nofound">
               <img
+              style="height: 250px; padding-left: 12px"
                 src="../../assets/images/modern-flat-design-concept-no-result-found-empty-results-popup-design_637684-98 1.png"
               />
             </div>
