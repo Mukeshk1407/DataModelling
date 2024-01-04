@@ -48,7 +48,7 @@
   <div *ngFor="let entity of entityList" class="entity-box">
     {{ entity.entityName }}
     <div class="icons-container1">
-      <div *ngIf="hasValues !== undefined && hasValues[entity.entityName] !== undefined"  [ngClass]="{ 'disabled': hasValues[entity.entityName] }"  [routerLink]="['/Edit-Entity', entity.entityName]" (click)="editTable(entity.entityName)">
+      <div [routerLink]="['/Edit-Entity', entity.entityName]" (click)="editTable(entity.entityName)">
         <i matTooltip="Add Validation" class="fa-solid fa-plus" ></i>
       </div>
       <i

@@ -307,15 +307,14 @@
               <div class="incontainer">
                 <label>Default Value</label>
                 <input
-                  *ngIf="row.datatype === 'date'"
+                *ngIf="row.datatype === 'date'"
                   type="date"
                   [(ngModel)]="row.defaultValue"
                   id="defaultValue{{ i }}"
                   name="defaultValue{{ i }}"
-                  [min]="minDate"
-                  [max]="maxDate"
+                  [min]="row.dateMinValue"
+                  [max]="row.dateMaxValue"
                   (change)="onDefaultValueInputChange($event, row)"
-                  [disabled]="!minMaxDatesSelected"
                   (keydown)="preventInput($event)"
                   (keypress)="preventInput($event)"
                 />
