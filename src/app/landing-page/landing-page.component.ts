@@ -47,11 +47,21 @@ export class LandingPageComponent implements OnInit {
   navigateToLogin(): void {
     this.router.navigate(['/login']); // Update 'login' with the actual route path to your login component
   }
+  // isAdminRole(): boolean {
+  //   const userRole = this.authService.getUserRole();
+  //   console.log('roleinlanding',userRole)
+  //   return userRole === 'admin'; // Replace 'admin' with your actual admin role value
+  // }
   isAdminRole(): boolean {
-    const userRole = this.authService.getUserRole();
-    console.log('roleinlanding',userRole)
-    return userRole === 'admin'; // Replace 'admin' with your actual admin role value
-  }
+    const userRole = this.authService.getUserRole()?.toLowerCase(); // Convert to lowercase for case-insensitive comparison
+    console.log('roleinlanding', userRole);
+
+    // List of possible admin role values
+    const adminRoles = ['admin', 'administrator', 'superadmin', 'createadmin','Admin'];
+
+    return userRole !== undefined && adminRoles.includes(userRole);
+}
+
 
   logout() {
     
