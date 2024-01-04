@@ -254,7 +254,7 @@ th {
   .outbox{
     background-color: white;
     padding-left: 50px;
-    height: 320px;
+    height: 250px;
     width: 95%;
     
   }
@@ -271,6 +271,7 @@ th {
   .error-content{
     font-weight: bold;
     text-align: center;
+    margin-top: -43px;
   }
 
 .table-container{
