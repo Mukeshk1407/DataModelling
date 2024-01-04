@@ -11,7 +11,7 @@ export interface TableEditColumnDTO {
     maxRange: string;
     dateMinValue: string;
     dateMaxValue:string;
-    description:String;
+    description:string;
     isNullable: boolean;
     defaultValue: string;
     ColumnPrimaryKey: boolean; 

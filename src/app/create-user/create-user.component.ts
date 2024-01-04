@@ -5,7 +5,7 @@ import { Role } from '../interface/role';
 import { User } from '../models/User.model';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-
+import { AuthStorageService } from '../services/authstorage.service';
 
 @Component({
   selector: 'app-create-user',
@@ -22,6 +22,7 @@ export class CreateUserComponent {
  constructor(private createuserservice: CreateUserService,
   private roleService: RoleService,
   private toastrService: ToastrService,
+  private authStorageService: AuthStorageService,
   private router: Router) {}
 
 
@@ -80,9 +81,12 @@ export class CreateUserComponent {
 }
 
 logout() {
+  this.authStorageService.clearAuthInfo();
   this.router.navigate(['']);
  }
-
+ BacktoList(){
+  this.router.navigate(['/list-user']);
+ }
 // validation-dob
 getMaxDOB(): string {
   const today = new Date();

@@ -11,7 +11,7 @@ export interface TableColumnDTO {
   maxRange: number;
   dateMinValue: string;
   dateMaxValue:string;
-  description:String;
+  description:string;
   isNullable: boolean;
   defaultValue: string;
   ColumnPrimaryKey: boolean; 

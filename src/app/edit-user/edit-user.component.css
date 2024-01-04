@@ -283,20 +283,20 @@
       font-weight: bold;
       text-align: center;
       font-size: 26px;
-      padding-left: 30%;
+      padding-left: 27%;
   }
   .button4 {
     border-radius: 12px;
   }
   .button {
-    background-color: #243D4D94;
+    background-color: steelblue;
     border: none;
     color: white;
     padding: 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
     margin: 5px 16px;
     height: 40px;
     width: 75px;

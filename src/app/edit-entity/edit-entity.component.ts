@@ -776,7 +776,6 @@ export class EditEntityComponent implements OnInit {
         hostName:  databaseDetails?.hostname || '',
         databaseName: databaseDetails?.databaseName || ''
       }));
-
       const backendRequest = {
         entityName: this.entityName,
         entityId: this.selectedEntityKeyId || 0, // Include EntityId in the request
@@ -798,6 +797,7 @@ export class EditEntityComponent implements OnInit {
             );
             this.toastrService.showError('Error updating entity column');
           }
+          this.router.navigate(['/entity', backendRequest.entityName]);
         },
         (error) => {
           console.error('HTTP Error Response:', error);

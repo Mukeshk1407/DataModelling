@@ -1,16 +1,26 @@
 <div class="header">
   <div class="icon-container">
-    <!-- <i matTooltip="Disconnect Database" class="fa-solid fa-plug-circle-xmark" (click)="switchView()"></i> 
-      <i matTooltip="Logout" class="fas fa-sign-out-alt" (click)="logout()"></i>  -->
-    <i
-      matTooltip="Back to Landingpage"
-      class="fas fa-arrow-left"
-      (click)="backtolanding()"
-    ></i>
+    <!-- <i
+      matTooltip="Disconnect Database"
+      class="fa-solid fa-plug-circle-xmark"
+      (click)="switchView()"
+    ></i> -->
+    <i matTooltip="Logout" class="fas fa-sign-out-alt" (click)="logout()"></i>
   </div>
 </div>
 
 <div class="content">
+  <div class="left-header" [routerLink]="['/list-user']">
+    <i
+      class="fas-sharp fa-solid fa-circle-arrow-left fa-2xl"
+      style="
+        color: white;
+        font-size: 33px;
+        font-weight: bold;
+        padding-left: 160px;
+      "
+    ></i>
+  </div>
   <div class="middle-header">
     <span>Create User</span>
   </div>
@@ -206,7 +216,7 @@
 
     <div class="row row-4">
       <div class="col-md-4 offset-md-4">
-        <button class="button button4" (click)="logout()">Cancel</button>
+        <button class="button button4" (click)="BacktoList()">Cancel</button>
         <button class="button button4" (click)="createUser()">Create</button>
       </div>
     </div>

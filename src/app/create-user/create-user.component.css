@@ -48,6 +48,36 @@
   display: flex;
   /* Add additional styling for your entity list content */
 }
+  
+.left-header span {
+  font-size: x-large;
+  font-weight: 500;
+  color: white;
+}
+
+.right-header {
+  right: 5%;
+  width: 7%;
+  display: inline-grid;
+  position: absolute;
+}
+
+.icon-container {
+  display: flex;
+  gap: 20px;
+}
+
+.icon-container i {
+  font-size: 24px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.content {
+  padding: 20px;
+  display: flex;
+  /* Add additional styling for your entity list content */
+}
 
 .create-entity {
   justify-content: flex-end;
@@ -188,14 +218,14 @@ opacity: 0.7;
 }
 
 .input-box {
-  border: 1px solid #ccc;
+  border: 1px solid #243D4D;;
   border-radius: 10px;
   padding: 8px;
   /* margin-bottom: 8px; */
   box-sizing: border-box;
   width: 200px; /* Adjust width as needed */
   width: calc(100% - 40px); /* Adjust width to accommodate the eye icon */
-  
+  margin-bottom: 7px;
 }
 
 .inside_elcontainer{
@@ -287,7 +317,7 @@ input:checked + .slider:before {
     font-weight: bold;
     text-align: center;
     font-size: 26px;
-    padding-left: 44%;
+    padding-left: 27%;
 }
 .button4 {
   border-radius: 12px;
@@ -296,12 +326,14 @@ input:checked + .slider:before {
   background-color: steelblue;
   border: none;
   color: white;
-  padding: 14px;
+  padding: 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  font-size: 14px;
+  margin: 5px 16px;
+  height: 40px;
+  width: 75px;
 }
 .password-container {
   display: flex;

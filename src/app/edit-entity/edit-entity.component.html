@@ -22,7 +22,7 @@
     </i>
   </div>
   <div class="middle-header">
-    <span>Edit Attributes of {{ entityName }}</span>
+    <span>Add Validation</span>
   </div>
 </div>
 <div
@@ -92,7 +92,7 @@
           <div class="row">
             <div class="col-2">
               <div class="incontainer">
-                <label>Column name</label>
+                <label>Column Name</label>
                 <input
                   [(ngModel)]="row.entityColumnName"
                   name="columnName{{ i }}"
@@ -340,8 +340,10 @@
                 <label>Description</label>
                 <input
                   type="text"
+                  [(ngModel)]="row.description"
                   placeholder="Enter Description"
                   style="font-size: 15px"
+                  name="description{{i}}"
                 />
               </div>
             </div>

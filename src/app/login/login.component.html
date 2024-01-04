@@ -15,7 +15,7 @@
                     <label class="label" for="username">Username</label>
                     <!-- Add [ngClass] to dynamically set the class -->
                     <input type="email" id="username" name="username" class="form-control input"
-                        placeholder="Enter Username" formControlName="username"
+                        placeholder="Enter mail id" formControlName="username"
                         [ngClass]="{ 'error-input': isInvalid('username') }">
                     <div *ngIf="isInvalid('username')">
                         <div *ngIf="loginForm.get('username')?.hasError('required')" class="errorcolor">Username is

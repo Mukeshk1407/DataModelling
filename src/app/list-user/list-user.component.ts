@@ -74,9 +74,12 @@ export class ListUserComponent {
     this.inactiveUserCount = this.totalUserCount - this.activeUserCount;
   }
   BacktoView() {
-    this.router.navigate([`/register`]);
+    this.router.navigate(['']);
     // Dispatch the logout action
     // this.store.dispatch(authActions.logout());
+  }
+  Create(){
+    this.router.navigate([`/register`]);
   }
   selectUser(userId: number) {
     this.selectedUserId = userId;
