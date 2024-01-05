@@ -277,3 +277,15 @@ th {
 .table-container{
   padding-top: 10px;
 }
+
+/* Add this to your global styles or component styles */
+.details-button {
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  background-color: #4caf50; /* Green color as an example */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}

@@ -46,7 +46,8 @@
             <div class="trash">
               <div class="background-circle">
                 <div class="upload-align" (click)="generateExcelTemplate()"  [routerLink]="['/entity', entityName]"  [ngClass]="{ 'disabled': !hasColumns() }" >
-                  <i class="fa-solid fa-file-excel" ></i>
+                 
+                  <i class="fa-solid fa-download" style="margin-left:-3px"></i>
                 </div>
               </div>
               <div class="label-content">
