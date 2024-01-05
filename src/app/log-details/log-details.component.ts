@@ -22,6 +22,9 @@ export class LogDetailsComponent {
   columns: TableColumnDTO[] = [];
   entityName: string = ''; // Initialize entityName variable
 
+  showPopup: boolean = false;
+  selectedErrorRowNumber: string = '';
+
   
   constructor(private router: Router,
     private sharedDataService: SharedDataService,
@@ -236,4 +239,12 @@ export class LogDetailsComponent {
   }
 
  
+  showErrorDetailsPopup(errorRowNumber: string): void {
+    this.selectedErrorRowNumber = errorRowNumber;
+    this.showPopup = true;
+  }
+
+  closePopup(): void {
+    this.showPopup = false;
+  }
 }
