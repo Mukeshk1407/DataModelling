@@ -1,4 +1,4 @@
-// log-details.dto.ts
+
 export class LogDetailsDTO {
   entityName: string = '';
     totalCounts: number = 0;

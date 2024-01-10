@@ -7,7 +7,6 @@
     height: 100%;
     width: 100%;
     position: fixed;
-    /* background-color: #23136b; */
 }
 
 .image {
@@ -66,7 +65,6 @@
     margin-left: 60px;
 }
 
-/* Optional: Style the content inside the container */
 .full-screen-image img {
     max-width: 100%;
 }
@@ -87,7 +85,7 @@
     color: #243D4D;
     font-size: 14px;
     font-style: normal;
-    font-weight: 700; /* Increase the font weight */
+    font-weight: 700;
     line-height: normal;
 }
 
@@ -112,7 +110,7 @@
     color: #243D4D;
     font-size: 14px;
     font-style: normal;
-    font-weight: 700; /* Increase the font weight */
+    font-weight: 700;
     line-height: normal;
 }
 
@@ -121,7 +119,6 @@
     margin-left: 5px;
 }
 
-/* Use the same styling as the login button for the Register button */
 .register-button {
     position: absolute;
     top: 5%;

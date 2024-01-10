@@ -25,7 +25,10 @@
     <span [textContent]="entityName"></span>
   </div>
 </div>
-<div class="entity-list-container"  [ngClass]="{'scrollable': columns.length >= 2}">
+<div
+  class="entity-list-container"
+  [ngClass]="{ scrollable: columns.length >= 2 }"
+>
   <br />
   <div class="container">
     <div class="row">
@@ -45,9 +48,13 @@
           <div class="col-1" style="padding-right: 50px; width: 43px">
             <div class="trash">
               <div class="background-circle">
-                <div class="upload-align" (click)="generateExcelTemplate()"  [routerLink]="['/entity', entityName]"  [ngClass]="{ 'disabled': !hasColumns() }" >
-                 
-                  <i class="fa-solid fa-download" style="margin-left:-3px"></i>
+                <div
+                  class="upload-align"
+                  (click)="generateExcelTemplate()"
+                  [routerLink]="['/entity', entityName]"
+                  [ngClass]="{ disabled: !hasColumns() }"
+                >
+                  <i class="fa-solid fa-download" style="margin-left: -3px"></i>
                 </div>
               </div>
               <div class="label-content">
@@ -60,11 +67,22 @@
             <div class="trash">
               <div class="background-circle">
                 <div class="upload-align">
-                  <i class="fa-solid fa-arrow-up-from-bracket" style="color: #ffffff" [ngClass]="{ 'disabled': !hasColumns() }" (click)="openFileInput()"></i>
-                  <input type="file" #fileInput style="display: none" (change)="uploadTemplate($event)" accept=".xlsx">
+                  <i
+                    class="fa-solid fa-arrow-up-from-bracket"
+                    style="color: #ffffff"
+                    [ngClass]="{ disabled: !hasColumns() }"
+                    (click)="openFileInput()"
+                  ></i>
+                  <input
+                    type="file"
+                    #fileInput
+                    style="display: none"
+                    (change)="uploadTemplate($event)"
+                    accept=".xlsx"
+                  />
                 </div>
                 <div class="label-content">
-                  <label style="padding-left: 10px;"> Upload</label>
+                  <label style="padding-left: 10px"> Upload</label>
                 </div>
               </div>
             </div>
@@ -81,7 +99,7 @@
                   ></i>
                 </div>
                 <div class="label-content">
-                  <label style="padding-left: 10px;">Create</label>
+                  <label style="padding-left: 10px">Create</label>
                 </div>
               </div>
             </div>
@@ -124,7 +142,16 @@
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'string' || row.datatype === 'varchar' || row.datatype === 'nvarchar' || row.datatype === 'text' || row.datatype === 'character varying'">
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'string' ||
+                row.datatype === 'varchar' ||
+                row.datatype === 'nvarchar' ||
+                row.datatype === 'text' ||
+                row.datatype === 'character varying'
+              "
+            >
               <div class="incontainer">
                 <label>Min Length</label>
                 <input
@@ -136,7 +163,16 @@
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'string' || row.datatype === 'varchar' || row.datatype === 'nvarchar' || row.datatype === 'text' || row.datatype === 'character varying'">
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'string' ||
+                row.datatype === 'varchar' ||
+                row.datatype === 'nvarchar' ||
+                row.datatype === 'text' ||
+                row.datatype === 'character varying'
+              "
+            >
               <div class="incontainer">
                 <label>Max Length</label>
                 <input
@@ -148,7 +184,14 @@
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'integer' || row.datatype ==='number' || row.datatype ==='int'">
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'integer' ||
+                row.datatype === 'number' ||
+                row.datatype === 'int'
+              "
+            >
               <div class="incontainer">
                 <label>Min Range</label>
                 <input
@@ -160,7 +203,14 @@
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'integer' || row.datatype ==='number' || row.datatype ==='int'">
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'integer' ||
+                row.datatype === 'number' ||
+                row.datatype === 'int'
+              "
+            >
               <div class="incontainer">
                 <label>Max Range</label>
                 <input

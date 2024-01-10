@@ -44,15 +44,13 @@ export class EditEntityComponent implements OnInit {
   selectedColumnIds: any;
   firstColumnId: number | null = null; // Initialize firstColumnId with a default value of null
   cdr: any;
-  isReadOnly: boolean = true; 
-  // Assume these properties are defined in your component
+  isReadOnly: boolean = true;
   entityKeyColumnName: string = '';
   EntityentityName: string = '';
   entityValueColumnName: string = '';
   initiallyHidden: boolean = true;
   secondSetVisible: boolean = false;
   minMaxDatesSelected: boolean = false;
-  // In your component
   dateErrorMap: Map<number, boolean> = new Map<number, boolean>();
 
   constructor(
@@ -70,7 +68,6 @@ export class EditEntityComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.entityName = params['entityName'];
-      console.log(this.entityName);
       this.fetchColumnsData();
       this.fetchEntityIdByName(this.entityName);
     });
@@ -79,9 +76,7 @@ export class EditEntityComponent implements OnInit {
       (data: any) => {
         this.listOfValues = data.result;
       },
-      (error) => {
-        console.error('Error fetching entity names:', error);
-      }
+      (error) => {}
     );
 
     this.columnsService.getColumnsForEntity(this.entityName).subscribe(
@@ -89,21 +84,10 @@ export class EditEntityComponent implements OnInit {
         if (data.isSuccess) {
           // Iterate through columns and fetch data dynamically
           data.result.forEach((columnData: any) => {
-            console.log(
-              'API Response - isPrimaryKey:',
-              columnData.columnPrimaryKey
-            );
-
             // Extract values from columnData
             const dynamicListEntityId = columnData.listEntityId;
             const dynamicListEntityKey = columnData.listEntityKey;
             const dynamicListEntityValue = columnData.listEntityValue;
-            console.log(
-              dynamicListEntityId,
-              dynamicListEntityKey,
-              dynamicListEntityValue
-            );
-
             // Call sharedDataService.getEntityData with dynamic values from columnData
             this.sharedDataService
               .getEntityData(
@@ -113,20 +97,17 @@ export class EditEntityComponent implements OnInit {
               )
               .subscribe(
                 (entityData) => {
-                  console.log(entityData);
                   this.entityKeyColumnName =
                     entityData.entityKeyColumnName || '';
                   this.EntityentityName = entityData.entityName || '';
                   this.entityValueColumnName =
                     entityData.entityValueColumnName || '';
-                  console.log(this.EntityentityName);
                 },
                 (error) => {
                   console.error(error);
                 }
               );
           });
-          // Rest of your code
           this.columns = data.result.map((columnData: any) => {
             const column: TableColumnDTO = {
               entityname: this.entityName,
@@ -151,26 +132,21 @@ export class EditEntityComponent implements OnInit {
               ListEntityKey: columnData.listEntityKey,
               ListEntityValue: columnData.listEntityValue,
             };
-            console.log(column);
             return column;
           });
         } else {
-          console.error('Error fetching columns data:', data.errorMessage);
         }
       },
-      (error) => {
-        console.error('Error fetching columns data:', error);
-      }
+      (error) => {}
     );
   }
   logout() {
     localStorage.removeItem('logDetailsData');
     this.authStorageService.clearAuthInfo();
-      this.router.navigate(['']);
+    this.router.navigate(['']);
   }
   switchView() {
     this.router.navigate(['']);
-
     const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
       width: '400px',
       disableClose: true,
@@ -178,11 +154,7 @@ export class EditEntityComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: string | undefined) => {
       if (result) {
-        // Handle the selected database
-        console.log('Selected Database:', result);
       } else {
-        // Handle modal close event
-        console.log('Modal closed');
       }
     });
   }
@@ -190,7 +162,6 @@ export class EditEntityComponent implements OnInit {
     entityForm.resetForm();
   }
   BacktoView() {
-    // localStorage.removeItem('entitylist');
     this.router.navigate(['entitylist']);
   }
   hasColumns(): boolean {
@@ -209,17 +180,12 @@ export class EditEntityComponent implements OnInit {
       (response: any) => {
         if (response.isSuccess) {
           this.selectedEntityKeyId = response.result;
-          console.log(this.selectedEntityKeyId);
-          this.columns.forEach((column) => {
-            column.entityId = this.selectedEntityKeyId || 0;
-          });
+          this.columns.forEach((column) => {});
         } else {
-          console.error('Error fetching entityId:', response.errorMessage);
           this.toastrService.showError('Error fetching entityId');
         }
       },
       (error) => {
-        console.error('HTTP Error Response:', error);
         this.toastrService.showError('Unexpected error fetching entityId');
       }
     );
@@ -229,7 +195,6 @@ export class EditEntityComponent implements OnInit {
       (data: any) => {
         if (data.isSuccess) {
           this.columns = data.result.map((columnData: any) => {
-            console.log('API Response - isPrimaryKey:', this.columns);
             const column: TableColumnDTO = {
               entityname: this.entityName,
               id: columnData.id,
@@ -256,14 +221,9 @@ export class EditEntityComponent implements OnInit {
             return column;
           });
         } else {
-          console.error('Error fetching columns data:', data.errorMessage);
-          // Handle the error as needed
         }
       },
-      (error) => {
-        console.error('Error fetching columns data:', error);
-        // Handle the error as needed
-      }
+      (error) => {}
     );
   }
 
@@ -331,9 +291,7 @@ export class EditEntityComponent implements OnInit {
   onListValueSelected(entityName: string, rowIndex: number) {
     this.zone.run(() => {
       this.selectedEntity = entityName;
-      console.log(this.selectedEntity);
       this.SelectedEntityName = this.selectedEntity;
-      console.log(this.SelectedEntityName);
       // Fetch columns for the selected entity
       this.columnsService
         .getColumnsForEntity(this.selectedEntity)
@@ -354,7 +312,6 @@ export class EditEntityComponent implements OnInit {
   updateSelectedId(index: number) {
     if (index !== null && index >= 0 && index < this.selectedColumnIds.length) {
       this.selectedKeyvalueId = this.selectedColumnIds[index];
-      console.log(this.selectedKeyvalueId);
     } else {
       this.selectedKeyvalueId = null; // Handle the case when the index is out of range
     }
@@ -469,12 +426,9 @@ export class EditEntityComponent implements OnInit {
           this.entityColumnNames1 = this.selectedEntityColumns;
           this.entityColumnNames2 = this.selectedEntityColumns;
         } else {
-          console.error('Invalid data structure in API response:', data);
         }
       },
-      (error) => {
-        console.error('Error fetching entity columns:', error);
-      }
+      (error) => {}
     );
   }
 
@@ -483,7 +437,6 @@ export class EditEntityComponent implements OnInit {
       this.selectedEntity2Index = this.entityColumnNames2.indexOf(
         this.selectedEntity2
       );
-      console.log(this.selectedEntity2Index);
     }
   }
   onMinDateChange(event: Event, row: any): void {
@@ -749,9 +702,7 @@ export class EditEntityComponent implements OnInit {
     const databaseDetailsString = localStorage.getItem('databaseDetails');
     const databaseDetails = JSON.parse(databaseDetailsString || '{}');
     if (errorMessages.length > 0) {
-      console.log('Form validation failed:');
       for (const errorMessage of errorMessages) {
-        console.log(errorMessage);
       }
     } else {
       const filteredColumns = this.columns.map((column) => ({
@@ -773,8 +724,8 @@ export class EditEntityComponent implements OnInit {
         listEntityId: parseInt(this.selectedEntity) || 0,
         listEntityKey: this.firstColumnId || 0,
         listEntityValue: this.selectedKeyvalueId || 0,
-        hostName:  databaseDetails?.hostname || '',
-        databaseName: databaseDetails?.databaseName || ''
+        hostName: databaseDetails?.hostname || '',
+        databaseName: databaseDetails?.databaseName || '',
       }));
       const backendRequest = {
         entityName: this.entityName,
@@ -783,24 +734,17 @@ export class EditEntityComponent implements OnInit {
           propertiesList: filteredColumns,
         },
       };
-      console.log(backendRequest);
       this.sharedDataService.updateEntityColumn(backendRequest).subscribe(
         (response) => {
           if (response.isSuccess) {
-            console.log('Entity updated successfully:', response.result);
             this.toastrService.showSuccess('Entity updated successfully');
             this.router.navigate(['/entity-list']);
           } else {
-            console.error(
-              'Error updating entity column. Server response:',
-              response.errorMessage
-            );
             this.toastrService.showError('Error updating entity column');
           }
           this.router.navigate(['/entity', backendRequest.entityName]);
         },
         (error) => {
-          console.error('HTTP Error Response:', error);
           this.toastrService.showError(
             'Unexpected error updating entity column'
           );

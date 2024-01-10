@@ -10,7 +10,7 @@ interface UserData {
   id: number;
   name: string;
   roleId: number;
-  roleName: string; // Add this line
+  roleName: string;
   email: string;
   password?: string;
   phonenumber: string;
@@ -30,7 +30,7 @@ export class EditUserComponent implements OnInit {
     id: 0,
     name: '',
     roleId: 0,
-    roleName: '', // Add this line
+    roleName: '',
     email: '',
     phonenumber: '',
     gender: '',
@@ -43,7 +43,9 @@ export class EditUserComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userInfoService: UserInfoService,private authStorageService: AuthStorageService,private dialog:MatDialog
+    private userInfoService: UserInfoService,
+    private authStorageService: AuthStorageService,
+    private dialog: MatDialog
   ) {}
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -56,7 +58,6 @@ export class EditUserComponent implements OnInit {
     this.userInfoService.getUserById(userId).subscribe(
       (response: any) => {
         if (response.isSuccess) {
-          console.log('Received user details:', response.result);
           this.user = {
             id: response.result.id,
             name: response.result.name,
@@ -68,27 +69,21 @@ export class EditUserComponent implements OnInit {
             dob: response.result.dob,
             status: response.result.status,
           };
-
           // Fetch the role name for the user
           this.userInfoService.getRoleById(this.user.roleId).subscribe(
             (roleResponse: any) => {
               if (roleResponse.isSuccess) {
                 this.user.roleName = roleResponse.result;
               } else {
-                console.error('Error fetching role:', roleResponse.error);
               }
             },
-            (error) => {
-              console.error('Error fetching role:', error);
-            }
+            (error) => {}
           );
         } else {
-          console.error('Error fetching user details:', response);
           this.user = {} as UserData;
         }
       },
       (error) => {
-        console.error('Error fetching user details:', error);
         this.user = {} as UserData;
       }
     );
@@ -98,65 +93,54 @@ export class EditUserComponent implements OnInit {
     this.userInfoService.getRoles().subscribe(
       (response: any) => {
         if (response.isSuccess) {
-          console.log('Received roles:', response.result);
           this.roles = response.result;
         } else {
-          console.error('Error fetching roles:', response);
           this.roles = [];
         }
       },
       (error) => {
-        console.error('Error fetching roles:', error);
         this.roles = [];
       }
     );
   }
 
   onSubmit(): void {
-    this.user.password = ''; 
+    this.user.password = '';
     // Ensure the user object is properly populated with updated data
     this.userInfoService.updateUserById(this.userId, this.user).subscribe(
       (response) => {
-        console.log('User updated successfully:', response);
         // Optionally, you can redirect to another page or perform other actions upon successful update
         this.router.navigate(['list-user']);
       },
-      (error) => {
-        console.error('Error updating user:', error);
-        // Handle error as needed
-      }
+      (error) => {}
     );
   }
 
   BacktoView(entityName: string) {
     this.router.navigate([`entity/${entityName}`]);
     localStorage.removeItem('logDetailsData');
-    // Dispatch the logout action
-    // this.store.dispatch(authActions.logout());
   }
   logout() {
     localStorage.removeItem('logDetailsData');
     this.authStorageService.clearAuthInfo();
-      this.router.navigate(['']);
+    this.router.navigate(['']);
   }
   switchView() {
     // Clear localStorage data
- localStorage.removeItem('databaseDetails');
-   this.router.navigate(['']);
+    localStorage.removeItem('databaseDetails');
+    this.router.navigate(['']);
 
-   const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
-     width: '400px',
-     disableClose:true
-   });
- 
-   dialogRef.afterClosed().subscribe((result: string | undefined) => {
-     if (result) {
-       // Handle the selected database
-       console.log('Selected Database:', result);
-     } else {
-       // Handle modal close event
-       console.log('Modal closed');
-     }
-   });
- }
+    const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
+      width: '400px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      if (result) {
+        // Handle the selected database
+      } else {
+        // Handle modal close event
+      }
+    });
+  }
 }

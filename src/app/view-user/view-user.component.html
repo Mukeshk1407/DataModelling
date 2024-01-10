@@ -1,10 +1,5 @@
 <div class="header">
   <div class="icon-container">
-    <!-- <i
-      matTooltip="Disconnect Database"
-      class="fa-solid fa-plug-circle-xmark"
-      (click)="switchView()"
-    ></i> -->
     <i matTooltip="Logout" class="fas fa-sign-out-alt" (click)="logout()"></i>
   </div>
 </div>
@@ -87,10 +82,14 @@
 
     <div class="row cancel-btn">
       <button class="button button4" (click)="listuser()">Cancel</button>
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      <button class="button button4" style="margin-left: 2px;" (click)="editUser()">Update Status</button>
+      &nbsp; &nbsp; &nbsp;
+      <button
+        class="button button4"
+        style="margin-left: 2px"
+        (click)="editUser()"
+      >
+        Update Status
+      </button>
     </div>
   </div>
 </div>

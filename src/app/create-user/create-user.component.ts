@@ -10,21 +10,20 @@ import { AuthStorageService } from '../services/authstorage.service';
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.css']
+  styleUrls: ['./create-user.component.css'],
 })
 export class CreateUserComponent {
-
   userModel: User = new User();
- roles: Role[] = []; // Array to store role names
- selectedRole: Role | null = null;
+  roles: Role[] = []; // Array to store role names
+  selectedRole: Role | null = null;
 
-
- constructor(private createuserservice: CreateUserService,
-  private roleService: RoleService,
-  private toastrService: ToastrService,
-  private authStorageService: AuthStorageService,
-  private router: Router) {}
-
+  constructor(
+    private createuserservice: CreateUserService,
+    private roleService: RoleService,
+    private toastrService: ToastrService,
+    private authStorageService: AuthStorageService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getRoles();
@@ -33,77 +32,62 @@ export class CreateUserComponent {
   getRoles() {
     this.roleService.getRoles().subscribe(
       (response) => {
-       // this.roles = response?.result.map((role: Role) => role.roleName) || [];
-       this.roles = response?.result || [];
-       console.log('Roles:', this.roles);
+        this.roles = response?.result || [];
       },
-      (error) => {
-        console.error('Error getting roles', error);
-      }
+      (error) => {}
     );
   }
 
   onRoleSelected(selectedRole: Role | null) {
     if (selectedRole !== null && selectedRole !== undefined) {
-      console.log('Selected role ID:', selectedRole.id);
-      console.log('Selected role Name:', selectedRole.roleName);
-
-   // Assign the selected role name to the userModel's role property
-    this.userModel.role = selectedRole.roleName;
+      // Assign the selected role name to the userModel's role property
+      this.userModel.role = selectedRole.roleName;
     } else {
-      console.log('error');
     }
   }
-  
- createUser() {
-   // Check if a role is selected
-   if (this.selectedRole) {
-    // Assign selected role information to userModel
-    this.userModel.roleId = this.selectedRole.id;
-    this.userModel.role = this.selectedRole.roleName;
-  }
-  console.log('User Model:', this.userModel);
-  this.createuserservice.createUser(this.userModel).subscribe(
-    
-    (response) => {
-      
-      console.log('User created successfully', response);
-      this.toastrService.success('User created successfully');
-      // Reset the userModel to clear the form fields
-      this.userModel = new User();
-      this.router.navigate(['/list-user']);
-    },
-    (error) => {
-      console.error('Error creating user', error);
-      this.toastrService.error('Error creating user');
+
+  createUser() {
+    // Check if a role is selected
+    if (this.selectedRole) {
+      // Assign selected role information to userModel
+      this.userModel.roleId = this.selectedRole.id;
+      this.userModel.role = this.selectedRole.roleName;
     }
-  );
-}
+    this.createuserservice.createUser(this.userModel).subscribe(
+      (response) => {
+        this.toastrService.success('User created successfully');
+        // Reset the userModel to clear the form fields
+        this.userModel = new User();
+        this.router.navigate(['/list-user']);
+      },
+      (error) => {
+        this.toastrService.error('Error creating user');
+      }
+    );
+  }
 
-logout() {
-  this.authStorageService.clearAuthInfo();
-  this.router.navigate(['']);
- }
- BacktoList(){
-  this.router.navigate(['/list-user']);
- }
-// validation-dob
-getMaxDOB(): string {
-  const today = new Date();
-  today.setFullYear(today.getFullYear() - 18);
-  return today.toISOString().split('T')[0];
-}
+  logout() {
+    this.authStorageService.clearAuthInfo();
+    this.router.navigate(['']);
+  }
+  BacktoList() {
+    this.router.navigate(['/list-user']);
+  }
+  // validation-dob
+  getMaxDOB(): string {
+    const today = new Date();
+    today.setFullYear(today.getFullYear() - 18);
+    return today.toISOString().split('T')[0];
+  }
 
-//password
-showPassword = false;
+  //password
+  showPassword = false;
 
-togglePasswordVisibility() {
-  this.showPassword = !this.showPassword;
-}
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
-backtolanding(){
-  this.router.navigate(['/']);
-}
-
-
+  backtolanding() {
+    this.router.navigate(['/']);
+  }
 }

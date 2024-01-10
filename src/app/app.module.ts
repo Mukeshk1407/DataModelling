@@ -28,7 +28,6 @@ import { MatInputModule } from '@angular/material/input';
 import { ListUserComponent } from './list-user/list-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
-import { UserInfoService } from './services/user-info.service';
 import { ErrorDetailsPopupComponent } from './error-details-popup/error-details-popup.component';
 
 

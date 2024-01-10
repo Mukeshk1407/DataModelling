@@ -14,7 +14,6 @@ export class SharedDataService {
   private EntityIdURL = 'https://localhost:7093';
   private baseUrl= 'https://localhost:7093';
   getLogDetailsData() {
-    console.log(this.data);
     return this.logDetailsData.asObservable();
   }
   checkTablesHaveValues(
@@ -27,7 +26,6 @@ export class SharedDataService {
   }
   setLogDetails(data: any) {
     this.logDetailsData.next(data);
-    console.log(this.logDetailsData);
   }
   updateEntityColumn(data: any): Observable<any> {
     const url = `${this.EditApiURL}/updateEntityColumn`;

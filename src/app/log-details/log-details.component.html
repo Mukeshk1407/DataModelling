@@ -164,13 +164,20 @@
               <tbody>
                 <tr *ngFor="let child of logChildren; let i = index">
                   <td scope="row">{{ i + 1 }}</td>
-       
+
                   <td>{{ child.errorMessage }}</td>
                   <td>
- 
-<button class="details-button" (click)="showErrorDetailsPopup(child.errorRowNumber)">Details</button>
-<app-error-details-popup *ngIf="showPopup" [errorRowNumber]="selectedErrorRowNumber" (closePopupEvent)="closePopup()"></app-error-details-popup>
-
+                    <button
+                      class="details-button"
+                      (click)="showErrorDetailsPopup(child.errorRowNumber)"
+                    >
+                      Details
+                    </button>
+                    <app-error-details-popup
+                      *ngIf="showPopup"
+                      [errorRowNumber]="selectedErrorRowNumber"
+                      (closePopupEvent)="closePopup()"
+                    ></app-error-details-popup>
                   </td>
                 </tr>
               </tbody>
@@ -196,7 +203,6 @@
     </div>
   </div>
 
-  <!-- Add this at the end of your log-details.component.html file -->
   <div
     class="modal fade"
     id="exportModal"
@@ -212,10 +218,8 @@
         </div>
         <div class="modal-body">
           <p>You want to Exporting the error data for {{ entityName }}</p>
-          <!-- Add your export-related content here -->
         </div>
         <div class="modal-footer">
-          <!-- Update the Close button inside the modal-footer -->
           <button
             type="button"
             class="btn btn-secondary"
@@ -223,7 +227,6 @@
           >
             Close
           </button>
-          <!-- OK button to trigger export -->
           <button type="button" class="btn btn-primary" (click)="exportData()">
             OK
           </button>
