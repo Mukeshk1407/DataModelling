@@ -1,5 +1,3 @@
-<!-- entity-list.component.html -->
-
 <div class="header">
   <div class="icon-container">
     <i
@@ -43,13 +41,16 @@
   </div>
   <!-- Line below search box -->
   <div class="line"></div>
-  
+
   <!-- Display entity names here -->
   <div *ngFor="let entity of entityList" class="entity-box">
     {{ entity.entityName }}
     <div class="icons-container1">
-      <div [routerLink]="['/Edit-Entity', entity.entityName]" (click)="editTable(entity.entityName)">
-        <i matTooltip="Add Validation" class="fa-solid fa-plus" ></i>
+      <div
+        [routerLink]="['/Edit-Entity', entity.entityName]"
+        (click)="editTable(entity.entityName)"
+      >
+        <i matTooltip="Add Validation" class="fa-solid fa-plus"></i>
       </div>
       <i
         matTooltip="View Attributes"

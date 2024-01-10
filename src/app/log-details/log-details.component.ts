@@ -1,4 +1,4 @@
-import { Component,HostListener } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { TableColumnDTO } from '../models/TableColumnDTO.model';
 import { SharedDataService } from '../services/log-details.service';
 import { ColumnsService } from '../services/create-entity.service';
@@ -7,13 +7,12 @@ import { AuthStorageService } from '../services/authstorage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 
-declare var $: any; // Add this line to declare the jQuery variable
+declare var $: any;
 
-
-@Component({ 
+@Component({
   selector: 'app-log-details',
   templateUrl: './log-details.component.html',
-  styleUrls: ['./log-details.component.css']
+  styleUrls: ['./log-details.component.css'],
 })
 export class LogDetailsComponent {
   logParent: any;
@@ -25,22 +24,22 @@ export class LogDetailsComponent {
   showPopup: boolean = false;
   selectedErrorRowNumber: string = '';
 
-  
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private sharedDataService: SharedDataService,
     private columnsService: ColumnsService,
-    private authStorageService: AuthStorageService, private dialog:MatDialog) { }
+    private authStorageService: AuthStorageService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     // Subscribe to the shared service to get log details data
     this.sharedDataService.getLogDetailsData().subscribe((data: any) => {
       if (data) {
-        this.logParent = data.result.logParentDTOs; 
-        this.logChildren = data.result.childrenDTOs; 
-        console.log("errorrow", this.logChildren);
+        this.logParent = data.result.logParentDTOs;
+        this.logChildren = data.result.childrenDTOs;
         this.entityName = this.extractEntityName(this.logParent.fileName);
-        this.parentId = this.logParent.id
-        console.log(this.logChildren)
+        this.parentId = this.logParent.id;
       }
     });
 
@@ -57,8 +56,8 @@ export class LogDetailsComponent {
       // If no data in localStorage, fetch it from the shared service
       this.sharedDataService.getLogDetailsData().subscribe((data: any) => {
         if (data) {
-          this.logParent = data.result.logParentDTOs; 
-          this.logChildren = data.result.childrenDTOs; 
+          this.logParent = data.result.logParentDTOs;
+          this.logChildren = data.result.childrenDTOs;
           this.entityName = this.extractEntityName(this.logParent.fileName);
           this.parentId = this.logParent.id;
 
@@ -67,7 +66,6 @@ export class LogDetailsComponent {
         }
       });
     }
-
   }
 
   saveDataToLocalStorage(): void {
@@ -75,7 +73,7 @@ export class LogDetailsComponent {
       logParent: this.logParent,
       logChildren: this.logChildren,
       entityName: this.entityName,
-      parentId: this.parentId
+      parentId: this.parentId,
     };
     localStorage.setItem('logDetailsData', JSON.stringify(dataToSave));
   }
@@ -87,44 +85,38 @@ export class LogDetailsComponent {
     if (parentId !== undefined) {
       $('#exportModal').modal('show');
     } else {
-      console.error('parentId is undefined. Unable to generate Excel template.');
     }
   }
-  
 
   switchView() {
     // Clear localStorage data
- localStorage.removeItem('databaseDetails');
-   this.router.navigate(['']);
+    localStorage.removeItem('databaseDetails');
+    this.router.navigate(['']);
 
-   const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
-     width: '400px',
-     disableClose:true
-   });
- 
-   dialogRef.afterClosed().subscribe((result: string | undefined) => {
-     if (result) {
-       // Handle the selected database
-       console.log('Selected Database:', result);
-     } else {
-       // Handle modal close event
-       console.log('Modal closed');
-     }
-   });
- }
+    const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
+      width: '400px',
+      disableClose: true,
+    });
 
-  BacktoView(entityName : string) {
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      if (result) {
+        // Handle the selected database
+      } else {
+        // Handle modal close event
+      }
+    });
+  }
+
+  BacktoView(entityName: string) {
     this.router.navigate([`entity/${entityName}`]);
     localStorage.removeItem('logDetailsData');
-    // Dispatch the logout action
-    // this.store.dispatch(authActions.logout());
   }
 
   truncateErrorRowNumber(errorRowNumber: number): string {
     const truncatedNumber = errorRowNumber.toString().slice(0, 10);
     return truncatedNumber;
   }
-  
+
   exportData(): void {
     const entityName = this.entityName;
     const parentId = this.parentId;
@@ -133,20 +125,16 @@ export class LogDetailsComponent {
       this.generateExcelTemplates(parentId);
       this.closeModal();
     } else {
-      console.error('parentId is undefined. Unable to generate Excel template.');
     }
-    
   }
-  exportbtn():void{
-    console.log("first")
-   this.exportData();
-   this.exportData();
+  exportbtn(): void {
+    this.exportData();
+    this.exportData();
   }
 
   closeModal(): void {
     $('#exportModal').modal('hide');
   }
-
 
   ngOnDestroy(): void {
     // Clear the data from localStorage when the component is destroyed
@@ -156,7 +144,7 @@ export class LogDetailsComponent {
   logout() {
     localStorage.removeItem('logDetailsData');
     this.authStorageService.clearAuthInfo();
-      this.router.navigate(['']);
+    this.router.navigate(['']);
   }
 
   fetchColumnsData(entityName: string): void {
@@ -177,33 +165,34 @@ export class LogDetailsComponent {
               ColumnPrimaryKey: columnData.columnPrimaryKey,
               True: columnData.true,
               False: columnData.false,
-              minLength:columnData.minLength,
-              maxLength:columnData.maxLength,
+              minLength: columnData.minLength,
+              maxLength: columnData.maxLength,
               minRange: columnData.minRange,
-              maxRange:columnData.maxRange,
-              dateMinValue:columnData.dateMinValue,
-              dateMaxValue:columnData.dateMaxValue,
-              ListEntityId:columnData.listEntityId,
-              ListEntityKey:columnData.listEntityKey,
-              ListEntityValue:columnData.listEntityValue
+              maxRange: columnData.maxRange,
+              dateMinValue: columnData.dateMinValue,
+              dateMaxValue: columnData.dateMaxValue,
+              ListEntityId: columnData.listEntityId,
+              ListEntityKey: columnData.listEntityKey,
+              ListEntityValue: columnData.listEntityValue,
             };
             return column;
           });
         } else {
         }
       },
-      (error) => {
-      }
+      (error) => {}
     );
   }
 
   generateExcelTemplates(parentId: number) {
     if (this.columns.length === 0) {
-      return; 
+      return;
     }
-    this.columnsService.generateExcelFiles(parentId,this.columns).subscribe(
+    this.columnsService.generateExcelFiles(parentId, this.columns).subscribe(
       (data: Blob) => {
-        const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const blob = new Blob([data], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -212,15 +201,14 @@ export class LogDetailsComponent {
         a.click();
         window.URL.revokeObjectURL(url);
       },
-      (error: any) => {
-      }
+      (error: any) => {}
     );
   }
-  
-
 
   saveExcelFiles(data: Blob): void {
-    const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const blob = new Blob([data], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -229,16 +217,15 @@ export class LogDetailsComponent {
     a.click();
     window.URL.revokeObjectURL(url);
   }
-  
+
   extractEntityName(fullFileName: string): string {
     const parts = fullFileName.split('_');
     if (parts.length > 0) {
-      return parts[0]; 
+      return parts[0];
     }
-    return ''; 
+    return '';
   }
 
- 
   showErrorDetailsPopup(errorRowNumber: string): void {
     this.selectedErrorRowNumber = errorRowNumber;
     this.showPopup = true;

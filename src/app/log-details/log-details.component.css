@@ -1,9 +1,8 @@
-
   body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4; /* Set your desired background color */
+    background-color: #f4f4f4;
   }
 
 :host {
@@ -60,7 +59,6 @@
     padding-top: 16px;
     display: flex;
     padding-left: 200px;
-    /* Add additional styling for your entity list content */
   }
   
   .create-entity {
@@ -156,10 +154,10 @@ th {
   margin-left: -23px;
   color: white;
   cursor: pointer;
-  background: #243D4D; /* Background color for the icon */
-  border-radius: 50%; /* Border-radius to make it circular */
-  padding: 10px; /* Padding to increase the clickable area */
-  margin-left: 5px; /* Margin to separate the icon from the input */
+  background: #243D4D;
+  border-radius: 50%; 
+  padding: 10px;
+  margin-left: 5px;
 }
 
 .line {
@@ -202,12 +200,11 @@ th {
   .align-export{
     align-content: center;
   }
-  /* Center the content within the table */
+
   .table {
     text-align: center;
   }
-  
-  /* Align the button to the right */
+
   .text-right {
     text-align: end;
   }
@@ -278,12 +275,11 @@ th {
   padding-top: 10px;
 }
 
-/* Add this to your global styles or component styles */
 .details-button {
   font-weight: bold;
   font-size: 14px;
   color: white;
-  background-color: #4caf50; /* Green color as an example */
+  background-color: #4caf50;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;

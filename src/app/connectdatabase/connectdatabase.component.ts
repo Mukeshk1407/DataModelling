@@ -21,7 +21,6 @@ export class ConnectdatabaseComponent {
     { content: 'PostgreSQL', imageSrc: 'assets/images/postgre.png', selected: false },
     { content: 'MY SQL', imageSrc: 'assets/images/Db1-mysql.png', selected: false },
     { content: 'MS SQL', imageSrc: 'assets/images/sql.png', selected: false },
-    // ... other items
   ];  
 
   showInputFields = false;
@@ -47,7 +46,6 @@ export class ConnectdatabaseComponent {
   showSelectedContent() {
     if (this.selectedBox) {
       this.selectedContent = this.selectedBox.content;
-      console.log('Selected content:', this.selectedContent);
       this.showInputFields = true;
       // You can perform any action with the selected content here
     }
@@ -93,7 +91,6 @@ export class ConnectdatabaseComponent {
     } else {
       // Display an error message or perform any other action for incomplete fields
       this.toastrService.showError('Please fill in all fields');
-      console.log('Please fill in all fields');
     }
   }
 

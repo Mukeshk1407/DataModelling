@@ -48,7 +48,7 @@
             [(ngModel)]="entityName"
             #entityNameInput="ngModel"
             readonly="true"
-            value="entityName "    
+            value="entityName "
           />
         </div>
         <div
@@ -122,7 +122,16 @@
                 </select>
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'string' || row.datatype === 'varchar' || row.datatype === 'nvarchar' || row.datatype === 'text' || row.datatype === 'character varying'">
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'string' ||
+                row.datatype === 'varchar' ||
+                row.datatype === 'nvarchar' ||
+                row.datatype === 'text' ||
+                row.datatype === 'character varying'
+              "
+            >
               <div class="incontainer">
                 <label>Min Length</label>
                 <input
@@ -138,7 +147,16 @@
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'string' || row.datatype === 'varchar' || row.datatype === 'nvarchar' || row.datatype === 'text' || row.datatype === 'character varying'">
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'string' ||
+                row.datatype === 'varchar' ||
+                row.datatype === 'nvarchar' ||
+                row.datatype === 'text' ||
+                row.datatype === 'character varying'
+              "
+            >
               <div class="incontainer">
                 <label>Max Length</label>
                 <input
@@ -154,7 +172,14 @@
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'integer' || row.datatype ==='number' || row.datatype ==='int'">
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'integer' ||
+                row.datatype === 'number' ||
+                row.datatype === 'int'
+              "
+            >
               <div class="incontainer">
                 <label>Min Range</label>
                 <input
@@ -169,7 +194,14 @@
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'integer' || row.datatype ==='number' || row.datatype ==='int'">
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'integer' ||
+                row.datatype === 'number' ||
+                row.datatype === 'int'
+              "
+            >
               <div class="incontainer">
                 <label>Max Range</label>
                 <input
@@ -307,7 +339,7 @@
               <div class="incontainer">
                 <label>Default Value</label>
                 <input
-                *ngIf="row.datatype === 'date'"
+                  *ngIf="row.datatype === 'date'"
                   type="date"
                   [(ngModel)]="row.defaultValue"
                   id="defaultValue{{ i }}"
@@ -342,7 +374,7 @@
                   [(ngModel)]="row.description"
                   placeholder="Enter Description"
                   style="font-size: 15px"
-                  name="description{{i}}"
+                  name="description{{ i }}"
                 />
               </div>
             </div>
@@ -412,8 +444,7 @@
               class="col-1"
               style="padding-top: 37px; padding-left: 87px"
               (click)="deleteRow(i, $event)"
-            >
-            </div>
+            ></div>
           </div>
           <div style="margin-bottom: 10px; padding-top: 10px"><hr /></div>
         </div>

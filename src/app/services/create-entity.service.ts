@@ -8,7 +8,6 @@ import { TableColumnDTO } from '../models/TableColumnDTO.model';
 })
 
 export class ColumnsService {
-  // private apiUrl = 'https://localhost:7245/api';
   private ApiUrlGateWay = 'https://localhost:7093';
 
   constructor(private http: HttpClient) { }

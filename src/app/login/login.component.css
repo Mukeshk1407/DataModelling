@@ -1,7 +1,6 @@
 .login-container {
     display: flex;
     height: 100vh;
-    /* Use linear-gradient for the background color and url for the background image */
     background: linear-gradient(rgba(36, 20, 108, 0.76), rgba(36, 20, 108, 0.76)),
                 url("../../assets/images/login.jpg") center center / cover no-repeat;
 }

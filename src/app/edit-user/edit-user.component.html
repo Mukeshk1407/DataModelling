@@ -1,10 +1,5 @@
 <div class="header">
   <div class="icon-container">
-    <!-- <i
-      matTooltip="Disconnect Database"
-      class="fa-solid fa-plug-circle-xmark"
-      (click)="switchView()"
-    ></i> -->
     <i matTooltip="Logout" class="fas fa-sign-out-alt" (click)="logout()"></i>
   </div>
 </div>
@@ -105,9 +100,10 @@
 
     <div class="row row-4">
       <div class="col-md-4 offset-md-4">
-        <button class="button button4" [routerLink]="['/view-user', user.id]">Cancel</button>
+        <button class="button button4" [routerLink]="['/view-user', user.id]">
+          Cancel
+        </button>
         <button class="button button4" (click)="onSubmit()">Submit</button>
-
       </div>
     </div>
   </div>

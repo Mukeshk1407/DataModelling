@@ -29,14 +29,17 @@
     </div>
   </div>
 
-  <div class="register-button" *ngIf="(loggedIn$ | async) && isAdminRole()" (click)="navigateToRegister()">
-    <button style="margin-right: 8px;">
+  <div
+    class="register-button"
+    *ngIf="(loggedIn$ | async) && isAdminRole()"
+    (click)="navigateToRegister()"
+  >
+    <button style="margin-right: 8px">
       <span>Register</span>
       <i class="fas fa-user-plus"></i>
     </button>
   </div>
-  
-  
+
   <div *ngIf="loggedIn$; else showLoginButton">
     <div class="connect-database" (click)="dbPopup()">
       <button>

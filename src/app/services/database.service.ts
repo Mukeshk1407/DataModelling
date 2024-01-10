@@ -16,7 +16,6 @@ export class DatabaseService {
 
     return this.http.get<any>(endpoint).pipe(
       catchError((error) => {
-        console.error('An error occurred:', error);
         return throwError('Something went wrong. Please try again later.');
       })
     );

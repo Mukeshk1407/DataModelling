@@ -18,7 +18,6 @@ export class JWTTokenService {
             }
             return null;
         } catch (error) {
-            console.error('Error decoding token:', error);
             return null;
         }
     }

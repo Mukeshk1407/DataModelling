@@ -1,10 +1,5 @@
 <div class="header">
   <div class="icon-container">
-    <!-- <i
-      matTooltip="Disconnect Database"
-      class="fa-solid fa-plug-circle-xmark"
-      (click)="switchView()"
-    ></i> -->
     <i matTooltip="Logout" (click)="logout()" class="fas fa-sign-out-alt"></i>
   </div>
 </div>
@@ -169,14 +164,6 @@
                 <td>{{ user.roleName }}</td>
                 <td>{{ user.status }}</td>
               </tr>
-              <!-- Add the user details display here -->
-              <!-- <tr *ngIf="selectedUserId === user.id">
-                <td colspan="9">
-                  <div *ngFor="let userDetail of user | keyvalue">
-                    {{ userDetail.key }}: {{ userDetail.value }}
-                  </div>
-                </td>
-              </tr> -->
             </tbody>
           </table>
         </div>
@@ -186,7 +173,7 @@
           <div class="outbox" *ngIf="users.length === 0">
             <div class="nofound">
               <img
-              style="height: 250px; padding-left: 12px"
+                style="height: 250px; padding-left: 12px"
                 src="../../assets/images/modern-flat-design-concept-no-result-found-empty-results-popup-design_637684-98 1.png"
               />
             </div>
@@ -198,8 +185,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Add this at the end of your log-details.component.html file -->
   <div
     class="modal fade"
     id="exportModal"
@@ -215,12 +200,9 @@
         </div>
         <div class="modal-body">
           <p>You want to Exporting the error data for {{ entityName }}</p>
-          <!-- Add your export-related content here -->
         </div>
         <div class="modal-footer">
-          <!-- Update the Close button inside the modal-footer -->
           <button type="button" class="btn btn-secondary">Close</button>
-          <!-- OK button to trigger export -->
           <button type="button" class="btn btn-primary">OK</button>
         </div>
       </div>

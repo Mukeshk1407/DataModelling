@@ -1,10 +1,5 @@
 <div class="header">
   <div class="icon-container">
-    <!-- <i
-      matTooltip="Disconnect Database"
-      class="fa-solid fa-plug-circle-xmark"
-      (click)="switchView()"
-    ></i> -->
     <i matTooltip="Logout" class="fas fa-sign-out-alt" (click)="logout()"></i>
   </div>
 </div>
@@ -186,8 +181,12 @@
             [minlength]="8"
             required
           />
-          <i [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="password-toggle-icon"
-          (click)="togglePasswordVisibility()" style="margin-left:-30px;  cursor: pointer;"></i>
+          <i
+            [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"
+            class="password-toggle-icon"
+            (click)="togglePasswordVisibility()"
+            style="margin-left: -30px; cursor: pointer"
+          ></i>
         </div>
         <div *ngIf="password.invalid && (password.dirty || password.touched)">
           <div *ngIf="password.hasError('required')" style="color: red">

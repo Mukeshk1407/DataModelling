@@ -8,7 +8,6 @@ import { EntityListDto } from '../models/EntitylistDto.model';
   providedIn: 'root'
 })
 export class EntitylistService {
-  // private apiUrl = 'https://localhost:7245/api/entitylist';
   private apiUrlGateway = 'https://localhost:7093/api/entitylist';
   constructor(private http:HttpClient) { }
   getEntityList(): Observable<EntityListDto[]> {  

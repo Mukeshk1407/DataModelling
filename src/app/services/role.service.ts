@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class RoleService {
 
-  private apiUrl = 'https://localhost:7138'; // Replace with your API endpoint
+  private apiUrl = 'https://localhost:7138';
 
   constructor(private http: HttpClient) { }
 

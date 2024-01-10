@@ -13,7 +13,6 @@
             <form (ngSubmit)="login()" [formGroup]="loginForm">
                 <div class="form-group" [ngStyle]="{ 'border-color': isInvalid('username') ? '#F00' : '' }">
                     <label class="label" for="username">Email</label>
-                    <!-- Add [ngClass] to dynamically set the class -->
                     <input type="email" id="username" name="username" class="form-control input"
                         placeholder="Enter mail id" formControlName="username"
                         [ngClass]="{ 'error-input': isInvalid('username') }">

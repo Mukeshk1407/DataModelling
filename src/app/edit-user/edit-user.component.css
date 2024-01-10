@@ -1,5 +1,3 @@
-/* entity-list.component.css */
-
 :host {
     display: block;
     width: 100%;
@@ -46,7 +44,6 @@
   .content {
     padding: 20px;
     display: flex;
-    /* Add additional styling for your entity list content */
   }
   
   .create-entity {
@@ -78,7 +75,7 @@
     padding: 35px;
     border-radius: 10px;
     display: flex;
-    justify-content: center; /* Center horizontally */
+    justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
     max-height: 518px;
@@ -90,13 +87,13 @@
   }
   
   .entity-list-container::-webkit-scrollbar-thumb {
-  background-color: #243D4D; /* Color of the scrollbar thumb */
-  border-radius: 10px; /* Rounded corners of the thumb */
+  background-color: #243D4D;
+  border-radius: 10px;
   }
   
   .entity-list-container::-webkit-scrollbar-track {
-  background-color: rgba(143, 185, 212, 0.85); /* Color of the scrollbar track */
-  border-radius: 10px; /* Rounded corners of the track */
+  background-color: rgba(143, 185, 212, 0.85);
+  border-radius: 10px;
   }
   .scrollable {
   overflow-y: auto;
@@ -104,18 +101,13 @@
   
   .entity-box {
     height: 63px;
-    /* height: 47px; */
     width: 180px;
     margin-right: 68px;
-    /* margin-left: 23%; */
     background: #FFF;
     text-align: center;
-    /* height: 36%; */
-    /* margin: auto; */
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    /* width: calc(26.33% - 29px); */
     box-sizing: border-box;
   }
   
@@ -145,10 +137,10 @@
   margin-left: -23px;
   color: white;
   cursor: pointer;
-  background: #243D4D; /* Background color for the icon */
-  border-radius: 50%; /* Border-radius to make it circular */
-  padding: 10px; /* Padding to increase the clickable area */
-  margin-left: 5px; /* Margin to separate the icon from the input */
+  background: #243D4D;
+  border-radius: 50%;
+  padding: 10px; 
+  margin-left: 5px;
   }
   
   .line {
@@ -178,9 +170,7 @@
     cursor: pointer;
     margin-bottom: 5px;
   }
-  
-  /* newly added for inputbox */
-  
+
   .input-container {
     display: flex;
     margin-bottom: 10px;
@@ -192,7 +182,7 @@
     padding: 8px;
     margin-bottom: 8px;
     box-sizing: border-box;
-    width: 200px; /* Adjust width as needed */
+    width: 200px;
   }
   
   .inside_elcontainer{
@@ -219,7 +209,7 @@
     padding: 35px;
     border-radius: 10px;
     display: initial;
-    justify-content: center; /* Center horizontally */
+    justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
     max-height: 518px;
@@ -227,7 +217,6 @@
     top: 19px;
   }
   
-  /* slider */
   .switch {
     display: inherit;
     height: 34px;

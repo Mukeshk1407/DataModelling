@@ -1,6 +1,4 @@
 
-  /* error-details-popup.component.css */
-
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -14,26 +12,25 @@
   }
   
   .popup-content {
-    background: #f1f1f1; /* Light gray background color */
+    background: #f1f1f1; 
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     text-align: center;
-    max-height: 80vh; /* Set a maximum height, adjust as needed */
-    overflow-y: auto; /* Add a vertical scrollbar when content overflows */
+    max-height: 80vh;
+    overflow-y: auto; 
   }
   
   .popup-content h2 {
-    color: #333; /* Dark gray text color */
+    color: #333;
   }
   
   .popup-content p {
-    color: #555; /* Slightly lighter text color */
+    color: #555; 
   }
   
-  /* Style for "Close" button */
   .popup-content button.close-btn {
-    background-color: #f44336; /* Red color */
+    background-color: #f44336;
     color: white;
     border: none;
     border-radius: 5px;

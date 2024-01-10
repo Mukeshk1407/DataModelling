@@ -14,7 +14,6 @@ export class CreateUserService {
     return this.http.post<any>(`${this.apiUrl}/createUser`, userModel)
       .pipe(
         catchError(error => {
-          console.error('Error creating user', error);
           throw error; // Rethrow the error to propagate it to the component
         })
       );
