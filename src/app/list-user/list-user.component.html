@@ -157,7 +157,7 @@
               <tr>
                 <td>{{ i + 1 }}</td>
                 <td>
-                  <a [routerLink]="['/view-user', user.id]">{{ user.name }}</a>
+                  <a [routerLink]="['/edit-user', user.id]">{{ user.name }}</a>
                 </td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.phonenumber }}</td>
@@ -181,29 +181,6 @@
               <h4>No Users found</h4>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    class="modal fade"
-    id="exportModal"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="exportModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exportModalLabel">Confirmation</h5>
-        </div>
-        <div class="modal-body">
-          <p>You want to Exporting the error data for {{ entityName }}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary">Close</button>
-          <button type="button" class="btn btn-primary">OK</button>
         </div>
       </div>
     </div>

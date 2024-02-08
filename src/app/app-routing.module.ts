@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'register',component: CreateUserComponent},
   { path: 'entitylist', component: EntityListComponent },
   { path: 'entity/:entityName', component: EntityDetailsComponent },
-  {path:'log_details',component:LogDetailsComponent},
+  {path:'log_details/:logId',component:LogDetailsComponent},
   {path:'createentity',component:CreateEntityComponent},
   {path:'Edit-Entity/:entityName',component:EditEntityComponent},
   {path:'list-user',component:ListUserComponent},

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { UserInfoService } from '../services/user-info.service';
 import { AuthStorageService } from '../services/authstorage.service';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserTableDTO } from '../models/user-table.dto';
+import { UserService } from '../services/user.service';
 interface UserData {
   id: number;
   name: string;
@@ -43,7 +43,7 @@ export class EditUserComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userInfoService: UserInfoService,
+    private userService: UserService,
     private authStorageService: AuthStorageService,
     private dialog: MatDialog
   ) {}
@@ -55,7 +55,7 @@ export class EditUserComponent implements OnInit {
     });
   }
   getUserDetails(userId: number): void {
-    this.userInfoService.getUserById(userId).subscribe(
+    this.userService.getUserById(userId).subscribe(
       (response: any) => {
         if (response.isSuccess) {
           this.user = {
@@ -70,7 +70,7 @@ export class EditUserComponent implements OnInit {
             status: response.result.status,
           };
           // Fetch the role name for the user
-          this.userInfoService.getRoleById(this.user.roleId).subscribe(
+          this.userService.getRoleById(this.user.roleId).subscribe(
             (roleResponse: any) => {
               if (roleResponse.isSuccess) {
                 this.user.roleName = roleResponse.result;
@@ -90,7 +90,7 @@ export class EditUserComponent implements OnInit {
   }
 
   loadRoles(): void {
-    this.userInfoService.getRoles().subscribe(
+    this.userService.getRoles().subscribe(
       (response: any) => {
         if (response.isSuccess) {
           this.roles = response.result;
@@ -107,7 +107,7 @@ export class EditUserComponent implements OnInit {
   onSubmit(): void {
     this.user.password = '';
     // Ensure the user object is properly populated with updated data
-    this.userInfoService.updateUserById(this.userId, this.user).subscribe(
+    this.userService.updateUserById(this.user).subscribe(
       (response) => {
         // Optionally, you can redirect to another page or perform other actions upon successful update
         this.router.navigate(['list-user']);
@@ -142,5 +142,9 @@ export class EditUserComponent implements OnInit {
         // Handle modal close event
       }
     });
+  }
+  
+  listuser(): void {
+    this.router.navigate(['list-user']);
   }
 }

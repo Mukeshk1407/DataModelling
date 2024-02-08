@@ -44,11 +44,12 @@
 
   <!-- Display entity names here -->
   <div *ngFor="let entity of entityList" class="entity-box">
-    {{ entity.entityName }}
+    <!-- Display only the first 10 letters and add ellipsis if the entity name is longer -->
+    <div class="short-entity-name" [matTooltip]= "entity.entityName">{{ entity.entityName | slice:0:12 }}{{ entity.entityName.length > 10 ? '...' : '' }}</div>
+  
     <div class="icons-container1">
       <div
         [routerLink]="['/Edit-Entity', entity.entityName]"
-        (click)="editTable(entity.entityName)"
       >
         <i matTooltip="Add Validation" class="fa-solid fa-plus"></i>
       </div>

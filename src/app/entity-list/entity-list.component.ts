@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EntityListDto } from '../models/EntitylistDto.model';
-import { SharedDataService } from '../services/log-details.service';
 
 @Component({
   selector: 'app-entity-list',
@@ -19,31 +18,21 @@ export class EntityListComponent implements OnInit {
   currentPage = 1;
   entityList: any[] = [];
   pagedData: any[] = [];
-  hasValues: { [key: string]: boolean } = {};
 
   constructor(
     private entitylistService: EntitylistService,
     private authStorageService: AuthStorageService,
     private router: Router,
     private dialog: MatDialog,
-    private SharedDataService: SharedDataService
   ) {}
 
   ngOnInit() {
-    this.entitylistService.getEntityList().subscribe(
+    this.entitylistService.getTablesByHostProviderDatabase().subscribe(
       (data: any) => {
         this.tableNames = data.result;
         this.pagedData = this.tableNames;
         // Make the second API call inside this block
         const tableNames = this.pagedData.map((table) => table.entityName);
-        this.SharedDataService.checkTablesHaveValues(
-          this.pagedData.map((table) => table.entityName)
-        ).subscribe(
-          (tablesWithValues: { [key: string]: boolean }) => {
-            this.hasValues = tablesWithValues; // Assign the values to the component property
-          },
-          (error) => {}
-        );
       },
       (error) => {
         this.errorMessage = 'No Data Available'; // Update error message
@@ -58,7 +47,7 @@ export class EntityListComponent implements OnInit {
   }
 
   loadEntityList() {
-    this.entitylistService.getEntityList().subscribe(
+    this.entitylistService.getTablesByHostProviderDatabase().subscribe(
       (data: any) => {
         this.originalEntityList = data.result || [];
         this.entityList = [...this.originalEntityList];
@@ -69,12 +58,9 @@ export class EntityListComponent implements OnInit {
     );
   }
   setPage(page: number) {
-    // const startIndex = (page - 1) * this.itemsPerPage;
-    // const endIndex = Math.min(startIndex + this.itemsPerPage, this.tableNames.length);
     this.pagedData = this.tableNames;
   }
   logout() {
-    localStorage.removeItem('logDetailsData');
     this.authStorageService.clearAuthInfo();
     this.router.navigate(['']);
   }

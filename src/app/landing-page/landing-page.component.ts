@@ -6,7 +6,7 @@ import { selectRole } from '../state/auth.selectors';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthStorageService } from '../services/authstorage.service';
-import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -23,7 +23,7 @@ export class LandingPageComponent implements OnInit {
     private store: Store,
     private dialog: MatDialog,
     private authStorageService: AuthStorageService,
-    private authService: AuthService
+    private userService: UserService
   ) {
     var storedAuthInfo = this.authStorageService.getAuthInfo();
     if (storedAuthInfo != undefined && storedAuthInfo.loggedIn != undefined) {
@@ -36,7 +36,7 @@ export class LandingPageComponent implements OnInit {
   ngOnInit(): void {
     this.loggedIn$!.subscribe((loggedIn) => {
       if (loggedIn) {
-        const userRole = this.authService.getUserRole();
+        const userRole = this.userService.getUserRole();
       }
     });
   }
@@ -45,7 +45,7 @@ export class LandingPageComponent implements OnInit {
     this.router.navigate(['/login']); // Update 'login' with the actual route path to your login component
   }
   isAdminRole(): boolean {
-    const userRole = this.authService.getUserRole()?.toLowerCase(); // Convert to lowercase for case-insensitive comparison
+    const userRole = this.userService.getUserRole()?.toLowerCase(); // Convert to lowercase for case-insensitive comparison
 
     // List of possible admin role values
     const adminRoles = [

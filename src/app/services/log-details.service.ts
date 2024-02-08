@@ -5,38 +5,43 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class SharedDataService {
+
+  private baseUrl = 'https://localhost:7046/EntitySchema';
   
   constructor(private http: HttpClient) {}
   private logDetailsData = new BehaviorSubject<any>(null);
   data: any[] = [];
-  private EditApiURL = 'https://localhost:7093';
-  private ListOfTableURL = 'https://localhost:7093/api/entity/has-values';
-  private EntityIdURL = 'https://localhost:7093';
-  private baseUrl= 'https://localhost:7093';
+  
   getLogDetailsData() {
     return this.logDetailsData.asObservable();
   }
-  checkTablesHaveValues(
-    tableNames: string[]
-  ): Observable<{ [key: string]: boolean }> {
-    return this.http.post<{ [key: string]: boolean }>(
-      `${this.ListOfTableURL}`,
-      tableNames
-    );
-  }
+ 
   setLogDetails(data: any) {
     this.logDetailsData.next(data);
   }
-  updateEntityColumn(data: any): Observable<any> {
-    const url = `${this.EditApiURL}/updateEntityColumn`;
-    return this.http.post(url, data);
-  }
-  getEntityIdByName(entityName: string): Observable<any> {
-    const url = `${this.EntityIdURL}/getEntityIdByName/${entityName}`;
+
+  getLogByParentId(logParentId: number): Observable<any> {
+    const url = `${this.baseUrl}/log/${logParentId}`;
     return this.http.get(url);
   }
-  getEntityData(listEntityId: number, listEntityKey: number, listEntityValue: number): Observable<any> {
-    const url = `${this.baseUrl}/getEntityData?listEntityId=${listEntityId}&listEntityKey=${listEntityKey}&listEntityValue=${listEntityValue}`;
+
+  getLogByChildId(logChildId: number): Observable<any> {
+    const url = `${this.baseUrl}/log/child/${logChildId}`;
+    return this.http.get(url);
+  }
+
+  getAllLogs(): Observable<any> {
+    const url = `${this.baseUrl}/logs`;
+    return this.http.get(url);
+  }
+
+  getLogsByUserId(userId: number): Observable<any> {
+    const url = `${this.baseUrl}/logs/user/${userId}`;
+    return this.http.get(url);
+  }
+
+  getLogsByEntityId(entityId: number): Observable<any> {
+    const url = `${this.baseUrl}/logs/entity/${entityId}`;
     return this.http.get(url);
   }
 }

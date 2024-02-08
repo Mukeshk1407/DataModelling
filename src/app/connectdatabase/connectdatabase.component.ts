@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DatabaseService } from '../services/database.service';
 import { ToastrService } from '../services/ToastrService';
 import { Router } from '@angular/router';
+import { EntitylistService } from '../services/entitylist.service';
 
 @Component({
   selector: 'app-connectdatabase',
@@ -12,13 +12,13 @@ import { Router } from '@angular/router';
 export class ConnectdatabaseComponent {
 
   constructor(private dialog: MatDialog,
-    private dbService: DatabaseService,
+    private entityService: EntitylistService,
     private toastrService : ToastrService,
     private router : Router) {
   }
   boxes = [
     { content: 'Dynamo', imageSrc: 'assets/images/dynamo.png', selected: false },
-    { content: 'PostgreSQL', imageSrc: 'assets/images/postgre.png', selected: false },
+    { content: 'postgresql', imageSrc: 'assets/images/postgre.png', selected: false },
     { content: 'MY SQL', imageSrc: 'assets/images/Db1-mysql.png', selected: false },
     { content: 'MS SQL', imageSrc: 'assets/images/sql.png', selected: false },
   ];  
@@ -65,22 +65,22 @@ export class ConnectdatabaseComponent {
       databaseName: this.databaseName,
       username: this.username,
       password: this.password,
-      selectedContent: this.selectedContent,
+      provider: this.selectedContent,
     };
     localStorage.setItem('databaseDetails', JSON.stringify(databaseDetails));
-      // Use the DatabaseService to connect to the backend
-      //this.selectedContent,
-      this.dbService.getTableDetails( 
-        this.hostname,this. databaseName, this.username, this.password).subscribe(
+      this.entityService.getClientEntity().subscribe(
         (response) => {
-
+          console.log(response)
           if(response.isSuccess){
             const dialogRef = this.dialog.closeAll();
             this.toastrService.showSuccess('Your Database Connected Successfully');
             this.router.navigate(['/entitylist']);
           }
-          else{
+          else if(response.errorMessages[0] != null){
             this.toastrService.showError(response.errorMessages);
+          }
+          else{
+            this.toastrService.showError(response.result);
           }
         },
         (error) => {
@@ -89,7 +89,6 @@ export class ConnectdatabaseComponent {
       );
   
     } else {
-      // Display an error message or perform any other action for incomplete fields
       this.toastrService.showError('Please fill in all fields');
     }
   }

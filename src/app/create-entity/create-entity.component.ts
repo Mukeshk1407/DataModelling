@@ -1,15 +1,15 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ColumnInputServiceService } from '../services/column-input-service.service';
 import { ToastrService } from '../services/ToastrService';
 import { NgForm } from '@angular/forms';
-import { ColumnsService } from '../services/create-entity.service';
 import { EntityListDto } from '../models/EntitylistDto.model';
 import { EntitylistService } from '../services/entitylist.service';
 import { NgZone } from '@angular/core';
 import { AuthStorageService } from '../services/authstorage.service';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TableRequest } from '../models/TableRequest';
+import { ColumnDTO } from '../models/ColumnDTO';
 
 @Component({
   selector: 'app-create-entity',
@@ -45,8 +45,6 @@ export class CreateEntityComponent {
     private authStorageService: AuthStorageService,
     private dialog: MatDialog,
     private router: Router,
-    private columnInputService: ColumnInputServiceService,
-    private columnsService: ColumnsService,
     private entitylistService: EntitylistService,
     private zone: NgZone
   ) {}
@@ -116,7 +114,7 @@ export class CreateEntityComponent {
         localStorage.removeItem('formData');
       }, deletionTimeout);
     }
-    this.entitylistService.getEntityList().subscribe(
+    this.entitylistService.getTablesByHostProviderDatabase().subscribe(
       (data: any) => {
         this.listOfValues = data.result;
       },
@@ -141,14 +139,14 @@ export class CreateEntityComponent {
       this.selectedEntity = entityName;
       this.SelectedEntityName = this.selectedEntity;
       // Fetch columns for the selected entity
-      this.columnsService
-        .getColumnsForEntity(this.selectedEntity)
+      this.entitylistService
+        .getColumnsByHostProviderDatabaseTableName(this.selectedEntity)
         .subscribe((columns) => {
           this.entityColumnNames1 = columns.map(
-            (column) => column.entityColumnName
+            (column) => column.ColumnName
           );
           this.entityColumnNames2 = columns.map(
-            (column) => column.entityColumnName
+            (column) => column.ColumnName
           );
         });
       // Fetch columns for the selected entity
@@ -168,7 +166,7 @@ export class CreateEntityComponent {
   }
 
   fetchSelectedEntityColumns(entityName: string) {
-    this.columnsService.getColumnsForEntity(entityName).subscribe(
+    this.entitylistService.getColumnsByHostProviderDatabaseTableName(entityName).subscribe(
       (data: any) => {
         if (data && data.result) {
           this.selectedEntityColumns = data.result.map(
@@ -284,6 +282,17 @@ export class CreateEntityComponent {
     }
     return primaryKeyCount === 1;
   }
+
+  hasEmptyOrNullColumnNames(): boolean {
+    for (const row of this.newEntity.columns) {
+      if (!row.columnName) {
+        return true; // Return true if any column name is empty or null
+      }
+    }
+    return false; // Return false if all column names have values
+  }
+  
+
   preventSubmitOnEnter(event: KeyboardEvent, form: NgForm): void {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -413,6 +422,12 @@ export class CreateEntityComponent {
       this.newEntity.columns.some((column: { columnName: string }) =>
         this.isReservedKeyword(column.columnName)
       );
+
+      if (this.hasEmptyOrNullColumnNames()) {
+        this.toastrService.showError('Entity or column name is missing');
+        return;
+      }
+
     if (reservedKeywordFound) {
       this.toastrService.showError(
         'Entity or column name cannot be a reserved keyword.'
@@ -507,55 +522,57 @@ export class CreateEntityComponent {
         columns: this.newEntity.columns,
       };
 
-      const backendRequest = {
-        tableName: formData.entityname,
-        hostName: '',
-        databaseName: '',
-        provider: '',
-        columns: formData.columns.map((columns: any) => {
+      const backendRequest : TableRequest = {
+        Table: {
+          Id: 0,  // Set the appropriate default value or omit it if it's optional
+          EntityName: formData.entityname,
+          HostName: 'YourHostName',  // Provide the actual hostname
+          DatabaseName: 'YourDatabaseName',  // Provide the actual database name
+          Provider: 'YourProvider',  // Provide the actual provider
+        },
+        Columns: formData.columns.map((column: any) => {
           return {
-            entityColumnName: columns.columnName,
-            dataType: columns.datatype,
-            length: columns.length || 0,
-            true: columns.true,
-            false: columns.false,
-            isNullable: columns.isNullable,
-            defaultValue: columns.defaultValue,
-            columnPrimaryKey: columns.primaryKey,
-            description: columns.description,
-            minLength: parseInt(columns.minLength),
-            maxLength: parseInt(columns.maxLength),
-            maxRange: parseInt(columns.MaxRange),
-            minRange: parseInt(columns.MinRange),
-            dateMinValue: columns.dateminValue,
-            dateMaxValue: columns.datemaxValue,
-            listEntityId: parseInt(this.selectedEntity) || 0,
-            listEntityKey: this.firstColumnId || 0,
-            listEntityValue: this.selectedKeyId || 0,
-          };
+            Id: 0,  // Set the appropriate default value or omit it if it's optional
+            ColumnName: column.columnName,
+            Datatype: column.datatype,
+            IsPrimaryKey: column.primaryKey,
+            IsForeignKey: column.foreignKey,
+            EntityId: 0,  // Set the appropriate default value or omit it if it's optional
+            ReferenceEntityID: column.referenceEntityID || null,
+            ReferenceColumnID: column.referenceColumnID || null,
+            Length: column.length || null,
+            MinLength: column.minLength || null,
+            MaxLength: column.maxLength || null,
+            MaxRange: column.maxRange || null,
+            MinRange: column.minRange || null,
+            DateMinValue: column.dateMinValue || null,
+            DateMaxValue: column.dateMaxValue || null,
+            Description: column.description,
+            IsNullable: column.isNullable,
+            DefaultValue: column.defaultValue || null,
+            True: column.true || null,
+            False: column.false || null,
+          } as ColumnDTO;
         }),
-      };
+      };      
+      console.log(backendRequest);
 
-      const databaseDetailsString = localStorage.getItem('databaseDetails');
-      const databaseDetails = JSON.parse(databaseDetailsString || '{}');
-
-      // Assign the values to backendRequest
-      backendRequest.hostName = databaseDetails?.hostname || '';
-      backendRequest.databaseName = databaseDetails?.databaseName || '';
-      backendRequest.provider = databaseDetails?.selectedContent || '';
-
-      this.columnInputService.createTable(backendRequest).subscribe(
+      this.entitylistService.insertTable(backendRequest).subscribe(
         (response) => {
-          // Handle success response if needed
-          this.toastrService.showSuccess('Entity created successfully');
-          this.router.navigate(['/entity-list']);
+          if(response.isSuccess){
+            // Handle success response if needed
+            this.toastrService.showSuccess('Entity created successfully');
+            this.router.navigate(['/entity-list']);
+          }else{
+            this.toastrService.showError(response.errorMessage[0]);
+          }
         },
         (error) => {
           // Handle error response and display error message
           this.toastrService.showError('Error creating table: ' + error);
         }
       );
-
+      
       localStorage.removeItem('formData');
     }
   }
