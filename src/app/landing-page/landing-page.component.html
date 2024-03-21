@@ -29,29 +29,34 @@
     </div>
   </div>
 
+  <div *ngIf="loggedIn$; else showLoginButton" class="register-button">
   <div
-    class="register-button"
     (click)="navigateToRegister()"
   >
-    <button style="margin-right: 8px">
-      <span>Register</span>
+    <button>
+      <span>User</span>
       <i class="fas fa-user-plus"></i>
     </button>
   </div>
-
-  <div *ngIf="loggedIn$; else showLoginButton">
-    <div class="connect-database" (click)="dbPopup()">
-      <button>
-        <span>Connect Database</span>&nbsp;<i class="fa-solid fa-plug"></i>
-      </button>
-    </div>
-    <div class="login-button" (click)="logout()">
-      <button>
-        <span>Logout</span>
-        <i class="fa fa-sign-out"></i>
-      </button>
-    </div>
+  <div (click)="RolePopup()" style="margin-right:10px">
+    <button>
+      <span>Role</span>
+      <i class="fas fa-user-plus"></i>
+    </button>
   </div>
+  <div (click)="dbPopup()" style="margin-right:10px">
+    <button style="width: 100%;">
+      <span>Connect Database</span>&nbsp;<i class="fa-solid fa-plug"></i>
+    </button>
+  </div>
+  <div (click)="logout()">
+    <button>
+      <span>Logout</span>
+      <i class="fa fa-sign-out"></i>
+    </button>
+  </div>
+  </div>
+
   <ng-template #showLoginButton>
     <div class="login-button" (click)="navigateToLogin()">
       <button>

@@ -1,0 +1,35 @@
+<div class="modal">
+    <div class="close-icon" (click)="closePopup()">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </div>
+    <h2>Role Management</h2>
+  
+    <div class="rolelist">
+      <div *ngFor="let role of roles" class="role-item">
+        <input [(ngModel)]="role.roleName" disabled="true" class="add-role-input" />
+          <div class="test">
+              <button class="edit-button" (click)="editRole(role)">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+          </div>
+      </div>
+  
+      <div *ngIf="!editingRole" class="add-item">
+        <input [(ngModel)]="newRole" placeholder="New Role Name" class="add-role-input" />
+        <button class="add-button" (click)="addRole(newRole)">
+          <i class="fas fa-plus"></i> Add
+        </button>
+      </div>
+  
+      <div *ngIf="editingRole" class="edit-buttons">
+        <input class="add-role-input" [(ngModel)]="editingRole.roleName" />
+        <button class="save-button" (click)="saveEditedRole()">
+          <i class="fas fa-check"></i> Save
+        </button>
+        <button class="cancel-button" (click)="cancelEditedRole()">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+  

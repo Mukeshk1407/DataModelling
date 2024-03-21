@@ -7,6 +7,7 @@ import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.com
 import { MatDialog } from '@angular/material/dialog';
 import { AuthStorageService } from '../services/authstorage.service';
 import { UserService } from '../services/user.service';
+import { RoleManagementComponent } from '../role-management/role-management.component';
 
 @Component({
   selector: 'app-landing-page',
@@ -67,6 +68,21 @@ export class LandingPageComponent implements OnInit {
 
   dbPopup() {
     const dialogRef = this.dialog.open(ConnectdatabaseComponent, {
+      width: '400px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      if (result) {
+        // Handle the selected database
+      } else {
+        // Handle modal close event
+      }
+    });
+  }
+
+  RolePopup() {
+    const dialogRef = this.dialog.open(RoleManagementComponent, {
       width: '400px',
       disableClose: true,
     });
