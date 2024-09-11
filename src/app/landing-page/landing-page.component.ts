@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthStorageService } from '../services/authstorage.service';
 import { UserService } from '../services/user.service';
 import { RoleManagementComponent } from '../role-management/role-management.component';
+import { ScreenManagementComponent } from '../screen-management/screen-management.component';
 
 @Component({
   selector: 'app-landing-page',
@@ -98,5 +99,20 @@ export class LandingPageComponent implements OnInit {
 
   navigateToRegister(): void {
     this.router.navigate(['/list-user']); // Update 'login' with the actual route path to your login component
+  }
+
+  ScreenPopup() {
+    const dialogRef = this.dialog.open(ScreenManagementComponent, {
+      width: '400px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      if (result) {
+        // Handle the selected database
+      } else {
+        // Handle modal close event
+      }
+    });
   }
 }

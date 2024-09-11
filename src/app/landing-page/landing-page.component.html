@@ -30,6 +30,14 @@
   </div>
 
   <div *ngIf="loggedIn$; else showLoginButton" class="register-button">
+    <div
+    (click)="ScreenPopup()"
+  >
+    <button>
+      <span>Screen</span>
+      <i class="fas fa-user-plus"></i>
+    </button>
+  </div>
   <div
     (click)="navigateToRegister()"
   >

@@ -50,7 +50,7 @@ import { ScreenManagementComponent } from './screen-management/screen-management
     EditUserComponent,
     ErrorDetailsPopupComponent,
     RoleManagementComponent,
-    ScreenManagementComponent,
+    ScreenManagementComponent
    ],
   imports: [
     BrowserModule,
