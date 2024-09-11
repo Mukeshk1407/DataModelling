@@ -25,9 +25,46 @@
   </div>
 </div>
 
-<div
+<!-- <div
   class="entity-list-container"
   [ngClass]="{ scrollable: entityList.length > 12 }"
+>
+  Search box
+  <div class="search-box">
+    <input
+      #searchInput
+      type="text"
+      placeholder="Search by Entity Name"
+      (input)="onSearch(searchInput.value)"
+    />
+    <i class="fas fa-search"></i>
+  </div>
+  Line below search box
+  <div class="line"></div>
+
+  Display entity names here
+  <div *ngFor="let entity of entityList" class="entity-box">
+    Display only the first 10 letters and add ellipsis if the entity name is longer
+    <div class="short-entity-name" [matTooltip]= "entity.entityName">{{ entity.entityName | slice:0:12 }}{{ entity.entityName.length > 10 ? '...' : '' }}</div>
+  
+    <div class="icons-container1">
+      <div
+        [routerLink]="['/Edit-Entity', entity.entityName]"
+      >
+        <i matTooltip="Add Validation" class="fa-solid fa-plus"></i>
+      </div>
+      <i
+        matTooltip="View Attributes"
+        class="fa-solid fa-eye"
+        [routerLink]="['/entity', entity.entityName]"
+      ></i>
+    </div>
+  </div>
+</div> -->
+
+<div
+  class="entity-list-container"
+  [ngClass]="{ scrollable: tableNames.length > 12 }"
 >
   <!-- Search box -->
   <div class="search-box">
@@ -43,14 +80,14 @@
   <div class="line"></div>
 
   <!-- Display entity names here -->
-  <div *ngFor="let entity of entityList" class="entity-box">
-    <!-- Display only the first 10 letters and add ellipsis if the entity name is longer -->
-    <div class="short-entity-name" [matTooltip]= "entity.entityName">{{ entity.entityName | slice:0:12 }}{{ entity.entityName.length > 10 ? '...' : '' }}</div>
-  
+  <div *ngFor="let entity of tableNames" class="entity-box">
+    <!-- Display only the first 12 letters and add ellipsis if the entity name is longer -->
+    <div class="short-entity-name" [matTooltip]="entity.entityName">
+      {{ entity.entityName | slice : 0 : 12
+      }}{{ entity.entityName.length > 12 ? "..." : "" }}
+    </div>
     <div class="icons-container1">
-      <div
-        [routerLink]="['/Edit-Entity', entity.entityName]"
-      >
+      <div [routerLink]="['/Edit-Entity', entity.entityName]">
         <i matTooltip="Add Validation" class="fa-solid fa-plus"></i>
       </div>
       <i

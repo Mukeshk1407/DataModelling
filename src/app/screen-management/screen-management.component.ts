@@ -1,100 +1,55 @@
-import { Component } from '@angular/core';
-import { Role } from '../models/Role';
+import { Component, OnInit } from '@angular/core';
+import { ScreenService } from '../services/screen.service';
+import { Screen } from '../models/Screen';
 import { MatDialog } from '@angular/material/dialog';
-import { RoleService } from '../services/role.service';
-import { ToastrService } from '../services/ToastrService';
 
 @Component({
   selector: 'app-screen-management',
   templateUrl: './screen-management.component.html',
   styleUrls: ['./screen-management.component.css']
 })
-export class ScreenManagementComponent {
+export class ScreenManagementComponent implements OnInit {
+  screens: Screen[] = [];
+  rolesWithScreens: any[] = [];
 
-  roles: Role[] = [];
-  newRole: string = '';
-  editingRole: Role | null = null;
-
-  constructor(private dialog: MatDialog, private roleService: RoleService,private toastrService: ToastrService,) {}
+  constructor(private screenService: ScreenService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.getrole();
+    this.fetchScreens();
   }
 
-  // removeRole(roleId: number): void {
-  //   this.roleService.removeRole(roleId);
-  // }
-
-  editRole(editedRole: Role): void {
-    this.editingRole = { ...editedRole };  // Set the editingRole property
-  }
-  
-  addRole(roleName: string): void {
-    if (roleName.trim() !== '') {
-      const newRole: Role = {
-        roleName: roleName,
-        id: 0
-      };
-      this.roleService.addRole(newRole).subscribe(
-        response => {
-          if(response.isSuccess){
-            this.toastrService.showSuccess('New Role Created Successfully');
-            this.getrole();
-            this.newRole = "";
-          }
-          else{
-            this.toastrService.showError(response.errorMessage[0]);
-          }
-        },
-        error => {
-          this.toastrService.showError('Role name cannot be empty');
-        }
-      );
-    } else {
-      this.toastrService.showError('Role name cannot be empty');
-    }
-  }
-
-  getrole(){
-    this.roleService.getRoles().subscribe(
-      (data: any) => {
-        this.roles = data.result.result;
+  fetchScreens(): void {
+    this.screenService.getList().subscribe(
+      (screens: Screen[]) => {
+        this.screens = screens;
+        this.groupScreensByRole();
       },
-      (error) => {
+      error => {
+        console.error('Error fetching screens:', error);
       }
     );
   }
-  
-  saveEditedRole(): void {
-    if (this.editingRole !== null && this.editingRole.roleName.trim() !== '') {
-      const roleId = this.editingRole.id;
 
-    this.roleService.editRole(roleId, this.editingRole).subscribe(
-      (updatedRole) => {
-        console.log('Role updated successfully:', updatedRole);
-        if(updatedRole.result.isSuccess){
-          this.toastrService.showSuccess('Role updated successfully');
+  groupScreensByRole(): void {
+    const roles: { [key: number]: { roleName: string; screenNames: string[] } } = {};
+    this.screens.forEach(screen => {
+      if (screen.role && screen.screen) { // Check if both screen.role and screen.screen are defined
+        const roleId = screen.role.id;
+        if (!roles[roleId]) {
+          roles[roleId] = {
+            roleName: screen.role.roleName,
+            screenNames: []
+          };
         }
-        // Update your local data or take any other actions as needed
-      },
-      (error) => {
-        console.error('Error updating role:', error);
-        // Handle the error, show a message, etc.
+        roles[roleId].screenNames.push(screen.screen.screenName);
       }
-    );
-      this.editingRole = null;
-    } else {
-      this.toastrService.showError('Role name cannot be empty');
-    }
+    });
+    this.rolesWithScreens = Object.values(roles);
   }
-
-  cancelEditedRole(): void{
-    this.editingRole = null;
-  }
+  
+  
 
   closePopup(): void {
-    // Implement logic to close the popup when the close icon is clicked
     const dialogRef = this.dialog.closeAll();
   }
-  
 }

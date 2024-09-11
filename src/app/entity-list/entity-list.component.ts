@@ -23,7 +23,7 @@ export class EntityListComponent implements OnInit {
     private entitylistService: EntitylistService,
     private authStorageService: AuthStorageService,
     private router: Router,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -33,15 +33,16 @@ export class EntityListComponent implements OnInit {
         this.pagedData = this.tableNames;
         // Make the second API call inside this block
         const tableNames = this.pagedData.map((table) => table.entityName);
+        console.log('tableNames', tableNames);
       },
       (error) => {
         this.errorMessage = 'No Data Available'; // Update error message
       }
     );
-
     this.setPage(this.currentPage); // Initialize the first page
     this.loadEntityList();
   }
+
   editTable(entityName: string) {
     // Implement your editTable logic here
   }
