@@ -32,7 +32,6 @@ export class EntitylistService {
     // Retrieve details from localStorage
     var databaseDetailsString = localStorage.getItem('databaseDetails');
     var databaseDetails = JSON.parse(databaseDetailsString || '{}');
-
     // Populate values or use 'null' as fallback
     var hostName = databaseDetails?.hostname || 'null';
     var databaseName = databaseDetails?.databaseName || 'null';
@@ -48,6 +47,7 @@ export class EntitylistService {
     const endpoint = `${this.apiUrlGateway}tables/GetTablesByHostProviderDatabase?hostName=${hostName}&provider=${provider}&databaseName=${databaseName}&accessKey=${accessKey}&secretkey=${secretkey}&region=${region}&keyspace=${keyspace}&ec2Instance=${ec2Instance}&ipAddress=${ipAddress}`;
     // Make the API request
     return this.http.get<TableMetaDataDTO[]>(endpoint);
+    
   }
 
   // Endpoint: /EntitySchema/tables/{hostName}/{provider}/{databaseName}/{tableName}
@@ -60,18 +60,22 @@ export class EntitylistService {
     var databaseName = databaseDetails?.databaseName || '';
     var provider = databaseDetails?.provider || '';
     const endpoint = `${this.apiUrlGateway}tables/${hostName}/${provider}/${databaseName}/${tableName}`;
+    console.log("Dbconnect2",endpoint);
     return this.http.get<TableMetaDataDTO>(endpoint);
   }
 
   // Endpoint: /EntitySchema/columns
   getAllColumns(): Observable<ColumnDTO[]> {
     const endpoint = `${this.apiUrlGateway}columns`;
+  
     return this.http.get<ColumnDTO[]>(endpoint);
+    
   }
 
   // Endpoint: /EntitySchema/columns/{id}
   getColumnById(id: number): Observable<ColumnDTO> {
     const endpoint = `${this.apiUrlGateway}columns/${id}`;
+   
     return this.http.get<ColumnDTO>(endpoint);
   }
 
@@ -81,12 +85,14 @@ export class EntitylistService {
     entityid: number
   ): Observable<ColumnDTO> {
     const endpoint = `${this.apiUrlGateway}columns/${id}/${entityid}`;
+   
     return this.http.get<ColumnDTO>(endpoint);
   }
 
   // Endpoint: /EntitySchema/columns/entity/{entityId}
   getColumnsByEntityId(entityId: number): Observable<ColumnDTO[]> {
     const endpoint = `${this.apiUrlGateway}columns/entity/${entityId}`;
+    
     return this.http.get<ColumnDTO[]>(endpoint);
   }
 
@@ -94,7 +100,6 @@ export class EntitylistService {
   private setDBConnectionDTOFromLocalStorage(): DBConnectionDTO {
     const databaseDetailsString = localStorage.getItem('databaseDetails');
     const databaseDetails1 = JSON.parse(databaseDetailsString || '{}');
-
     const connectionDTO: DBConnectionDTO = {
       Provider: databaseDetails1?.provider || '',
       HostName: databaseDetails1?.hostname || '',
@@ -134,9 +139,9 @@ export class EntitylistService {
     tableName: string
   ): Observable<ColumnDTO[]> {
     const connectionDTO = this.setDBConnectionDTOFromLocalStorage();
-    const endpoint = `${this.apiUrlGateway}columns/${connectionDTO.HostName}/${connectionDTO.Provider}/${connectionDTO.DataBase}/${tableName}`;
-    return this.http.get<ColumnDTO[]>(endpoint, {
-      params: connectionDTO as any,
-    });
+   const encodedHostName = encodeURIComponent(connectionDTO.HostName);
+    const endpoint = `${this.apiUrlGateway}columns/${encodedHostName}/${connectionDTO.Provider}/${connectionDTO.DataBase}/${tableName}`;
+    console.log("column",endpoint)
+    return this.http.get<ColumnDTO[]>(endpoint, { params: connectionDTO as any });
   }
 }

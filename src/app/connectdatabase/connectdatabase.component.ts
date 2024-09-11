@@ -60,8 +60,9 @@ export class ConnectdatabaseComponent {
     // Check if all required fields are filled
     if (this.hostname && this.username && this.password &&this. databaseName && this.selectedContent) {
        // Store the entered details in localStorage
+    const encodedHostName = encodeURIComponent(this.hostname);
     const databaseDetails = {
-      hostname: this.hostname,
+      hostname: encodedHostName,
       databaseName: this.databaseName,
       username: this.username,
       password: this.password,
