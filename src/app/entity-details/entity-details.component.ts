@@ -44,21 +44,21 @@ export class EntityDetailsComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.entityName = params['entityName'];
     });
-    this.entityService.getColumnsByHostProviderDatabaseTableName(this.entityName).subscribe(
-      (data: any) => {
-        if (data.isSuccess) {
-          this.columnsList = data.result;
-          this.columns = this.columnsList;
-        } else {
-        }
-      },
-      (error) => {
-      }
-    );
+    this.entityService
+      .getColumnsByHostProviderDatabaseTableName(this.entityName)
+      .subscribe(
+        (data: any) => {
+          if (data.isSuccess) {
+            this.columnsList = data.result;
+            this.columns = this.columnsList;
+          } else {
+          }
+        },
+        (error) => {}
+      );
   }
 
   searchText = ''; // Variable to store user input for search
-
 
   BacktoView() {
     this.router.navigate(['entitylist']);
@@ -83,13 +83,13 @@ export class EntityDetailsComponent implements OnInit {
     });
   }
 
-//   onSearch(searchTerm: string) {
-//   console.log(searchTerm);
-//   this.columnsList = this.columns.filter((entity) =>
-//     entity.columnName.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
-//   console.log(this.columnsList);
-// }
+  //   onSearch(searchTerm: string) {
+  //   console.log(searchTerm);
+  //   this.columnsList = this.columns.filter((entity) =>
+  //     entity.columnName.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
+  //   console.log(this.columnsList);
+  // }
 
   hasColumns(): boolean {
     return this.columns.length > 0;
@@ -111,12 +111,10 @@ export class EntityDetailsComponent implements OnInit {
         const response = JSON.parse(res);
         var logId = response.result;
         if (response.isSuccess) {
-
           this.toastrService.showSuccess(response.errorMessage[0]);
           // Navigate to LogDetailsComponent
           this.router.navigate([`/log_details/${logId}`]);
         } else {
-
           this.toastrService.showError(response.errorMessage[0]);
           this.router.navigate([`/log_details/${logId}`]);
         }
@@ -151,7 +149,6 @@ export class EntityDetailsComponent implements OnInit {
   }
 
   generateExcelTemplate() {
-
     if (this.columns.length === 0) {
       return; // Do nothing if there are no columns
     }
