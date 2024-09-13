@@ -6,7 +6,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { ValidationErrors } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 import { Store } from '@ngrx/store';
 import * as authActions from '../state/auth.actions';
 import { Observable, Subject } from 'rxjs';
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private userService: UserService,
     private store: Store,
     private jwtTockenService: JWTTokenService,
     private toastrService: ToastrService,
@@ -83,10 +83,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login() {
     if (this.loginForm.invalid) {
+      this.toastrService.showError("Invalid Credentials");
       return;
     }
-
-    this.authService
+    this.userService
       .login(this.f['username'].value, this.f['password'].value)
       .subscribe(
         (response) => {
@@ -105,7 +105,6 @@ export class LoginComponent implements OnInit, OnDestroy {
               email,
               role
             );
-
             this.toastrService.showSuccess('LogIn successfully');
             this.router.navigate(['']);
           } else {
@@ -116,12 +115,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           }
         },
         (error) => {
-          this.store.dispatch(
-            authActions.loginFailure({ error: 'Authentication failed' })
-          );
-          this.toastrService.showError('Invalid Credentials');
-        }
-      );
+          this.toastrService.showError(error.error.errorMessage[0]);
+        });
   }
 
   emailValidator(control: AbstractControl): ValidationErrors | null {

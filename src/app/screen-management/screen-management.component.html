@@ -1,0 +1,19 @@
+<div class="modal">
+  <div class="close-icon" (click)="closePopup()">
+    <i class="fa-solid fa-circle-xmark"></i>
+  </div>
+  <h2>Screen Management</h2>
+
+  <!-- Display roleName in input field -->
+  <input type="text" [value]="screens.length > 0 ? screens[0].role?.roleName : ''" readonly />
+
+  <!-- Display screen names as a list of checkboxes in a row -->
+  <div class="rolelist">
+    <div class="role-item" *ngFor="let screen of screens">
+      <label>
+        <input type="checkbox" [(ngModel)]="screen.isSelected" class="checkbox" />
+        {{ screen.screen?.screenName }}
+      </label>
+    </div>
+  </div>
+</div>

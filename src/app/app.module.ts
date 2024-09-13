@@ -29,6 +29,8 @@ import { ListUserComponent } from './list-user/list-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { ErrorDetailsPopupComponent } from './error-details-popup/error-details-popup.component';
+import { RoleManagementComponent } from './role-management/role-management.component';
+import { ScreenManagementComponent } from './screen-management/screen-management.component';
 
 
 @NgModule({
@@ -47,6 +49,8 @@ import { ErrorDetailsPopupComponent } from './error-details-popup/error-details-
     ViewUserComponent,
     EditUserComponent,
     ErrorDetailsPopupComponent,
+    RoleManagementComponent,
+    ScreenManagementComponent
    ],
   imports: [
     BrowserModule,

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserInfoService } from '../services/user-info.service';
 import { AuthStorageService } from '../services/authstorage.service';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UserService } from '../services/user.service';
 
 interface User {
   name: string;
@@ -28,7 +28,7 @@ export class ViewUserComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private userInfoService: UserInfoService,
+    private userService: UserService,
     private authStorageService: AuthStorageService,
     private dialog: MatDialog
   ) {}
@@ -41,7 +41,7 @@ export class ViewUserComponent implements OnInit {
   }
 
   getUserDetails(userId: number): void {
-    this.userInfoService.getUserById(userId).subscribe(
+    this.userService.getUserById(userId).subscribe(
       (response: any) => {
         if (response.isSuccess) {
           const result = response.result;
@@ -58,7 +58,7 @@ export class ViewUserComponent implements OnInit {
           };
 
           // Fetch the role name for the user
-          this.userInfoService.getRoleById(this.user.roleId).subscribe(
+          this.userService.getRoleById(this.user.roleId).subscribe(
             (roleResponse: any) => {
               if (roleResponse.isSuccess) {
                 this.user.roleName = roleResponse.result;

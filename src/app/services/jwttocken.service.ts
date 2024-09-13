@@ -7,7 +7,6 @@ export class JWTTokenService {
     decodedToken : DecodedToken | null = null;
 
     constructor() {
-        
     };
 
     decodeToken(jwtToken: string): DecodedToken | null {
@@ -21,14 +20,12 @@ export class JWTTokenService {
             return null;
         }
     }
-    
 
     getUser(jwtToken: string): string {
         const decodedToken = this.decodeToken(jwtToken);
         const userName = decodedToken ? decodedToken.userName : '';
         return userName.toString();
     }
-    
 
     getEmailId(jwtToken: string): string {
         const decodedToken = this.decodeToken(jwtToken);

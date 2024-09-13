@@ -94,35 +94,11 @@
     margin-left: 5px;
 }
 
-.connect-database{
-    position: absolute;
-    top: 5%;
-    right: 25%;
-}
-
-.connect-database button {
-    border-radius: 10px;
-    background: #FFF;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    width: 162px;
-    height: 40px;
-    flex-shrink: 0;
-    color: #243D4D;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-
-
-.connect-database button i {
-    margin-left: 5px;
-}
-
 .register-button {
     position: absolute;
     top: 5%;
-    left: 80%;
+    right: -170px;
+    display: flex;
     transform: translateX(-50%);
 }
 
@@ -138,4 +114,9 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    margin-left: 10px;
+}
+
+.register-button i {
+    margin-left: 4px;
 }

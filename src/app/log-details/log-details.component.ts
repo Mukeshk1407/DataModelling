@@ -1,11 +1,12 @@
 import { Component, HostListener } from '@angular/core';
-import { TableColumnDTO } from '../models/TableColumnDTO.model';
 import { SharedDataService } from '../services/log-details.service';
-import { ColumnsService } from '../services/create-entity.service';
-import { Router } from '@angular/router';
+import { ExcelService } from '../services/excel.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthStorageService } from '../services/authstorage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
+import { EntitylistService } from '../services/entitylist.service';
+import { ColumnDTO } from '../models/ColumnDTO';
 
 declare var $: any;
 
@@ -15,11 +16,16 @@ declare var $: any;
   styleUrls: ['./log-details.component.css'],
 })
 export class LogDetailsComponent {
+
   logParent: any;
   parentId: number | undefined;
   logChildren!: any[];
-  columns: TableColumnDTO[] = [];
+  columns: ColumnDTO[] = [];
+  
   entityName: string = ''; // Initialize entityName variable
+  entityId: number;
+  logId: number;
+
 
   showPopup: boolean = false;
   selectedErrorRowNumber: string = '';
@@ -27,65 +33,39 @@ export class LogDetailsComponent {
   constructor(
     private router: Router,
     private sharedDataService: SharedDataService,
-    private columnsService: ColumnsService,
+    private ExcelService: ExcelService,
     private authStorageService: AuthStorageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private entityService: EntitylistService,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+
+    this.route.params.subscribe((params) => {
+      this.logId = params['logId'];
+    });
+    
     // Subscribe to the shared service to get log details data
-    this.sharedDataService.getLogDetailsData().subscribe((data: any) => {
-      if (data) {
+    this.sharedDataService.getLogByParentId(this.logId).subscribe((data: any) => {
+      if (data.isSuccess) {
+
         this.logParent = data.result.logParentDTOs;
         this.logChildren = data.result.childrenDTOs;
-        this.entityName = this.extractEntityName(this.logParent.fileName);
-        this.parentId = this.logParent.id;
+        this.entityId = this.logParent.entity_Id;
+          this.entityService.getTableById(this.entityId).subscribe((entity: any) => {
+            if (entity.isSuccess) {
+            this.entityName = entity.result.entityName;
+          }
+
+          this.entityService.getColumnsByEntityId(this.entityId).subscribe((columns: any)=>{
+            if(columns.isSuccess){
+              this.columns = columns.result;
+            }
+          })
+        });
       }
     });
-
-    const savedData = localStorage.getItem('logDetailsData');
-
-    if (savedData) {
-      // If data exists in localStorage, parse and set it
-      const parsedData = JSON.parse(savedData);
-      this.logParent = parsedData.logParent;
-      this.logChildren = parsedData.logChildren;
-      this.entityName = parsedData.entityName;
-      this.parentId = parsedData.parentId;
-    } else {
-      // If no data in localStorage, fetch it from the shared service
-      this.sharedDataService.getLogDetailsData().subscribe((data: any) => {
-        if (data) {
-          this.logParent = data.result.logParentDTOs;
-          this.logChildren = data.result.childrenDTOs;
-          this.entityName = this.extractEntityName(this.logParent.fileName);
-          this.parentId = this.logParent.id;
-
-          // Save data to localStorage
-          this.saveDataToLocalStorage();
-        }
-      });
-    }
-  }
-
-  saveDataToLocalStorage(): void {
-    const dataToSave = {
-      logParent: this.logParent,
-      logChildren: this.logChildren,
-      entityName: this.entityName,
-      parentId: this.parentId,
-    };
-    localStorage.setItem('logDetailsData', JSON.stringify(dataToSave));
-  }
-
-  onButtonClick(): void {
-    this.fetchColumnsData(this.entityName);
-    const entityName = this.entityName;
-    const parentId = this.parentId;
-    if (parentId !== undefined) {
-      $('#exportModal').modal('show');
-    } else {
-    }
   }
 
   switchView() {
@@ -107,9 +87,8 @@ export class LogDetailsComponent {
     });
   }
 
-  BacktoView(entityName: string) {
-    this.router.navigate([`entity/${entityName}`]);
-    localStorage.removeItem('logDetailsData');
+  BacktoView() {
+    this.router.navigate([`entity/${this.entityName}`]);
   }
 
   truncateErrorRowNumber(errorRowNumber: number): string {
@@ -118,77 +97,27 @@ export class LogDetailsComponent {
   }
 
   exportData(): void {
-    const entityName = this.entityName;
-    const parentId = this.parentId;
-    if (parentId !== undefined) {
-      this.fetchColumnsData(entityName);
+    const parentId = this.logId;
+    if (parentId != undefined) {
       this.generateExcelTemplates(parentId);
-      this.closeModal();
     } else {
     }
   }
+
   exportbtn(): void {
     this.exportData();
-    this.exportData();
-  }
-
-  closeModal(): void {
-    $('#exportModal').modal('hide');
-  }
-
-  ngOnDestroy(): void {
-    // Clear the data from localStorage when the component is destroyed
-    localStorage.removeItem('logDetailsData');
   }
 
   logout() {
-    localStorage.removeItem('logDetailsData');
     this.authStorageService.clearAuthInfo();
     this.router.navigate(['']);
-  }
-
-  fetchColumnsData(entityName: string): void {
-    this.columnsService.getColumnsForEntitys(entityName).subscribe(
-      (data: any) => {
-        if (data.isSuccess) {
-          this.columns = data.result.map((columnData: any) => {
-            const column: TableColumnDTO = {
-              entityname: this.entityName,
-              id: columnData.id,
-              entityColumnName: columnData.entityColumnName,
-              entityId: columnData.entityid,
-              datatype: columnData.datatype,
-              length: columnData.length,
-              description: columnData.description,
-              isNullable: columnData.isNullable,
-              defaultValue: columnData.defaultValue,
-              ColumnPrimaryKey: columnData.columnPrimaryKey,
-              True: columnData.true,
-              False: columnData.false,
-              minLength: columnData.minLength,
-              maxLength: columnData.maxLength,
-              minRange: columnData.minRange,
-              maxRange: columnData.maxRange,
-              dateMinValue: columnData.dateMinValue,
-              dateMaxValue: columnData.dateMaxValue,
-              ListEntityId: columnData.listEntityId,
-              ListEntityKey: columnData.listEntityKey,
-              ListEntityValue: columnData.listEntityValue,
-            };
-            return column;
-          });
-        } else {
-        }
-      },
-      (error) => {}
-    );
   }
 
   generateExcelTemplates(parentId: number) {
     if (this.columns.length === 0) {
       return;
     }
-    this.columnsService.generateExcelFiles(parentId, this.columns).subscribe(
+    this.ExcelService.ExportExcelFiles(parentId, this.columns).subscribe(
       (data: Blob) => {
         const blob = new Blob([data], {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -203,27 +132,6 @@ export class LogDetailsComponent {
       },
       (error: any) => {}
     );
-  }
-
-  saveExcelFiles(data: Blob): void {
-    const blob = new Blob([data], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${this.entityName}_ExportData.xlsx`;
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-  }
-
-  extractEntityName(fullFileName: string): string {
-    const parts = fullFileName.split('_');
-    if (parts.length > 0) {
-      return parts[0];
-    }
-    return '';
   }
 
   showErrorDetailsPopup(errorRowNumber: string): void {

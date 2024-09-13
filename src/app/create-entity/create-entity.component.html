@@ -99,7 +99,7 @@
                   placeholder="Enter column name"
                   name="columnName{{ i }}"
                   required
-                  pattern="^[A-Z][a-zA-Z0-9]*$"
+                  pattern="^[a-zA-Z][a-zA-Z0-9]*$"
                   #columnNameInput="ngModel"
                   style="font-size: 15px"
                 />
@@ -119,7 +119,7 @@
                     class="error"
                     *ngIf="columnNameInput?.errors?.['pattern']"
                   >
-                    It should start with an uppercase letter and contain only
+                    It should start with an letter and contain only
                     letters and numbers.
                   </div>
                 </div>
@@ -140,7 +140,6 @@
                   <option value="char">Char</option>
                   <option value="date">Date</option>
                   <option value="bytea">ByteA</option>
-                  <option value="listofvalue">List of Value</option>
                 </select>
               </div>
             </div>
@@ -450,7 +449,6 @@
     <div class="form-button">
       <button
         class="Submit-button"
-        [disabled]="entityForm.invalid"
         (click)="submit()"
       >
         Submit

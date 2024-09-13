@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserTableDTO } from '../models/user-table.dto';
-import { UserInfoService } from '../services/user-info.service';
 import { AuthStorageService } from '../services/authstorage.service';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-list-user',
@@ -21,7 +21,7 @@ export class ListUserComponent {
   roles: any[] = [];
   constructor(
     private router: Router,
-    private UserInfoService: UserInfoService,
+    private userService: UserService,
     private authStorageService: AuthStorageService,
     private dialog: MatDialog
   ) {}
@@ -31,15 +31,15 @@ export class ListUserComponent {
   }
 
   fetchUsers() {
-    this.UserInfoService.getUsers().subscribe(
+    this.userService.getUsers().subscribe(
       (response: any) => {
         if (response.isSuccess && Array.isArray(response.result)) {
           this.users = response.result;
           this.users.forEach((user) => {
-            this.UserInfoService.getRoleById(user.roleId).subscribe(
+            this.userService.getRoleById(user.roleId).subscribe(
               (roleResponse: any) => {
                 if (roleResponse.isSuccess) {
-                  user.roleName = roleResponse.result;
+                  user.roleName = roleResponse.result.roleName;
                 } else {
                 }
               },
@@ -72,7 +72,6 @@ export class ListUserComponent {
     this.selectedUserId = userId;
   }
   logout() {
-    localStorage.removeItem('logDetailsData');
     this.authStorageService.clearAuthInfo();
     this.router.navigate(['']);
   }

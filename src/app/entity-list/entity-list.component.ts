@@ -5,8 +5,10 @@ import { Router } from '@angular/router';
 import { ConnectdatabaseComponent } from '../connectdatabase/connectdatabase.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EntityListDto } from '../models/EntitylistDto.model';
-import { SharedDataService } from '../services/log-details.service';
-
+interface Table {
+  tableName: string;
+  // Define other properties if needed
+}
 @Component({
   selector: 'app-entity-list',
   templateUrl: './entity-list.component.html',
@@ -19,46 +21,75 @@ export class EntityListComponent implements OnInit {
   currentPage = 1;
   entityList: any[] = [];
   pagedData: any[] = [];
-  hasValues: { [key: string]: boolean } = {};
 
   constructor(
     private entitylistService: EntitylistService,
     private authStorageService: AuthStorageService,
     private router: Router,
-    private dialog: MatDialog,
-    private SharedDataService: SharedDataService
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.entitylistService.getEntityList().subscribe(
+    this.entitylistService.getTablesByHostProviderDatabase().subscribe(
       (data: any) => {
         this.tableNames = data.result;
+        console.log('data', data);
         this.pagedData = this.tableNames;
         // Make the second API call inside this block
         const tableNames = this.pagedData.map((table) => table.entityName);
-        this.SharedDataService.checkTablesHaveValues(
-          this.pagedData.map((table) => table.entityName)
-        ).subscribe(
-          (tablesWithValues: { [key: string]: boolean }) => {
-            this.hasValues = tablesWithValues; // Assign the values to the component property
-          },
-          (error) => {}
-        );
       },
       (error) => {
         this.errorMessage = 'No Data Available'; // Update error message
       }
     );
-
     this.setPage(this.currentPage); // Initialize the first page
     this.loadEntityList();
   }
+  // ngOnInit() {
+  //   this.entitylistService.getTablesByHostProviderDatabase().subscribe(
+  //     (data: any) => {
+  //       this.tableNames = []; // Reset the tableNames array
+
+  //       // Check if data has the 'result' property for other databases
+  //       if (data.result) {
+  //         this.tableNames = data.result;
+  //       } else {
+  //         // For DynamoDB, the structure is different, so we need to handle it separately
+  //         for (let key in data) {
+  //           if (Array.isArray(data[key])) {
+  //             // Loop through each entry in the array with explicit typing for 'table'
+  //             (data[key] as Table[]).forEach((table) => {
+  //               if (table.tableName) {
+  //                 this.tableNames.push({
+  //                   id: 0, // Use a default id or adjust according to your needs
+  //                   entityName: table.tableName, // Extract the table name
+  //                 });
+  //               }
+  //             });
+  //           }
+  //         }
+  //       }
+
+  //       this.pagedData = this.tableNames;
+
+  //       // Log the table names for debugging
+  //       const tableNames = this.pagedData.map((table) => table.entityName);
+  //       console.log('Extracted table names:', tableNames);
+  //     },
+  //     (error) => {
+  //       this.errorMessage = 'No Data Available'; // Update error message
+  //     }
+  //   );
+
+  //   this.setPage(this.currentPage); // Initialize the first page
+  //   this.loadEntityList();
+  // }
   editTable(entityName: string) {
     // Implement your editTable logic here
   }
 
   loadEntityList() {
-    this.entitylistService.getEntityList().subscribe(
+    this.entitylistService.getTablesByHostProviderDatabase().subscribe(
       (data: any) => {
         this.originalEntityList = data.result || [];
         this.entityList = [...this.originalEntityList];
@@ -69,12 +100,9 @@ export class EntityListComponent implements OnInit {
     );
   }
   setPage(page: number) {
-    // const startIndex = (page - 1) * this.itemsPerPage;
-    // const endIndex = Math.min(startIndex + this.itemsPerPage, this.tableNames.length);
     this.pagedData = this.tableNames;
   }
   logout() {
-    localStorage.removeItem('logDetailsData');
     this.authStorageService.clearAuthInfo();
     this.router.navigate(['']);
   }

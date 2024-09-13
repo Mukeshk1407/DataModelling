@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { CreateUserService } from '../services/create-user.service';
-import { RoleService } from '../services/role.service';
-import { Role } from '../interface/role';
 import { User } from '../models/User.model';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AuthStorageService } from '../services/authstorage.service';
+import { UserService } from '../services/user.service';
+import { Role } from '../models/Role';
 
 @Component({
   selector: 'app-create-user',
@@ -18,8 +17,7 @@ export class CreateUserComponent {
   selectedRole: Role | null = null;
 
   constructor(
-    private createuserservice: CreateUserService,
-    private roleService: RoleService,
+    private userService: UserService,
     private toastrService: ToastrService,
     private authStorageService: AuthStorageService,
     private router: Router
@@ -30,7 +28,7 @@ export class CreateUserComponent {
   }
 
   getRoles() {
-    this.roleService.getRoles().subscribe(
+    this.userService.getRoles().subscribe(
       (response) => {
         this.roles = response?.result || [];
       },
@@ -53,7 +51,7 @@ export class CreateUserComponent {
       this.userModel.roleId = this.selectedRole.id;
       this.userModel.role = this.selectedRole.roleName;
     }
-    this.createuserservice.createUser(this.userModel).subscribe(
+    this.userService.createUser(this.userModel).subscribe(
       (response) => {
         this.toastrService.success('User created successfully');
         // Reset the userModel to clear the form fields

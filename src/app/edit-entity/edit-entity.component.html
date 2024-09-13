@@ -27,7 +27,7 @@
 </div>
 <div
   class="entity-list-container"
-  [ngClass]="{ scrollable: columns.length > 1 }"
+  [ngClass]="{ scrollable: columnsList.length > 1 }"
 >
   <br />
   <div class="container">
@@ -51,28 +51,6 @@
             value="entityName "
           />
         </div>
-        <div
-          *ngIf="
-            entityNameInput.invalid &&
-            (entityNameInput.dirty || entityNameInput.touched)
-          "
-        >
-          <div
-            class="error"
-            style="color: red"
-            *ngIf="entityNameInput?.errors?.['required']"
-          >
-            Entity Name is required.
-          </div>
-          <div
-            class="error"
-            style="color: red"
-            *ngIf="entityNameInput?.errors?.['pattern']"
-          >
-            Entity Name should start with a letter and contain only letters and
-            numbers.
-          </div>
-        </div>
       </div>
       <div class="line"></div>
     </div>
@@ -83,18 +61,18 @@
   <div style="padding: 0 10px">
     <form
       (keydown)="preventSubmitOnEnter($event, entityForm)"
-      (ngSubmit)="submit()"
+      (ngSubmit)="submit(columnsList)"
       #entityForm="ngForm"
       novalidate
     >
       <div class="main-container">
-        <div *ngFor="let row of columns; let i = index">
+        <div *ngFor="let row of columnsList; let i = index">
           <div class="row">
             <div class="col-2">
               <div class="incontainer">
                 <label>Column Name</label>
                 <input
-                  [(ngModel)]="row.entityColumnName"
+                  [(ngModel)]="row.columnName"
                   name="columnName{{ i }}"
                   #columnNameInput="ngModel"
                   style="font-size: 15px"
@@ -109,7 +87,6 @@
                   [(ngModel)]="row.datatype"
                   name="datatype{{ i }}"
                   required
-                  (change)="onDataTypeChange(row)"
                   [disabled]="isReadOnly"
                 >
                   <option value="character varying">String</option>
@@ -118,7 +95,9 @@
                   <option value="char">Char</option>
                   <option value="date">Date</option>
                   <option value="bytea">ByteA</option>
-                  <option value="listofvalue">List of Value</option>
+                  <option value="timestamp with time zone">Timestamp</option>
+                  <option value="jsonb">Jsonb</option>
+                  <option value="smallint">Smallint</option>
                 </select>
               </div>
             </div>
@@ -141,7 +120,6 @@
                   (keydown)="validateNumeric($event)"
                   placeholder="Min"
                   id="minLength{{ i }}"
-                  (change)="onPrimaryKeyChange($event, row)"
                   name="minLength{{ i }}"
                   style="font-size: 15px"
                 />
@@ -166,7 +144,6 @@
                   (keydown)="validateNumeric($event)"
                   placeholder="Max"
                   id="maxLength{{ i }}"
-                  (change)="onPrimaryKeyChange($event, row)"
                   name="maxLength{{ i }}"
                   style="font-size: 15px"
                 />
@@ -177,7 +154,8 @@
               *ngIf="
                 row.datatype === 'integer' ||
                 row.datatype === 'number' ||
-                row.datatype === 'int'
+                row.datatype === 'int' ||
+                row.datatype === 'smallint'
               "
             >
               <div class="incontainer">
@@ -189,8 +167,7 @@
                   placeholder="MinRange"
                   (keydown)="validateNumeric($event)"
                   (input)="onInput($event)"
-                  (change)="onPrimaryKeyChange($event, row)"
-                  name="minValue{{ i }}"
+                  name="minRange{{ i }}"
                 />
               </div>
             </div>
@@ -199,7 +176,8 @@
               *ngIf="
                 row.datatype === 'integer' ||
                 row.datatype === 'number' ||
-                row.datatype === 'int'
+                row.datatype === 'int' ||
+                row.datatype === 'smallint'
               "
             >
               <div class="incontainer">
@@ -211,40 +189,37 @@
                   placeholder="MinRange"
                   (keydown)="validateNumeric($event)"
                   (input)="onInput($event)"
-                  (change)="onPrimaryKeyChange($event, row)"
-                  name="maxValue{{ i }}"
+                  name="maxRange{{ i }}"
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'date'">
+            <div class="col-2" *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone' || row.datatype === 'timestamp with time zone'">
               <div class="incontainer">
                 <label for="minValue{{ i }}">Min Date</label>
                 <input
-                  *ngIf="row.datatype === 'date'"
+                  *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone'"
                   type="date"
                   [(ngModel)]="row.dateMinValue"
                   id="minValue{{ i }}"
                   name="minValue{{ i }}"
                   [min]="minDate"
                   [max]="maxDate"
-                  (change)="onMinDateChange($event, row)"
                   (keydown)="preventInput($event)"
                   (keypress)="preventInput($event)"
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'date'">
+            <div class="col-2" *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone'">
               <div class="incontainer">
                 <label for="maxValue{{ i }}">Max Date</label>
                 <input
-                  *ngIf="row.datatype === 'date'"
+                  *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone'"
                   type="date"
                   [(ngModel)]="row.dateMaxValue"
                   id="maxValue{{ i }}"
                   name="maxValue{{ i }}"
                   [min]="minDate"
                   [max]="maxDate"
-                  (change)="onMaxDateChange($event, row)"
                   (keydown)="preventInput($event)"
                   (keypress)="preventInput($event)"
                 />
@@ -259,6 +234,23 @@
                       type="checkbox"
                       [(ngModel)]="row.isNullable"
                       name="isNullable{{ i }}"
+                      disabled="true"
+                    />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="incontainer">
+                <div class="inside-incontainer">
+                  <label> IsForeignKey </label>
+                  <label class="toggle-switch" style="margin-top: 17px">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="row.isForeignKey"
+                      name="isForeignKey{{ i }}"
+                      disabled="true"
                     />
                     <span class="slider"></span>
                   </label>
@@ -272,11 +264,10 @@
                   <label class="toggle-switch" style="margin-top: 17px">
                     <input
                       type="checkbox"
-                      [(ngModel)]="row.ColumnPrimaryKey"
+                      [(ngModel)]="row.isPrimaryKey"
                       name="primaryKey{{ i }}"
                       [disabled]="!isStringOrNumber(row.datatype)"
                       [disabled]="isReadOnly"
-                      (change)="onPrimaryKeyChange($event, row)"
                       readonly="true"
                     />
                     <span class="slider" readonly="true"></span>
@@ -290,8 +281,7 @@
               *ngIf="
                 row.datatype !== 'boolean' &&
                 row.datatype !== 'date' &&
-                row.datatype !== 'timestamp' &&
-                row.datatype !== 'listofvalue'
+                row.datatype !== 'timestamp with time zone'
               "
             >
               <div class="incontainer">
@@ -301,7 +291,7 @@
                   type="text"
                   placeholder="Enter default value"
                   name="defaultValue{{ i }}"
-                  [disabled]="row.ColumnPrimaryKey"
+                  [disabled]="row.isPrimaryKey"
                   (input)="onDefaultValueInputChange($event, row)"
                   style="font-size: 15px"
                 />
@@ -313,7 +303,7 @@
                 <select
                   [(ngModel)]="row.defaultValue"
                   name="defaultValue{{ i }}"
-                  [disabled]="row.ColumnPrimaryKey"
+                  [disabled]="row.isPrimaryKey"
                 >
                   <option value="false">UnSelect</option>
                   <option value="true">True</option>
@@ -327,19 +317,19 @@
                 <input
                   type="text"
                   placeholder="Enter False Value"
-                  [(ngModel)]="row.False"
-                  id="input2"
+                  [(ngModel)]="row.false"
+                  id="falsevalue"
                   name="false{{ i }}"
-                  [disabled]="row.ColumnPrimaryKey"
+                  [disabled]="row.isPrimaryKey"
                   style="font-size: 15px"
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'date'">
+            <div class="col-2" *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone'">
               <div class="incontainer">
                 <label>Default Value</label>
                 <input
-                  *ngIf="row.datatype === 'date'"
+                  *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone'"
                   type="date"
                   [(ngModel)]="row.defaultValue"
                   id="defaultValue{{ i }}"
@@ -358,10 +348,10 @@
                 <input
                   type="text"
                   placeholder="Enter True Value"
-                  [(ngModel)]="row.True"
-                  id="input1"
+                  [(ngModel)]="row.true"
+                  id="truevalue"
                   name="true{{ i }}"
-                  [disabled]="row.ColumnPrimaryKey"
+                  [disabled]="row.isPrimaryKey"
                   style="font-size: 15px"
                 />
               </div>
@@ -378,73 +368,6 @@
                 />
               </div>
             </div>
-            <div class="col-2" *ngIf="row.datatype === 'listofvalue'">
-              <div class="incontainer">
-                <label>Select Entity</label>
-                <select
-                  [(ngModel)]="selectedEntity"
-                  (change)="onListValueSelected(selectedEntity, i)"
-                  [name]="'selectedEntity' + i"
-                  [disabled]="row.ColumnPrimaryKey"
-                >
-                  <option value="">Select an entity</option>
-                  <option
-                    *ngFor="let value of listOfValues"
-                    [value]="value.entityName"
-                  >
-                    {{ value.entityName }}
-                  </option>
-                </select>
-                <label
-                  style="
-                    position: relative;
-                    inset-block-start: -28px;
-                    font-weight: lighter;
-                    padding-left: 10px;
-                  "
-                  >{{ SelectedEntityName }}</label
-                >
-              </div>
-            </div>
-            <div class="col-2" *ngIf="entityColumnNames2.length > 0">
-              <div class="incontainer">
-                <label>Key</label>
-                <input
-                  type="text"
-                  name="selectedEntity1{{ i }}"
-                  value="{{ entityColumnNames1[0] }}"
-                  readonly
-                  placeholder="Select Key"
-                  style="font-size: 15px"
-                />
-              </div>
-            </div>
-            <div class="col-2" *ngIf="entityColumnNames2.length > 0">
-              <div class="incontainer">
-                <label>Value</label>
-                <select
-                  name="selectedEntity2{{ i }}"
-                  [(ngModel)]="selectedEntity2Index"
-                  (change)="
-                    selectedEntity2Index !== null &&
-                      updateSelectedId(selectedEntity2Index)
-                  "
-                >
-                  <option value="-1">Select a column 2</option>
-                  <option
-                    *ngFor="let columnName of entityColumnNames2; let i = index"
-                    [value]="i"
-                  >
-                    {{ columnName }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div
-              class="col-1"
-              style="padding-top: 37px; padding-left: 87px"
-              (click)="deleteRow(i, $event)"
-            ></div>
           </div>
           <div style="margin-bottom: 10px; padding-top: 10px"><hr /></div>
         </div>
@@ -458,7 +381,7 @@
         <button
           class="Submit-button"
           [disabled]="entityForm.invalid"
-          (click)="submit()"
+          (click)="submit(columnsList)"
         >
           Submit
         </button>

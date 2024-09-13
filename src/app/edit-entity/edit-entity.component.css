@@ -347,9 +347,11 @@ margin-bottom: 5px;
     margin-bottom: 10px;
     margin-right: 11px;
 }
+
 .entity-list-container::-webkit-scrollbar {
   width: 12px;
   }
+
 .entity-list-container::-webkit-scrollbar-thumb {
 background-color: #243D4D;
 border-radius: 10px;
@@ -359,6 +361,7 @@ border-radius: 10px;
 background-color: rgba(143, 185, 212, 0.85);
 border-radius: 10px;
 }
+
 .scrollable {
 overflow-y: auto;
 }
