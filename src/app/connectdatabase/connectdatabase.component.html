@@ -1,53 +1,247 @@
 <div class="modal">
-    <div *ngIf="true" class="close-icon" (click)="closePopup()"><i class="fa-solid fa-circle-xmark"></i></div>
-    <h2 *ngIf="!showInputFields">Choose your Database to Manage your Data</h2>
-    <div *ngIf="!showInputFields">
-        <div class="box-container">
-          <div *ngFor="let box of boxes" (click)="selectBox(box)" [ngClass]="{ 'selected': box.selected }">
-            <img matTooltip="{{ box.content }}" src="{{ box.imageSrc }}" alt="{{ box.content }}" />
-          </div>
-        </div>
-        <button class="next" *ngIf="showNextButton" (click)="showSelectedContent()">Next</button>
+  <div *ngIf="true" class="close-icon" (click)="closePopup()">
+    <i class="fa-solid fa-circle-xmark"></i>
+  </div>
+  <h2 *ngIf="!showInputFields">Choose your Database to Manage your Data</h2>
+  <div *ngIf="!showInputFields">
+    <div class="box-container">
+      <div
+        *ngFor="let box of boxes"
+        (click)="selectBox(box)"
+        [ngClass]="{ selected: box.selected }"
+      >
+        <img
+          matTooltip="{{ box.content }}"
+          src="{{ box.imageSrc }}"
+          alt="{{ box.content }}"
+        />
       </div>
-    <h2 *ngIf="showInputFields">Connect to {{this.selectedContent}} DB by entering the below details</h2>
-
-    <div *ngIf="showInputFields" class="input-fields">
-        <div class="input-group">
-            <label for="hostname">Host Name</label>
-            <input style="border-radius: 15px;" placeholder="Enter Hostname" type="text" id="hostname" [(ngModel)]="hostname" name="hostname" required #hostnameInput="ngModel" [ngClass]="{ 'error': hostnameInput.invalid && (hostnameInput.dirty || hostnameInput.touched) }" />
-            <div *ngIf="hostnameInput.invalid && (hostnameInput.dirty || hostnameInput.touched)" class="error-message">
-                Hostname is required.
-            </div>
-        </div>
-
-        <div class="input-group">
-            <label for="databasename">DataBase Name</label>
-            <input style="border-radius: 15px;" placeholder="Enter databasename" type="text" id="dbname" [(ngModel)]=" databaseName" name="hostname" required #dbnameInput="ngModel" [ngClass]="{ 'error': dbnameInput.invalid && (dbnameInput.dirty || dbnameInput.touched) }" />
-            <div *ngIf="dbnameInput.invalid && (dbnameInput.dirty || dbnameInput.touched)" class="error-message">
-                DatabaseName is required.
-            </div>
-        </div>
-
-        <div class="input-group">
-            <label for="username">Username</label>
-            <input style="border-radius: 15px;" placeholder="Enter Username" type="text" id="username" [(ngModel)]="username" name="username" required #usernameInput="ngModel" [ngClass]="{ 'error': usernameInput.invalid && (usernameInput.dirty || usernameInput.touched) }" />
-            <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)" class="error-message">
-                Username is required.
-            </div>
-        </div>
-
-        <div class="input-group">
-            <label for="password">Password</label>
-            <input style="border-radius: 15px;" placeholder="Enter password"  type="password" id="password" [(ngModel)]="password" name="password" required #passwordInput="ngModel" [ngClass]="{ 'error': passwordInput.invalid && (passwordInput.dirty || passwordInput.touched) }" />
-            <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)" class="error-message">
-                Password is required.
-            </div>
-        </div>
-
-        <div class="button-container">
-            <button class="connect" (click)="back()"><i class="fa-solid fa-backward-step"></i>&nbsp;Back</button>
-            <button class="connect" (click)="connect()">Connect&nbsp;<i class="fa-solid fa-plug"></i></button>
-          </div>
-          
     </div>
+    <button class="next" *ngIf="showNextButton" (click)="showSelectedContent()">
+      Next
+    </button>
+  </div>
+  <h2 *ngIf="showInputFields">
+    Connect to {{ selectedContent }} DB by entering the below details
+  </h2>
+
+  <div *ngIf="showInputFields" class="input-fields">
+    <!-- For DynamoDB -->
+    <ng-container *ngIf="selectedContent === 'Dynamo'">
+      <div class="input-group">
+        <label for="accessKey">Access Key</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter Access Key"
+          type="text"
+          id="accessKey"
+          [(ngModel)]="accessKey"
+          name="accessKey"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="secretKey">Secret Key</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter Secret Key"
+          type="text"
+          id="secretKey"
+          [(ngModel)]="secretKey"
+          name="secretKey"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="region">Region</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter Region"
+          type="text"
+          id="region"
+          [(ngModel)]="region"
+          name="region"
+          required
+        />
+      </div>
+    </ng-container>
+    <!-- For Influx -->
+    <ng-container *ngIf="selectedContent === 'Influx'">
+      <div class="input-group">
+        <label for="influxDbToken">InfluxDbToken</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter InfluxDbToken"
+          type="text"
+          id="influxDbToken"
+          [(ngModel)]="influxDbToken"
+          name="influxDbToken"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="influxDbOrgId">InfluxDbOrgId</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter InfluxDbOrgId"
+          type="text"
+          id="influxDbOrgId"
+          [(ngModel)]="influxDbOrgId"
+          name="influxDbOrgId"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="influxDbBucket">InfluxDbBucket</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter InfluxDbBucket"
+          type="text"
+          id="influxDbBucket"
+          [(ngModel)]="influxDbBucket"
+          name="influxDbBucket"
+          required
+        />
+      </div>
+      <div class="input-group">
+        <label for="influxDbURL">InfluxDbURL</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter InfluxDbURL"
+          type="text"
+          id="influxDbURL"
+          [(ngModel)]="influxDbURL"
+          name="influxDbURL"
+          required
+        />
+      </div>
+    </ng-container>
+    <!-- For Scylla -->
+    <ng-container *ngIf="selectedContent === 'Scylla'">
+      <div class="input-group">
+        <label for="iPAddress">IPAddress</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter IPAddress"
+          type="text"
+          id="iPAddress"
+          [(ngModel)]="iPAddress"
+          name="iPAddress"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="keySpace">KeySpace</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter KeySpace"
+          type="text"
+          id="keySpace"
+          [(ngModel)]="keySpace"
+          name="keySpace"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="ec2Instance">InstanceName</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter InstanceName"
+          type="text"
+          id="ec2Instance"
+          [(ngModel)]="ec2Instance"
+          name="ec2Instance"
+          required
+        />
+      </div>
+      <div class="input-group">
+        <label for="port">Port</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter Port"
+          type="text"
+          id="port"
+          [(ngModel)]="port"
+          name="port"
+          required
+        />
+      </div>
+    </ng-container>
+
+    <!-- For Other Databases (e.g., MySQL, PostgreSQL) -->
+    <ng-container
+      *ngIf="
+        selectedContent !== 'Dynamo' &&
+        selectedContent !== 'Influx' &&
+        selectedContent !== 'Scylla'
+      "
+    >
+      <div class="input-group">
+        <label for="hostname">Host Name</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter Hostname"
+          type="text"
+          id="hostname"
+          [(ngModel)]="hostname"
+          name="hostname"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="databasename">Database Name</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter Database Name"
+          type="text"
+          id="databasename"
+          [(ngModel)]="databaseName"
+          name="databasename"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter Username"
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input
+          style="border-radius: 15px"
+          placeholder="Enter Password"
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+        />
+      </div>
+    </ng-container>
+
+    <div class="button-container">
+      <button class="connect" (click)="back()">
+        <i class="fa-solid fa-backward-step"></i>&nbsp;Back
+      </button>
+      <button class="connect" (click)="connect()">
+        Connect&nbsp;<i class="fa-solid fa-plug"></i>
+      </button>
+    </div>
+  </div>
 </div>
