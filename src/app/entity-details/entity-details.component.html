@@ -69,7 +69,7 @@
                 <div class="upload-align">
                   <i
                     class="fa-solid fa-arrow-up-from-bracket"
-                    style="color: #ffffff;margin-left: -1px;"
+                    style="color: #ffffff; margin-left: -1px"
                     [ngClass]="{ disabled: !hasColumns() }"
                     (click)="openFileInput()"
                   ></i>
@@ -94,7 +94,7 @@
                 <div class="upload-align">
                   <i
                     class="fa-solid fa-plus"
-                    style="color: #ffffff; width: 33px;margin-left: -1px;"
+                    style="color: #ffffff; width: 33px; margin-left: -1px"
                     routerLink="/createentity"
                   ></i>
                 </div>
@@ -114,303 +114,330 @@
   <br />
   <div style="padding: 10px 10px">
     <form #entityForm="ngForm" novalidate>
-          <div class="main-container">
-            <div *ngFor="let row of columnsList; let i = index">
-              <div class="row">
-                <div class="col-2">
-                  <div class="incontainer">
-                    <label>Column Name</label>
-                    <input
-                      [(ngModel)]="row.columnName"
-                      name="columnName{{ i }}"
-                      #columnNameInput="ngModel"
-                      style="font-size: 15px"
-                      readonly="true"
-                    />
-                  </div>
-                </div>
-                <div class="col-2">
-                  <div class="incontainer">
-                    <label>Data Type</label>
-                    <select
-                      [(ngModel)]="row.datatype"
-                      name="datatype{{ i }}"
-                      required
-                      readonly="true"
-                    >
-                      <option value="character varying">String</option>
-                      <option value="int">Number</option>
-                      <option value="integer">integer</option>
-                      <option value="boolean">Boolean</option>
-                      <option value="char">Char</option>
-                      <option value="date">Date</option>
-                      <option value="bytea">ByteA</option>
-                      <option value="timestamp with time zone">Timestamp</option>
-                      <option value="jsonb">Jsonb</option>
-                      <option value="smallint">Smallint</option>
-                      
-                    </select>
-                  </div>
-                </div>
-                <div
-                  class="col-2"
-                  *ngIf="
-                    row.datatype === 'string' ||
-                    row.datatype === 'varchar' ||
-                    row.datatype === 'nvarchar' ||
-                    row.datatype === 'text' ||
-                    row.datatype === 'character varying'
-                  "
+      <div class="main-container">
+        <div *ngFor="let row of columnsList; let i = index">
+          <div class="row">
+            <div class="col-2">
+              <div class="incontainer">
+                <label>Column Name</label>
+                <input
+                  [(ngModel)]="row.columnName"
+                  name="columnName{{ i }}"
+                  #columnNameInput="ngModel"
+                  style="font-size: 15px"
+                  readonly="true"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="incontainer">
+                <label>Data Type</label>
+                <select
+                  [(ngModel)]="row.datatype"
+                  name="datatype{{ i }}"
+                  required
+                  disabled
                 >
-                  <div class="incontainer">
-                    <label>Min Length</label>
-                    <input
-                      type="number"
-                      [(ngModel)]="row.minLength"
-                      placeholder="Min"
-                      id="minLength{{ i }}"
-                      name="minLength{{ i }}"
-                      style="font-size: 15px"
-                      readonly="true"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="col-2"
+                  <option value="character varying">String</option>
+                  <option value="int">Number</option>
+                  <option value="integer">integer</option>
+                  <option value="boolean">Boolean</option>
+                  <option value="char">Char</option>
+                  <option value="date">Date</option>
+                  <option value="bytea">ByteA</option>
+                  <option value="timestamp with time zone">Timestamp</option>
+                  <option value="jsonb">Jsonb</option>
+                  <option value="smallint">Smallint</option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'string' ||
+                row.datatype === 'varchar' ||
+                row.datatype === 'nvarchar' ||
+                row.datatype === 'text' ||
+                row.datatype === 'character varying'
+              "
+            >
+              <div class="incontainer">
+                <label>Min Length</label>
+                <input
+                  type="number"
+                  [(ngModel)]="row.minLength"
+                  placeholder="Min"
+                  id="minLength{{ i }}"
+                  name="minLength{{ i }}"
+                  style="font-size: 15px"
+                  readonly="true"
+                />
+              </div>
+            </div>
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'string' ||
+                row.datatype === 'varchar' ||
+                row.datatype === 'nvarchar' ||
+                row.datatype === 'text' ||
+                row.datatype === 'character varying'
+              "
+            >
+              <div class="incontainer">
+                <label>Max Length</label>
+                <input
+                  type="number"
+                  [(ngModel)]="row.maxLength"
+                  placeholder="Max"
+                  id="maxLength{{ i }}"
+                  name="maxLength{{ i }}"
+                  style="font-size: 15px"
+                  readonly="true"
+                />
+              </div>
+            </div>
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'integer' ||
+                row.datatype === 'number' ||
+                row.datatype === 'int' ||
+                row.datatype === 'smallint'
+              "
+            >
+              <div class="incontainer">
+                <label>Min Range</label>
+                <input
+                  type="number"
+                  [(ngModel)]="row.minRange"
+                  id="MinRange{{ i }}"
+                  placeholder="MinRange"
+                  readonly="true"
+                  name="minRange{{ i }}"
+                />
+              </div>
+            </div>
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'integer' ||
+                row.datatype === 'number' ||
+                row.datatype === 'int' ||
+                row.datatype === 'smallint'
+              "
+            >
+              <div class="incontainer">
+                <label>Max Range</label>
+                <input
+                  type="number"
+                  [(ngModel)]="row.maxRange"
+                  id="MaxRange{{ i }}"
+                  placeholder="MinRange"
+                  readonly="true"
+                  name="maxRange{{ i }}"
+                />
+              </div>
+            </div>
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'date' ||
+                row.datatype === 'timestamp with time zone' ||
+                row.datatype === 'timestamp with time zone'
+              "
+            >
+              <div class="incontainer">
+                <label for="minValue{{ i }}">Min Date</label>
+                <input
                   *ngIf="
-                    row.datatype === 'string' ||
-                    row.datatype === 'varchar' ||
-                    row.datatype === 'nvarchar' ||
-                    row.datatype === 'text' ||
-                    row.datatype === 'character varying'
+                    row.datatype === 'date' ||
+                    row.datatype === 'timestamp with time zone'
                   "
-                >
-                  <div class="incontainer">
-                    <label>Max Length</label>
-                    <input
-                      type="number"
-                      [(ngModel)]="row.maxLength"
-                      placeholder="Max"
-                      id="maxLength{{ i }}"
-                      name="maxLength{{ i }}"
-                      style="font-size: 15px"
-                      readonly="true"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="col-2"
+                  type="date"
+                  [(ngModel)]="row.dateMinValue"
+                  id="minValue{{ i }}"
+                  name="minValue{{ i }}"
+                  readonly="true"
+                />
+              </div>
+            </div>
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'date' ||
+                row.datatype === 'timestamp with time zone'
+              "
+            >
+              <div class="incontainer">
+                <label for="maxValue{{ i }}">Max Date</label>
+                <input
                   *ngIf="
-                    row.datatype === 'integer' ||
-                    row.datatype === 'number' ||
-                    row.datatype === 'int' ||
-                    row.datatype === 'smallint'
+                    row.datatype === 'date' ||
+                    row.datatype === 'timestamp with time zone'
                   "
-                >
-                  <div class="incontainer">
-                    <label>Min Range</label>
+                  type="date"
+                  [(ngModel)]="row.dateMaxValue"
+                  id="maxValue{{ i }}"
+                  name="maxValue{{ i }}"
+                  readonly="true"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="incontainer">
+                <div class="inside-incontainer">
+                  <label> Not Null </label>
+                  <label class="toggle-switch" style="margin-top: 17px">
                     <input
-                      type="number"
-                      [(ngModel)]="row.minRange"
-                      id="MinRange{{ i }}"
-                      placeholder="MinRange"
-                      readonly="true"
-                      name="minRange{{ i }}"
+                      type="checkbox"
+                      [(ngModel)]="row.isNullable"
+                      name="isNullable{{ i }}"
+                      disabled="true"
                     />
-                  </div>
-                </div>
-                <div
-                  class="col-2"
-                  *ngIf="
-                    row.datatype === 'integer' ||
-                    row.datatype === 'number' ||
-                    row.datatype === 'int' ||
-                    row.datatype === 'smallint'
-                  "
-                >
-                  <div class="incontainer">
-                    <label>Max Range</label>
-                    <input
-                      type="number"
-                      [(ngModel)]="row.maxRange"
-                      id="MaxRange{{ i }}"
-                      placeholder="MinRange"
-                      readonly="true"
-                      name="maxRange{{ i }}"
-                    />
-                  </div>
-                </div>
-                <div class="col-2" *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone' || row.datatype === 'timestamp with time zone'">
-                  <div class="incontainer">
-                    <label for="minValue{{ i }}">Min Date</label>
-                    <input
-                      *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone'"
-                      type="date"
-                      [(ngModel)]="row.dateMinValue"
-                      id="minValue{{ i }}"
-                      name="minValue{{ i }}"
-                      readonly="true"
-                    />
-                  </div>
-                </div>
-                <div class="col-2" *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone'">
-                  <div class="incontainer">
-                    <label for="maxValue{{ i }}">Max Date</label>
-                    <input
-                      *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone'"
-                      type="date"
-                      [(ngModel)]="row.dateMaxValue"
-                      id="maxValue{{ i }}"
-                      name="maxValue{{ i }}"
-                      readonly="true"
-                    />
-                  </div>
-                </div>
-                <div class="col-2">
-                  <div class="incontainer">
-                    <div class="inside-incontainer">
-                      <label> Not Null </label>
-                      <label class="toggle-switch" style="margin-top: 17px">
-                        <input
-                          type="checkbox"
-                          [(ngModel)]="row.isNullable"
-                          name="isNullable{{ i }}"
-                          disabled="true"
-                        />
-                        <span class="slider"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-2">
-                  <div class="incontainer">
-                    <div class="inside-incontainer">
-                      <label> IsForeignKey </label>
-                      <label class="toggle-switch" style="margin-top: 17px">
-                        <input
-                          type="checkbox"
-                          [(ngModel)]="row.isForeignKey"
-                          name="isForeignKey{{ i }}"
-                          disabled="true"
-                        />
-                        <span class="slider"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-2">
-                  <div class="incontainer">
-                    <div class="inside-incontainer">
-                      <label> Primary Key </label>
-                      <label class="toggle-switch" style="margin-top: 17px">
-                        <input
-                          type="checkbox"
-                          [(ngModel)]="row.isPrimaryKey"
-                          name="primaryKey{{ i }}"
-                          readonly="true"
-                        />
-                        <span class="slider" readonly="true"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                &nbsp;
-                <div
-                  class="col-2"
-                  *ngIf="
-                    row.datatype !== 'boolean' &&
-                    row.datatype !== 'date' &&
-                    row.datatype !== 'timestamp with time zone'
-                  "
-                >
-                  <div class="incontainer">
-                    <label>Default Value</label>
-                    <input
-                      [(ngModel)]="row.defaultValue"
-                      type="text"
-                      placeholder="Enter default value"
-                      name="defaultValue{{ i }}"
-                      [disabled]="row.isPrimaryKey"
-                      style="font-size: 15px"
-                      readonly="true"
-                    />
-                  </div>
-                </div>
-                <div class="col-2" *ngIf="row.datatype === 'boolean'">
-                  <div class="incontainer">
-                    <label>Default Value</label>
-                    <select
-                      [(ngModel)]="row.defaultValue"
-                      name="defaultValue{{ i }}"
-                      [disabled]="row.isPrimaryKey"
-                    >
-                      <option value="false">UnSelect</option>
-                      <option value="true">True</option>
-                      <option value="false">False</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-2" *ngIf="row.datatype === 'boolean'">
-                  <div class="incontainer">
-                    <label>Custom Value False</label>
-                    <input
-                      type="text"
-                      placeholder="Enter False Value"
-                      [(ngModel)]="row.false"
-                      id="falsevalue"
-                      name="false{{ i }}"
-                      [disabled]="row.isPrimaryKey"
-                      style="font-size: 15px"
-                    />
-                  </div>
-                </div>
-                <div class="col-2" *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone'">
-                  <div class="incontainer">
-                    <label>Default Value</label>
-                    <input
-                      *ngIf="row.datatype === 'date' || row.datatype === 'timestamp with time zone'"
-                      type="date"
-                      [(ngModel)]="row.defaultValue"
-                      id="defaultValue{{ i }}"
-                      name="defaultValue{{ i }}"
-                      [min]="row.dateMinValue"
-                      [max]="row.dateMaxValue"
-                      readonly="true"
-                    />
-                  </div>
-                </div>
-                <div class="col-2" *ngIf="row.datatype === 'boolean'">
-                  <div class="incontainer">
-                    <label>Custom Value True</label>
-                    <input
-                      type="text"
-                      placeholder="Enter True Value"
-                      [(ngModel)]="row.true"
-                      id="truevalue"
-                      name="true{{ i }}"
-                      [disabled]="row.isPrimaryKey"
-                      style="font-size: 15px"
-                    />
-                  </div>
-                </div>
-                <div class="col-2">
-                  <div class="incontainer">
-                    <label>Description</label>
-                    <input
-                      type="text"
-                      [(ngModel)]="row.description"
-                      placeholder="Enter Description"
-                      style="font-size: 15px"
-                      name="description{{ i }}"
-                    />
-                  </div>
+                    <span class="slider"></span>
+                  </label>
                 </div>
               </div>
-              <div style="margin-bottom: 10px; padding-top: 10px"><hr /></div>
             </div>
-            <br />
+            <div class="col-2">
+              <div class="incontainer">
+                <div class="inside-incontainer">
+                  <label> IsForeignKey </label>
+                  <label class="toggle-switch" style="margin-top: 17px">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="row.isForeignKey"
+                      name="isForeignKey{{ i }}"
+                      disabled="true"
+                    />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="incontainer">
+                <div class="inside-incontainer">
+                  <label> Primary Key </label>
+                  <label class="toggle-switch" style="margin-top: 17px">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="row.isPrimaryKey"
+                      name="primaryKey{{ i }}"
+                      readonly="true"
+                    />
+                    <span class="slider" readonly="true"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            &nbsp;
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype !== 'boolean' &&
+                row.datatype !== 'date' &&
+                row.datatype !== 'timestamp with time zone'
+              "
+            >
+              <div class="incontainer">
+                <label>Default Value</label>
+                <input
+                  [(ngModel)]="row.defaultValue"
+                  type="text"
+                  placeholder="Enter default value"
+                  name="defaultValue{{ i }}"
+                  [disabled]="row.isPrimaryKey"
+                  style="font-size: 15px"
+                  readonly="true"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'boolean'">
+              <div class="incontainer">
+                <label>Default Value</label>
+                <select
+                  [(ngModel)]="row.defaultValue"
+                  name="defaultValue{{ i }}"
+                  [disabled]="row.isPrimaryKey"
+                >
+                  <option value="false">UnSelect</option>
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'boolean'">
+              <div class="incontainer">
+                <label>Custom Value False</label>
+                <input
+                  type="text"
+                  placeholder="Enter False Value"
+                  [(ngModel)]="row.false"
+                  id="falsevalue"
+                  name="false{{ i }}"
+                  [disabled]="row.isPrimaryKey"
+                  style="font-size: 15px"
+                />
+              </div>
+            </div>
+            <div
+              class="col-2"
+              *ngIf="
+                row.datatype === 'date' ||
+                row.datatype === 'timestamp with time zone'
+              "
+            >
+              <div class="incontainer">
+                <label>Default Value</label>
+                <input
+                  *ngIf="
+                    row.datatype === 'date' ||
+                    row.datatype === 'timestamp with time zone'
+                  "
+                  type="date"
+                  [(ngModel)]="row.defaultValue"
+                  id="defaultValue{{ i }}"
+                  name="defaultValue{{ i }}"
+                  [min]="row.dateMinValue"
+                  [max]="row.dateMaxValue"
+                  readonly="true"
+                />
+              </div>
+            </div>
+            <div class="col-2" *ngIf="row.datatype === 'boolean'">
+              <div class="incontainer">
+                <label>Custom Value True</label>
+                <input
+                  type="text"
+                  placeholder="Enter True Value"
+                  [(ngModel)]="row.true"
+                  id="truevalue"
+                  name="true{{ i }}"
+                  [disabled]="row.isPrimaryKey"
+                  style="font-size: 15px"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="incontainer">
+                <label>Description</label>
+                <input
+                  type="text"
+                  [(ngModel)]="row.description"
+                  placeholder="Enter Description"
+                  style="font-size: 15px"
+                  name="description{{ i }}"
+                />
+              </div>
+            </div>
           </div>
           <div style="margin-bottom: 10px; padding-top: 10px"><hr /></div>
+        </div>
+        <br />
+      </div>
+      <div style="margin-bottom: 10px; padding-top: 10px"><hr /></div>
       <br />
     </form>
     <br />
