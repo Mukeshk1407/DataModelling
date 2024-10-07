@@ -4,16 +4,32 @@
   </div>
   <h2>Screen Management</h2>
 
-  <!-- Display roleName in input field -->
-  <input type="text" [value]="screens.length > 0 ? screens[0].role?.roleName : ''" readonly />
+  <div class="screenlist">
+    <div *ngFor="let screen of screens" class="screen-item">
+      <span>{{ screen.screenName }}</span>
+      <!-- Displaying screenName -->
+      <span>{{ screen.routeURL }}</span>
+      <!-- Displaying routeURL -->
+      <div class="edit-buttons">
+        <button class="edit-button" (click)="editScreen(screen)">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+      </div>
+    </div>
 
-  <!-- Display screen names as a list of checkboxes in a row -->
-  <div class="rolelist">
-    <div class="role-item" *ngFor="let screen of screens">
-      <label>
-        <input type="checkbox" [(ngModel)]="screen.isSelected" class="checkbox" />
-        {{ screen.screen?.screenName }}
-      </label>
+    <div *ngIf="editingScreen" class="edit-buttons">
+      <input
+        class="screen-input"
+        [(ngModel)]="editingScreen.screenName"
+        placeholder="Screen Name"
+      />
+      <input
+        class="screen-input"
+        [(ngModel)]="editingScreen.routeURL"
+        placeholder="Screen URL"
+      />
+      <button (click)="saveEditedScreen()">Save</button>
+      <button (click)="cancelEdit()">Cancel</button>
     </div>
   </div>
 </div>

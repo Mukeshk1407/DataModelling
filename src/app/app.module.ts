@@ -31,7 +31,8 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { ErrorDetailsPopupComponent } from './error-details-popup/error-details-popup.component';
 import { RoleManagementComponent } from './role-management/role-management.component';
 import { ScreenManagementComponent } from './screen-management/screen-management.component';
-
+import { ScreenMappingComponent } from './screen-mapping/screen-mapping.component';
+import { PortCommunicationComponent } from './port-communication/port-communication.component';
 
 @NgModule({
   declarations: [
@@ -50,8 +51,10 @@ import { ScreenManagementComponent } from './screen-management/screen-management
     EditUserComponent,
     ErrorDetailsPopupComponent,
     RoleManagementComponent,
-    ScreenManagementComponent
-   ],
+    ScreenManagementComponent,
+    ScreenMappingComponent,
+    PortCommunicationComponent,
+  ],
   imports: [
     BrowserModule,
     MatDatepickerModule,
@@ -68,12 +71,12 @@ import { ScreenManagementComponent } from './screen-management/screen-management
     MatDialogModule,
     MatTooltipModule,
     ToastrModule.forRoot({
-      timeOut: 5000, 
-      positionClass: 'toast-top-right', 
+      timeOut: 5000,
+      positionClass: 'toast-top-right',
       preventDuplicates: true,
-    })
+    }),
   ],
   providers: [JWTTokenService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

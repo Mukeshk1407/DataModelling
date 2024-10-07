@@ -1,0 +1,154 @@
+.modal {
+  display: flex;
+  width: 700px;
+  height: 509px;
+  top: 10%;
+  left: 24%;
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: rgba(70, 66, 149, 0.76);
+  flex-direction: column;
+}
+
+.modal h2 {
+  margin-top: 5%;
+  margin-left: 23%;
+  font-size: larger;
+  color: white;
+  left: 20%;
+  display: flex;
+}
+
+.box-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px;
+}
+
+.box-container div {
+  flex: 0 0 calc(25% - 10px);
+  padding: 35px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.box-container div.selected {
+  background-color: #ffffff;
+  border: 1px solid #000000;
+}
+
+.box-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: scale-down;
+  transition: transform 0.3s ease-in-out;
+}
+
+.box-container div:hover img {
+  transform: scale(1.1);
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.next {
+  top: 80%;
+  left: 78%;
+  position: sticky;
+  font-weight: bold;
+  width: 115px;
+  height: 37px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: #d9d9d9;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.input-fields {
+  top: 20%;
+  position: absolute;
+  left: 27%;
+  line-height: 0px;
+  display: flex;
+  flex-direction: column;
+  font-size: medium;
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+label {
+  margin-bottom: 5%;
+  color: white;
+  margin-left: 4%;
+}
+
+input {
+  color: white;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 320px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: #504c9b;
+  margin-bottom: 3%;
+}
+
+.error {
+  border-radius: 15px;
+  border: 2px solid #f00;
+  background: rgba(177, 170, 231, 0.11);
+}
+
+.error-message {
+  color: #f00;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 4%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+::placeholder {
+  color: white;
+  font-weight: lighter;
+  opacity: 0.7;
+}
+
+button.connect {
+  color: white;
+  border-radius: 10px;
+  background: #243d4d;
+  margin-top: 20px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  width: 124px;
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+}

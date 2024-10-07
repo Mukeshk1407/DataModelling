@@ -9,6 +9,8 @@ import { AuthStorageService } from '../services/authstorage.service';
 import { UserService } from '../services/user.service';
 import { RoleManagementComponent } from '../role-management/role-management.component';
 import { ScreenManagementComponent } from '../screen-management/screen-management.component';
+import { ScreenMappingComponent } from '../screen-mapping/screen-mapping.component';
+import { PortCommunicationComponent } from '../port-communication/port-communication.component';
 
 @Component({
   selector: 'app-landing-page',
@@ -103,6 +105,34 @@ export class LandingPageComponent implements OnInit {
 
   ScreenPopup() {
     const dialogRef = this.dialog.open(ScreenManagementComponent, {
+      width: '400px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      if (result) {
+        // Handle the selected database
+      } else {
+        // Handle modal close event
+      }
+    });
+  }
+  ScreenMappingPopup() {
+    const dialogRef = this.dialog.open(ScreenMappingComponent, {
+      width: '400px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      if (result) {
+        // Handle the selected database
+      } else {
+        // Handle modal close event
+      }
+    });
+  }
+  portCommunicationPopup() {
+    const dialogRef = this.dialog.open(PortCommunicationComponent, {
       width: '400px',
       disableClose: true,
     });

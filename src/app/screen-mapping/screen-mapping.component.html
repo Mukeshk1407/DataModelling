@@ -1,0 +1,33 @@
+<div class="modal">
+  <div class="close-icon" (click)="closePopup()">
+    <i class="fa-solid fa-circle-xmark"></i>
+  </div>
+
+  <h2>Role Screen Mapping</h2>
+
+  <div *ngFor="let role of roles" class="role-section">
+    <h3>{{ role.roleName }}</h3>
+    <table class="role-table">
+      <thead>
+        <tr>
+          <th>Screen Name</th>
+          <th>Screen URL</th>
+          <th>Mapped</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let screen of screens">
+          <td>{{ screen.screenName }}</td>
+          <td class="screen-url">{{ screen.routeURL }}</td>
+          <td>
+            <input
+              type="checkbox"
+              [checked]="isScreenMapped(role.id, screen.id)"
+              disabled
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

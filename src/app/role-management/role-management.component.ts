@@ -9,16 +9,18 @@ import { ToastrService } from '../services/ToastrService';
 @Component({
   selector: 'app-role-management',
   templateUrl: './role-management.component.html',
-  styleUrls: ['./role-management.component.css']
+  styleUrls: ['./role-management.component.css'],
 })
-
 export class RoleManagementComponent {
-
   roles: Role[] = [];
   newRole: string = '';
   editingRole: Role | null = null;
 
-  constructor(private dialog: MatDialog, private roleService: RoleService,private toastrService: ToastrService,) {}
+  constructor(
+    private dialog: MatDialog,
+    private roleService: RoleService,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getrole();
@@ -29,27 +31,26 @@ export class RoleManagementComponent {
   // }
 
   editRole(editedRole: Role): void {
-    this.editingRole = { ...editedRole };  // Set the editingRole property
+    this.editingRole = { ...editedRole }; // Set the editingRole property
   }
-  
+
   addRole(roleName: string): void {
     if (roleName.trim() !== '') {
       const newRole: Role = {
         roleName: roleName,
-        id: 0
+        id: 0,
       };
       this.roleService.addRole(newRole).subscribe(
-        response => {
-          if(response.isSuccess){
+        (response) => {
+          if (response.isSuccess) {
             this.toastrService.showSuccess('New Role Created Successfully');
             this.getrole();
-            this.newRole = "";
-          }
-          else{
+            this.newRole = '';
+          } else {
             this.toastrService.showError(response.errorMessage[0]);
           }
         },
-        error => {
+        (error) => {
           this.toastrService.showError('Role name cannot be empty');
         }
       );
@@ -58,24 +59,35 @@ export class RoleManagementComponent {
     }
   }
 
-  getrole(){
-    this.roleService.getRoles().subscribe(
-      (data: any) => {
+  // getrole() {
+  //   this.roleService.getRoles().subscribe(
+  //     (data: any) => {
+  //       this.roles = data.result.result;
+  //     },
+  //     (error) => {}
+  //   );
+  // }
+  getrole() {
+    this.roleService.getRoles().subscribe({
+      next: (data: any) => {
         this.roles = data.result.result;
       },
-      (error) => {
-      }
-    );
+      error: (error) => {
+        console.error('Error fetching roles:', error);
+      },
+      complete: () => {
+        console.log('Role fetching completed');
+      },
+    });
   }
-  
+
   saveEditedRole(): void {
     if (this.editingRole !== null && this.editingRole.roleName.trim() !== '') {
       const roleId = this.editingRole.id;
-
       this.roleService.editRole(roleId, this.editingRole).subscribe(
         (updatedRole) => {
           console.log('Role updated successfully:', updatedRole);
-          if(updatedRole.result.isSuccess){
+          if (updatedRole.result.isSuccess) {
             this.toastrService.showSuccess('Role updated successfully');
           }
           // Update your local data or take any other actions as needed
@@ -85,13 +97,13 @@ export class RoleManagementComponent {
           // Handle the error, show a message, etc.
         }
       );
-        this.editingRole = null;
-      } else {
-        this.toastrService.showError('Role name cannot be empty');
-      }
+      this.editingRole = null;
+    } else {
+      this.toastrService.showError('Role name cannot be empty');
+    }
   }
 
-  cancelEditedRole(): void{
+  cancelEditedRole(): void {
     this.editingRole = null;
   }
 
@@ -99,5 +111,4 @@ export class RoleManagementComponent {
     // Implement logic to close the popup when the close icon is clicked
     const dialogRef = this.dialog.closeAll();
   }
-
 }

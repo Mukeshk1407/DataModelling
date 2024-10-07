@@ -1,0 +1,73 @@
+.modal {
+  display: flex;
+  width: 700px;
+  height: auto; /* Allow height to adjust based on content */
+  max-height: 80vh; /* Limit maximum height to prevent overflow */
+  top: 50%; /* Position from the top */
+  left: 50%; /* Position from the left */
+  transform: translate(-50%, -50%); /* Center the modal */
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: rgba(70, 66, 149, 0.76);
+  flex-direction: column;
+  padding: 20px; /* Add some padding */
+  position: fixed; /* Fixed position to keep it centered during scroll */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.modal h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: white;
+  text-align: center;
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+}
+
+/* Role Section Styles */
+.role-section {
+  margin-bottom: 20px; /* Space between role sections */
+}
+
+.role-section h3 {
+  color: #ffffff; /* Role name color */
+  margin-bottom: 10px; /* Space below role name */
+}
+
+/* Table Styles */
+.role-table {
+  width: 100%; /* Full width of container */
+  border-collapse: collapse; /* Remove spacing between borders */
+  background-color: rgba(255, 255, 255, 0.1); /* Background color for table */
+}
+
+.role-table th,
+.role-table td {
+  padding: 10px; /* Padding inside table cells */
+  text-align: left; /* Aligning text to the left */
+  border-bottom: 1px solid #dedcdc; /* Underline each row */
+}
+
+.role-table th {
+  background-color: rgba(70, 66, 149, 0.9); /* Header background color */
+  color: white; /* Header text color */
+}
+
+.screen-url {
+  color: #d0d0d0; /* URL color */
+  text-decoration: underline; /* Underline for URLs */
+}
+
+/* Checkbox Styles */
+input[type="checkbox"] {
+  cursor: not-allowed; /* Cursor indication for disabled checkbox */
+}
+
+/* Add any additional button styles if necessary */

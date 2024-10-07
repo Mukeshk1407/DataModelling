@@ -6,22 +6,20 @@ import { Role } from '../models/Role';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class RoleService {
   private rolesSubject = new BehaviorSubject<Role[]>([]);
   roles$ = this.rolesSubject.asObservable();
-  private apiUrl = 'https://localhost:7139/api/Auth'; 
+  private apiUrl = 'https://localhost:7139/api/Auth';
 
   constructor(private http: HttpClient) {
     // Mock data for initial roles
-    const initialRoles: Role[] = [
-      { id: 1, roleName: 'Admin' },
-      { id: 2, roleName: 'User' },
-    ];
-
-    this.rolesSubject.next(initialRoles);
+    // const initialRoles: Role[] = [
+    //   { id: 1, roleName: 'Admin' },
+    //   { id: 2, roleName: 'User' },
+    // ];
+    // this.rolesSubject.next(initialRoles);
   }
 
   getRoles(): Observable<any> {

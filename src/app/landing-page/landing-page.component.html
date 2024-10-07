@@ -30,39 +30,47 @@
   </div>
 
   <div *ngIf="loggedIn$; else showLoginButton" class="register-button">
-    <div
-    (click)="ScreenPopup()"
-  >
-    <button>
-      <span>Screen</span>
-      <i class="fas fa-user-plus"></i>
-    </button>
-  </div>
-  <div
-    (click)="navigateToRegister()"
-  >
-    <button>
-      <span>User</span>
-      <i class="fas fa-user-plus"></i>
-    </button>
-  </div>
-  <div (click)="RolePopup()" style="margin-right:10px">
-    <button>
-      <span>Role</span>
-      <i class="fas fa-user-plus"></i>
-    </button>
-  </div>
-  <div (click)="dbPopup()" style="margin-right:10px">
-    <button style="width: 100%;">
-      <span>Connect Database</span>&nbsp;<i class="fa-solid fa-plug"></i>
-    </button>
-  </div>
-  <div (click)="logout()">
-    <button>
-      <span>Logout</span>
-      <i class="fa fa-sign-out"></i>
-    </button>
-  </div>
+    <div (click)="portCommunicationPopup()">
+      <button>
+        <span>Port Communication</span>
+        <i class="fas fa-user-plus"></i>
+      </button>
+    </div>
+    <div (click)="ScreenMappingPopup()">
+      <button>
+        <span>ScreenMapping</span>
+        <i class="fas fa-user-plus"></i>
+      </button>
+    </div>
+    <div (click)="ScreenPopup()">
+      <button>
+        <span>Screen</span>
+        <i class="fas fa-user-plus"></i>
+      </button>
+    </div>
+    <div (click)="navigateToRegister()">
+      <button>
+        <span>User</span>
+        <i class="fas fa-user-plus"></i>
+      </button>
+    </div>
+    <div (click)="RolePopup()" style="margin-right: 10px">
+      <button>
+        <span>Role</span>
+        <i class="fas fa-user-plus"></i>
+      </button>
+    </div>
+    <div (click)="dbPopup()" style="margin-right: 10px">
+      <button style="width: 100%">
+        <span>Connect Database</span>&nbsp;<i class="fa-solid fa-plug"></i>
+      </button>
+    </div>
+    <div (click)="logout()">
+      <button>
+        <span>Logout</span>
+        <i class="fa fa-sign-out"></i>
+      </button>
+    </div>
   </div>
 
   <ng-template #showLoginButton>
@@ -74,3 +82,4 @@
     </div>
   </ng-template>
 </div>
+<!-- </div> -->
