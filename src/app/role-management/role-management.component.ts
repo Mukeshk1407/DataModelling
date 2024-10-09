@@ -1,5 +1,3 @@
-// role-management.component.ts
-
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleService } from '../services/role.service';
@@ -26,12 +24,8 @@ export class RoleManagementComponent {
     this.getrole();
   }
 
-  // removeRole(roleId: number): void {
-  //   this.roleService.removeRole(roleId);
-  // }
-
   editRole(editedRole: Role): void {
-    this.editingRole = { ...editedRole }; // Set the editingRole property
+    this.editingRole = { ...editedRole };
   }
 
   addRole(roleName: string): void {
@@ -59,14 +53,6 @@ export class RoleManagementComponent {
     }
   }
 
-  // getrole() {
-  //   this.roleService.getRoles().subscribe(
-  //     (data: any) => {
-  //       this.roles = data.result.result;
-  //     },
-  //     (error) => {}
-  //   );
-  // }
   getrole() {
     this.roleService.getRoles().subscribe({
       next: (data: any) => {
@@ -90,11 +76,9 @@ export class RoleManagementComponent {
           if (updatedRole.result.isSuccess) {
             this.toastrService.showSuccess('Role updated successfully');
           }
-          // Update your local data or take any other actions as needed
         },
         (error) => {
           console.error('Error updating role:', error);
-          // Handle the error, show a message, etc.
         }
       );
       this.editingRole = null;
@@ -108,7 +92,6 @@ export class RoleManagementComponent {
   }
 
   closePopup(): void {
-    // Implement logic to close the popup when the close icon is clicked
     const dialogRef = this.dialog.closeAll();
   }
 }

@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Screenmapping } from '../models/screenmappingDTO';
-import { Role } from '../models/Role';
-import { Screen } from '../models/Screen';
 
 @Injectable({
   providedIn: 'root',
